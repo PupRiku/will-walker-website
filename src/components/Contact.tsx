@@ -3,16 +3,24 @@
 import styles from './Contact.module.css';
 
 export default function Contact() {
+  const recipientEmail = 'chris.diorio12@example.com';
+
   return (
     <section id="contact" className={styles.contactSection}>
       <div className={styles.contentWrapper}>
         <h2 className={styles.heading}>Contact Me</h2>
         <form
-          name="contact"
-          action="/api/form"
+          action={`https://formsubmit.co/${recipientEmail}`}
           method="POST"
           className={styles.form}
         >
+          <input
+            type="hidden"
+            name="_next"
+            value="https://will-walker-website.vercel.app/thank-you"
+          />
+          <input type="hidden" name="_captcha" value="false" />
+
           <div className={styles.formGroup}>
             <label htmlFor="name" className={styles.label}>
               Name
