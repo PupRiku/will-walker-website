@@ -3,7 +3,7 @@
 import styles from './Contact.module.css';
 
 export default function Contact() {
-  const recipientEmail = 'chris.diorio12@example.com';
+  const recipientEmail = 'chris.diorio12@gmail.com';
 
   return (
     <section id="contact" className={styles.contactSection}>
