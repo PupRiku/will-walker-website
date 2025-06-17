@@ -1,13 +1,14 @@
 'use client';
 
 import styles from './Contact.module.css';
+import { handleForm } from '@/app/actions';
 
 export default function Contact() {
   return (
     <section id="contact" className={styles.contactSection}>
       <div className={styles.contentWrapper}>
         <h2 className={styles.heading}>Contact Me</h2>
-        <form name="contact" method="POST" className={styles.form}>
+        <form action={handleForm} className={styles.form}>
           <div className={styles.formGroup}>
             <label htmlFor="name" className={styles.label}>
               Name
