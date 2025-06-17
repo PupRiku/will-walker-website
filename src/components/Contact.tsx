@@ -7,7 +7,12 @@ export default function Contact() {
     <section id="contact" className={styles.contactSection}>
       <div className={styles.contentWrapper}>
         <h2 className={styles.heading}>Contact Me</h2>
-        <form action="/api/form" method="POST" className={styles.form}>
+        <form
+          name="contact"
+          action="/api/form"
+          method="POST"
+          className={styles.form}
+        >
           <div className={styles.formGroup}>
             <label htmlFor="name" className={styles.label}>
               Name
