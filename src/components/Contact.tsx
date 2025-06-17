@@ -17,7 +17,7 @@ export default function Contact() {
           <input
             type="hidden"
             name="_next"
-            value="https://will-walker-website.vercel.app/thank-you"
+            value="https://willwalkermontgomeriewrites.com/thank-you"
           />
           <input type="hidden" name="_captcha" value="false" />
 

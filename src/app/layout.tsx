@@ -50,7 +50,7 @@ export default function RootLayout({
               '@type': 'Person',
               name: 'William L. Walker Montgomerie',
               jobTitle: 'Playwright, Director, Educator',
-              url: 'https://will-walker-website.vercel.app/',
+              url: 'https://willwalkermontgomeriewrites.com/',
               sameAs: [
                 // Add links to his social media or professional profiles here
                 // "https://www.linkedin.com/in/williamwalker",
