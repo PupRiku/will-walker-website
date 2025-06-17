@@ -30,7 +30,7 @@ export default function About() {
 
           <div className={styles.imageWrapper}>
             <Image
-              src="/images/about_will.png"
+              src="/images/about_will.jpg"
               alt="A photo of Will Walker in what appears to be a library or study. He looks directly at the camera with a curious expression, wearing a green plaid shirt, black vest, and a dark flat cap, set against a backdrop of floor-to-ceiling antique books."
               width={400}
               height={500}
