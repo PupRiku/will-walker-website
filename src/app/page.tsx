@@ -11,10 +11,10 @@ export default function Home() {
         <div className={styles.imageContainer}>
           <Image
             className={styles.image}
-            src="/images/Will_Walker.png"
+            src="/images/Will_Walker.jpg"
             alt="A friendly headshot of Will Walker, a man with a goatee, smiling warmly at the camera. He is wearing a black beret, a dark jacket, and a vibrant blue bow tie, posed in front of a royal blue curtain."
-            width={1104}
-            height={1472}
+            width={500}
+            height={500}
             priority
           />
         </div>
