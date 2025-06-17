@@ -1,0 +1,128 @@
+.mobileMenuButton {
+  display: none;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--color-background);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--color-accent-subtle);
+}
+
+.nav {
+  max-width: 75rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  flex: 1;
+  justify-content: flex-start;
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.links {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.links a {
+  color: var(--color-text);
+  transition: color 0.2s ease-in-out;
+}
+
+.links a:hover {
+  color: var(--color-accent-primary);
+  text-decoration: none;
+}
+
+.actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ctaButton {
+  background-color: var(--color-accent-primary);
+  color: var(--color-background);
+  font-weight: 700;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.375rem;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.ctaButton:hover {
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .links,
+  .actions {
+    display: none;
+  }
+
+  .mobileMenuButton {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 101;
+    color: var(--color-text);
+  }
+
+  .mobileMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-background);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .mobileMenu.isOpen {
+    transform: translateX(0);
+  }
+
+  .mobileMenu a {
+    font-family: var(--font-family-heading);
+    font-size: 2rem;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .nav {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .brand {
+    flex: none;
+  }
+}
