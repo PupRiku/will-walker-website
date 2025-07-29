@@ -20,7 +20,7 @@ export default function Header() {
       <nav className={styles.nav}>
         <div className={styles.brand}>
           <Link href="/#home" onClick={closeMenu}>
-            Will Walker
+            Creare est vivere
           </Link>
         </div>
         <ul className={styles.links}>
