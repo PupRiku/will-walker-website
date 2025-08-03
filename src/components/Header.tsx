@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -19,8 +20,14 @@ export default function Header() {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.brand}>
-          <Link href="/#home" onClick={closeMenu}>
-            Creare est vivere
+          <Link href="/#home">
+            <Image
+              className={styles.logoImage}
+              src="/images/logo.png"
+              alt="William L. Walker Montgomerie's circular logo"
+              width={500}
+              height={500}
+            />
           </Link>
         </div>
         <ul className={styles.links}>

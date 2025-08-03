@@ -26,10 +26,16 @@
 .brand {
   flex: 1;
   justify-content: flex-start;
-  font-family: var(--font-family-heading);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-text);
+}
+
+.logoImage {
+  width: 100px;
+  height: auto;
+  transition: transform 0.2s ease-in-out;
+}
+
+.logoImage:hover {
+  transform: scale(1.05);
 }
 
 .links {
