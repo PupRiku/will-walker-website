@@ -26,11 +26,31 @@
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  position: relative;
 }
 
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.ribbon {
+  position: absolute;
+  top: 1rem;
+  right: -5px;
+  background-color: #eab308;
+  color: #422006;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+}
+
+.purchaseButton {
+  background-color: var(--color-accent-primary);
+  color: var(--color-background);
 }
 
 .cardImage {
@@ -93,6 +113,12 @@
 .button:hover {
   background-color: var(--color-accent-primary);
   text-decoration: none;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 @media (max-width: 1024px) {
