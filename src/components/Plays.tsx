@@ -89,13 +89,15 @@ export default function Plays() {
     };
   }, [emblaApi]);
 
+  const featuredWorks = worksData.filter((work) => work.featured === true);
+
   return (
     <section id="plays" className={styles.playsSection}>
       <h2 className={styles.heading}>Selected Works</h2>
       <div className={styles.embla}>
         <div className={styles.embla__viewport} ref={emblaRef}>
           <div className={styles.embla__container}>
-            {worksData.map((work, index) => (
+            {featuredWorks.map((work, index) => (
               <div className={styles.embla__slide} key={index}>
                 <button
                   onClick={() => handleOpenModal(work)}
