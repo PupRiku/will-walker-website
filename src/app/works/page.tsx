@@ -10,6 +10,7 @@ export default function WorksPage() {
       <div className={styles.grid}>
         {worksData.map((work, index) => (
           <div className={styles.card} key={index}>
+            {work.published && <div className={styles.ribbon}>Published</div>}
             <Image
               src={work.imageSrc}
               alt={`Cover for ${work.title}`}
@@ -25,14 +26,28 @@ export default function WorksPage() {
                 <b>Cast:</b> {work.cast}
               </p>
 
-              <a
-                href={work.pdfSrc}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.button}
-              >
-                Read Sample
-              </a>
+              <div className={styles.buttonGroup}>
+                {work.pdfSrc && (
+                  <a
+                    href={work.pdfSrc}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.button}
+                  >
+                    Read Sample
+                  </a>
+                )}
+                {work.purchase && (
+                  <a
+                    href={work.purchase}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${styles.button} ${styles.purchaseButton}`}
+                  >
+                    Purchase Rights
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         ))}
