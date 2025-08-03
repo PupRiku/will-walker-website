@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import SocialLinks from './SocialLinks';
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -45,6 +46,7 @@ export default function Header() {
           </li>
         </ul>
         <div className={styles.actions}>
+          <SocialLinks />
           <Link href="/#contact" className={styles.ctaButton}>
             Contact Me
           </Link>
@@ -107,6 +109,9 @@ export default function Header() {
         <Link href="/#contact" onClick={closeMenu}>
           Contact Me
         </Link>
+        <div className={styles.mobileSocials}>
+          <SocialLinks />
+        </div>
       </div>
     </header>
   );

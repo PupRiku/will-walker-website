@@ -64,6 +64,8 @@
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .ctaButton {
@@ -130,5 +132,11 @@
 
   .brand {
     flex: none;
+  }
+
+  .mobileSocials {
+    border-top: 1px solid var(--color-accent-subtle);
+    padding-top: 2rem;
+    margin-top: 2rem;
   }
 }
