@@ -1,0 +1,102 @@
+.cvContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.nameHeading {
+  font-family: var(--font-family-heading);
+  font-size: 3rem;
+  margin: 0;
+}
+
+.contactInfo {
+  font-family: var(--font-family-body);
+  font-size: 1.125rem;
+  color: var(--color-text);
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+.cvSection {
+  margin-bottom: 3rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-family-accent);
+  font-size: 1.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-accent-subtle);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.introParagraph {
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.8;
+  color: #333;
+}
+
+.entryList {
+  list-style: none;
+  padding: 0;
+}
+
+.entryItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.entryTitle {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.entryDetails {
+  font-style: italic;
+  color: #555;
+  margin-top: 0.25rem;
+}
+
+.entryDate {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--color-accent-primary);
+  text-align: right;
+}
+
+.playDescription {
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--color-accent-subtle);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.subSectionTitle {
+  font-family: var(--font-family-heading);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--color-text);
+}
+
+.responsibilitiesList {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+}
+
+.responsibilitiesList li {
+  margin-bottom: 0.5rem;
+}
