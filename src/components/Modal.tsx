@@ -8,6 +8,9 @@ type Play = {
   pdfSrc: string;
   cast: string;
   synopsis: string;
+  featured?: boolean;
+  published?: boolean;
+  purchase?: string;
 };
 
 type ModalProps = {
@@ -63,14 +66,28 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
             <h3 className={styles.modalHeading}>Cast Breakdown</h3>
             <p>{play.cast}</p>
 
-            <a
-              href={play.pdfSrc}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.modalButton}
-            >
-              Read Sample
-            </a>
+            <div className={styles.buttonGroup}>
+              {play.pdfSrc && (
+                <a
+                  href={play.pdfSrc}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.modalButton}
+                >
+                  Read Sample
+                </a>
+              )}
+              {play.purchase && (
+                <a
+                  href={play.purchase}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.modalButton}
+                >
+                  Purchase Rights
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>
