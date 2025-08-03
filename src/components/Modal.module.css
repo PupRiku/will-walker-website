@@ -91,10 +91,17 @@
   border-radius: 0.375rem;
   text-decoration: none;
   transition: opacity 0.2s ease-in-out;
+  margin-top: 0;
 }
 
 .modalButton:hover {
   opacity: 0.9;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 @media (max-width: 768px) {
