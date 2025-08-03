@@ -47,6 +47,7 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
 
         <div className={styles.modalBody}>
           <div className={styles.modalImage}>
+            {play.published && <div className={styles.ribbon}>Published</div>}
             <Image
               src={play.imageSrc}
               alt={`Cover for ${play.title}`}

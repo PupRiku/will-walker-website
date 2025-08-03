@@ -50,6 +50,7 @@
 .modalImage {
   flex: 1;
   max-width: 200px;
+  position: relative;
 }
 
 .modalImage img {
@@ -102,6 +103,21 @@
   display: flex;
   gap: 1rem;
   margin-top: 2rem;
+}
+
+.ribbon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #eab308;
+  color: #422006;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  z-index: 1;
 }
 
 @media (max-width: 768px) {
