@@ -3,9 +3,28 @@
   color: var(--color-text);
   padding: 1.5rem 2rem;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .text {
   font-size: 0.875rem;
   margin: 0;
+}
+
+.footerLink {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-text);
+}
+
+.footerLink:hover {
+  color: var(--color-accent-primary);
+  text-decoration: underline;
 }
