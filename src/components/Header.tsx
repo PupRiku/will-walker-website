@@ -33,6 +33,9 @@ export default function Header() {
           <li>
             <Link href="/#plays">Selected Works</Link>
           </li>
+          <li>
+            <Link href="/cv">CV</Link>
+          </li>
         </ul>
         <div className={styles.actions}>
           <Link href="/#contact" className={styles.ctaButton}>
@@ -90,6 +93,9 @@ export default function Header() {
         </Link>
         <Link href="/#plays" onClick={closeMenu}>
           Selected Works
+        </Link>
+        <Link href="/cv" onClick={closeMenu}>
+          CV
         </Link>
         <Link href="/#contact" onClick={closeMenu}>
           Contact Me
