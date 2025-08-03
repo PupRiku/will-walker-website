@@ -104,6 +104,9 @@ export default function Plays() {
                   className={styles.slide__link}
                 >
                   <div className={styles.slide__image_wrapper}>
+                    {work.published && (
+                      <div className={styles.ribbon}>Published</div>
+                    )}
                     <Image
                       src={work.imageSrc}
                       alt={`Cover for ${work.title}`}
