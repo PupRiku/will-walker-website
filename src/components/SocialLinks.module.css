@@ -1,0 +1,23 @@
+.socialsList {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.socialLink {
+  color: var(--color-text);
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.socialLink:hover {
+  color: var(--color-accent-primary);
+  transform: scale(1.1);
+}
+
+.socialIcon {
+  width: 24px;
+  height: 24px;
+}
