@@ -53,6 +53,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .slide__image {
@@ -110,6 +111,20 @@
 .embla__button__svg {
   width: 20px;
   height: 20px;
+}
+
+.ribbon {
+  position: absolute;
+  top: 1rem;
+  right: -5px;
+  background-color: #eab308;
+  color: #422006;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
 }
 
 .seeAllButton {
