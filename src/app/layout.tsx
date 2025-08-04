@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import KoFiWidget from '@/components/KoFiWidget';
 
 // Configure the fonts
 const lora = Lora({
@@ -53,9 +54,10 @@ export default function RootLayout({
               jobTitle: 'Playwright, Director, Educator',
               url: 'https://willwalkermontgomeriewrites.com/',
               sameAs: [
-                // Add links to his social media or professional profiles here
-                // "https://www.linkedin.com/in/williamwalker",
-                // "https://twitter.com/williamwalker"
+                'https://www.facebook.com/profile.php?id=61578837130254',
+                'https://www.instagram.com/montgomerieplaywright/',
+                'https://ko-fi.com/williamlwalkermontgomerie',
+                'https://newplayexchange.org/users/96446/william-l-walker-montgomerie',
               ],
             }),
           }}
@@ -65,6 +67,7 @@ export default function RootLayout({
         <Header />
         <main className="main-content">{children}</main>
         <Footer />
+        <KoFiWidget />
         <Analytics />
       </body>
     </html>
