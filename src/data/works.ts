@@ -73,7 +73,7 @@ export const worksData: Work[] = [
     pdfSrc: '/pdfs/Placeholder-PDF.pdf',
     cast: '7M, 5F, 5+ Flexible',
     synopsis:
-      "A swing-era spoof set in the golden age of radio, where a live broadcast unravels a wild tale of cryptid chaos at a Northwest family campground. When Grandma Minnie's sacred potato salad vanishes, suspicions of Sasquatch send this quirky crew into a frenzy of traps, jazz, and condiment-fueled confusion. Packed with live sound effects, sponsor bits, and off-air backstage antics, this nostalgic comedy blends heart, hilarity, and high camp in one unforgettable hour.",
+      "A heartfelt journey through one night in a sprawling city, where Alex—struggling with loneliness and identity—encounters a diverse group of strangers who each reveal a different form of love, loss, or resilience. From coffee shops to churches, drag shows to gardens, these fleeting yet powerful connections challenge Alex's perspective and spark healing. The play culminates in a rooftop gathering, where a chosen family of misfits and survivors affirms the beauty of showing up and being seen.",
     featured: true,
     published: false,
   },
