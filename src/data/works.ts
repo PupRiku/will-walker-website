@@ -198,7 +198,7 @@ export const worksData: Work[] = [
     runtime: '45-50 minutes',
   },
   {
-    title: 'The Squatch Upon Avon: Super Extended Conspiracy Cut',
+    title: 'The Squatch of Avon: Super Extended Conspiracy Cut',
     category: 'Short Comedy',
     imageSrc: '/images/The_Squatch_of_Avon_Cover_Art_New.png',
     pdfSrc: '',
