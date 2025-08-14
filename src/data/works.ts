@@ -13,21 +13,36 @@ export type Work = {
 
 export const worksData: Work[] = [
   {
+    title: 'Hamlet: A Horatio Story',
+    category: 'Drama',
+    imageSrc: '/images/Hamlet-A-Horatio-Story.jpg',
+    pdfSrc:
+      'https://www.nextstagepress.com/wp-content/uploads/2025/06/HAMLET-A-Horatio-Story-Sample.pdf',
+    cast: '20M/10W/Various',
+    synopsis:
+      'Set in the eerie Elsinore Center for Restorative Care, a 1950s asylum, Hamlet: A Horatio Story reimagines Shakespeare’s tragedy through Horatio’s fractured mind. As Hamlet descends into vengeance, Horatio struggles to bear witness, torn between loyalty and a truth distorted by grief. The asylum’s sterile halls mirror Denmark’s decay, where love, betrayal, and madness blur reality. Through Horatio’s eyes, memory and trauma intertwine—are events as they were, or as his mind has reshaped them? This adaptation invites audiences into a world where ghosts linger not just in shadows, but in the depths of the human soul.',
+    featured: true,
+    published: true,
+    purchase: 'https://www.nextstagepress.com/hamlet-a-horatio-story/',
+    runtime: '90+ Minutes',
+  },
+  {
     title: 'Echoes of Valor',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Echoes_of_Valor_Cover_copy_2.png',
     pdfSrc: '',
     cast: '3M, 3F',
     synopsis:
       "A raw, intimate drama set in a veterans' support group, where former service members confront PTSD, addiction, and the lingering impact of war. As stories unfold—from a young Afghanistan veteran to a Vietnam-era nurse—their shared pain becomes a bond of healing and resilience. When tragedy hits, they must lean on one another to rediscover purpose, hope, and the courage to keep going.",
     featured: true,
     published: false,
+    purchase: 'https://forms.gle/NJfNUHBLG73Wbjdz7',
     runtime: 'Full Length',
   },
   {
     title: 'MANKILLER: The Strength of a Nation',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Mankiller_Cover_Art.png',
     pdfSrc: '',
     cast: '2W, 2M, Large Flexible Ensemble',
     synopsis:
@@ -39,7 +54,7 @@ export const worksData: Work[] = [
   {
     title: "A Midsummer Night's Rehearsal",
     category: 'Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Midsummer_Nights_Rehearsal.png',
     pdfSrc: '',
     cast: '9M, 3W, Flexible Ensemble',
     synopsis:
@@ -51,7 +66,7 @@ export const worksData: Work[] = [
   {
     title: "I Love You, I'm Sorry",
     category: 'Intimate Drama/One Act Play',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/I_Love_You_Im_Sorry_Cover_Art.png',
     pdfSrc: '',
     cast: '1F, 2M, 1F Voice Over',
     synopsis:
@@ -63,7 +78,8 @@ export const worksData: Work[] = [
   {
     title: 'The Camp Cacophony Hour: Sasquatch Stole the Side Dish!',
     category: 'Radio Play-Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc:
+      '/images/The_Camp_Cacophony_Hour-_Sasquatch_Stole_the_Side_Dish.png',
     pdfSrc: '',
     cast: '4F, 5M, 2 Flexible',
     synopsis:
@@ -75,7 +91,7 @@ export const worksData: Work[] = [
   {
     title: 'See My Heart',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/See_My_Heart_Cover_Art.png',
     pdfSrc: '',
     cast: '7M, 5F, 5+ Flexible',
     synopsis:
@@ -87,7 +103,7 @@ export const worksData: Work[] = [
   {
     title: 'The Yellow Ward',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Yellow_Ward_Cover_Art.png',
     pdfSrc: '',
     cast: '4W, 5M, Flexible Ensemble',
     synopsis:
@@ -99,7 +115,7 @@ export const worksData: Work[] = [
   {
     title: 'Becoming',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Becoming_Cover_Art.png',
     pdfSrc: '',
     cast: '3W, 4M, Flexible Ensemble',
     synopsis:
@@ -111,7 +127,7 @@ export const worksData: Work[] = [
   {
     title: 'The Room: A Play in Scenes',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Room_Cover_Art.png',
     pdfSrc: '',
     cast: '1M, Large Flexible Ensemble',
     synopsis:
@@ -123,7 +139,7 @@ export const worksData: Work[] = [
   {
     title: 'You Never Know',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/You_Never_Know_Cover_Art.png',
     pdfSrc: '',
     cast: 'Large Ensemble (12-24)',
     synopsis:
@@ -135,7 +151,7 @@ export const worksData: Work[] = [
   {
     title: 'When the Light Comes On',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/When_the_Light_Comes_On_Cover_Art.png',
     pdfSrc: '',
     cast: '3W, 2M, 1 Flexible',
     synopsis:
@@ -160,7 +176,7 @@ export const worksData: Work[] = [
     title:
       "The To Do List: 1. Coffee 2. Don't Get Eaten by a Dinosaur - A One-Act Office Comedy of Jurassic Proportions",
     category: 'Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_To_Do_List_Cover_Art.png',
     pdfSrc: '',
     cast: '1M, 3W, 1Gender-Neutral Role',
     synopsis:
@@ -172,7 +188,7 @@ export const worksData: Work[] = [
   {
     title: 'The Shape of the Fall',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Shape_of_the_Fall.png',
     pdfSrc: '',
     cast: '4M, 1F, Flexible Ensemble',
     synopsis:
@@ -184,7 +200,7 @@ export const worksData: Work[] = [
   {
     title: 'The Squatch Upon Avon: Super Extended Conspiracy Cut',
     category: 'Short Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Squatch_of_Avon_Cover_Art_New.png',
     pdfSrc: '',
     cast: '2M, 2W',
     synopsis:
@@ -196,7 +212,7 @@ export const worksData: Work[] = [
   {
     title: 'The Drop',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Drop_Cover_Art.png',
     pdfSrc: '',
     cast: '3M, 2F, Flexible Ensemble',
     synopsis:
@@ -208,7 +224,7 @@ export const worksData: Work[] = [
   {
     title: '“Human” - A Play in Voices',
     category: 'Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Human_Cover_Art.png',
     pdfSrc: '',
     cast: 'Flexible Casting',
     synopsis:
@@ -220,7 +236,7 @@ export const worksData: Work[] = [
   {
     title: 'The Silence of Trees',
     category: 'Historical Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Silence_of_Trees.png',
     pdfSrc: '',
     cast: '4F, 2 Young Girls, 1M, 1 Boy, Flexible Ensemble',
     synopsis:
@@ -242,13 +258,13 @@ export const worksData: Work[] = [
     runtime: 'Collection of short plays',
   },
   {
-    title: 'Doug’s Guide to the Unexplained (and Totally Ture) Series',
+    title: 'Doug’s Guide to the Unexplained (and Totally True) Series',
     category: 'Comedy',
     imageSrc: '/images/script_placeholder.png',
     pdfSrc: '',
     cast: '2M/2W',
     synopsis:
-      'Doug’s Guide to the Unexplained (and Totally Real) is a fast-paced, factually questionable comedy series that dives headfirst into the world of history’s wildest conspiracies. From Sasquatch ghostwriting Shakespeare to Mothman advising the Founding Fathers, Doug has the red string and paranoia to prove it all. With help from a chaotic crew, he uncovers the bizarre truth behind cryptids, secret societies, and the dark influence of Girl Scout Cookies. Whether he’s on the verge of a breakthrough or a breakdown, one thing’s certain—Doug won’t stop until every mystery is (sort of) solved.',
+      'Doug’s Guide to the Unexplained (and Totally True) is a fast-paced, factually questionable comedy series that dives headfirst into the world of history’s wildest conspiracies. From Sasquatch ghostwriting Shakespeare to Mothman advising the Founding Fathers, Doug has the red string and paranoia to prove it all. With help from a chaotic crew, he uncovers the bizarre truth behind cryptids, secret societies, and the dark influence of Girl Scout Cookies. Whether he’s on the verge of a breakthrough or a breakdown, one thing’s certain—Doug won’t stop until every mystery is (sort of) solved.',
     featured: false,
     published: false,
     runtime: 'Collection of short plays',
@@ -300,6 +316,17 @@ export const worksData: Work[] = [
     featured: false,
     published: false,
     runtime: '10-15 minutes',
+  },
+  {
+    title: 'In the Lap of Queens',
+    category: 'Southern Ensemble Drama',
+    imageSrc: '/images/In_the_Lap_of_Queens_Cover_Art.png',
+    pdfSrc: '',
+    cast: '3M/5W/Flexible Ensemble',
+    synopsis:
+      'A soulful coming-of-age play about a young white boy, Jamie, raised by a circle of strong Black women in small-town Texas. Through joy, trauma, fashion, and fierce love, the Queens shape him into the man he was always meant to be. Their legacy becomes his foundation—and their lap, his home.',
+    featured: false,
+    published: false,
   },
   {
     title: 'One Table',
@@ -566,5 +593,16 @@ export const worksData: Work[] = [
     featured: false,
     published: false,
     runtime: '50-60 minutes',
+  },
+  {
+    title: 'FLYDERS!',
+    category: 'Horror-Comedy Screenplay',
+    imageSrc: '/images/FLYDERS.png',
+    pdfSrc: '',
+    cast: '',
+    synopsis:
+      "After a freak earthquake cracks open a secret military lab deep in the Montana wilderness, a swarm of government-engineered, flying, hyper-aggressive spiders—code name: Flyders—descend on the peaceful town of Clearwater. As the arachnids web up the countryside, a ragtag band of unlikely heroes emerges: Jim, a rugged, dad-bod park ranger with great flannel game; Lexi, an eccentric entomologist with a bug problem and a bigger attitude; a no-nonsense troop of Mountain Scouts led by the fierce and tactical Sara; and Ziggy, a blissed-out van-dweller whose new best friend is an actual Flyder named Sticky. Meanwhile, the military wants to torch the town and cover up everything. Survivors flee to the mountains—nudists, ranchers, babies, and all—seeking refuge in abandoned mines. There, secrets are uncovered, alliances are tested, and the only hope of saving humanity may lie in a homemade chemical discovered in a diner and the Girl Scouts' merit badge-level genius. Packed with explosive action, deadpan humor, insectoid chaos, and just the right amount of weed smoke, Flyders! is a horror-comedy thrill ride where the bite is bad, but the buzz is worse.",
+    featured: false,
+    published: false,
   },
 ];
