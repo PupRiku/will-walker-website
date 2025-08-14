@@ -167,7 +167,7 @@ export const worksData: Work[] = [
     published: false,
   },
   {
-    title: 'The Squatch of Avon: Super Extended Conspiracy Cut',
+    title: 'The Squatch Upon Avon: Super Extended Conspiracy Cut',
     category: 'Short Comedy',
     imageSrc: '/images/script_placeholder.png',
     pdfSrc: '/pdfs/Placeholder-PDF.pdf',
@@ -208,6 +208,185 @@ export const worksData: Work[] = [
     synopsis:
       'Set in Nazi-occupied Netherlands, The Silence of Trees tells the true story of three teenage girls—Freddie Oversteegen, her sister Truus, and their friend Hannie Schaft—who become courageous resistance fighters risking everything to sabotage Nazi operations. Through haunting narration, shadow play, and puppetry, this poetic drama explores the emotional cost of their fight and the silent legacy they left behind. It is a story of daughters, sisters, and children choosing resistance over survival, revealing a hidden chapter of history.',
     featured: true,
+    published: false,
+  },
+  {
+    title: 'Doug’s Guide to the Supernatural (and Totally True) Series',
+    category: 'Comedy',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '2M/2W/1V.O.',
+    synopsis:
+      'Doug’s Guide to the Supernatural (and Totally True) is an unreliable but enthusiastic field manual for navigating the hidden world of monsters, magic, and mayhem. With shaky evidence, cursed artifacts, and a suspicious number of unpaid interns, Doug investigates everything from vampire senators to kaiju coverups. No conspiracy is too wild—from fairy economics to government bans on silverware—as Doug tries to expose the truth behind the paranormal. Just don’t be surprised if he accidentally opens another portal to the Shadow Realm along the way.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'Doug’s Guide to the Unexplained (and Totally Ture) Series',
+    category: 'Comedy',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '2M/2W',
+    synopsis:
+      'Doug’s Guide to the Unexplained (and Totally Real) is a fast-paced, factually questionable comedy series that dives headfirst into the world of history’s wildest conspiracies. From Sasquatch ghostwriting Shakespeare to Mothman advising the Founding Fathers, Doug has the red string and paranoia to prove it all. With help from a chaotic crew, he uncovers the bizarre truth behind cryptids, secret societies, and the dark influence of Girl Scout Cookies. Whether he’s on the verge of a breakthrough or a breakdown, one thing’s certain—Doug won’t stop until every mystery is (sort of) solved.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'A Capital Mess',
+    category: 'Political Satire',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '5M/2F/2 Flexible',
+    synopsis:
+      'A Capitol Mess is a political satire where chaos reigns after a mysterious "event" tramples democracy—and the Capitol flower beds. Groundskeeper Martin Greenfield just wants to tend his tulips, but instead finds himself caught between clueless politicians, dramatic security, and one intensely judgmental squirrel. As conspiracy theories sprout faster than weeds, secretive squirrels and deep-state hedges threaten to upend reality itself. It\'s a wildly funny look at government gone nuts—literally.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'Beast Quest',
+    category: 'Fantasy based Comedy',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '2M/2W/2 Flexible',
+    synopsis:
+      'When whispers of a monster lurking in ancient ruins begin to spread, a band of adventurers sets out to uncover the truth. Led by the unshakable ranger Seraphina, the group faces eerie noises, unreliable witnesses, and each other’s wildly clashing personalities. As the night grows stranger, they’re forced to confront a truth more bizarre than any legend. Packed with chaotic humor and D&D-style action, Beast Quest: Legends of the Realms is a hilarious and harrowing journey into the unknown.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'Currents & Frequencies – A Play Inspired by Nikola Tesla',
+    category: 'Historical Drama',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '4M/3W/2 Flexible',
+    synopsis:
+      "Currents & Frequencies follows the ghost of Nikola Tesla as he lingers between worlds, still chasing the future he once envisioned. A modern-day Boy, grappling with grief and purpose, becomes the unlikely conduit for Tesla’s forgotten dreams. Guided by Katharine, a museum educator who also embodies Tesla’s cherished pigeon, the Boy unearths buried truths through surreal encounters, glowing memories, and static-laced voices from the past. As history and imagination collide, the play asks whether the most powerful force isn't electricity—but faith.",
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'Final Boarding Call',
+    category: 'Comedy',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '2M/2W/2 Flexible',
+    synopsis:
+      'Final Boarding Call is a fast-paced absurdist comedy set in the chaos of Gate 42, where a group of eccentric strangers confronts a perpetually delayed flight. As the frazzled gate agent battles missing airplane parts and mounting technical failures, she must also manage a cast of travelers spiraling into mayhem. From invisible emotional support animals to livestream meltdowns and weaponized granola bars, the terminal becomes a whirlwind of ferrets, raccoons, and existential crises. In this sharp, witty farce, human connection takes center stage—even when the plane never does.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'One Table',
+    category: 'Comedy/Drama',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '2M/3W/2 Flexible',
+    synopsis:
+      'One Table is a heartfelt 20-minute play set at a community potluck where a diverse group of LGBTQIA+ individuals and allies come together to share stories, struggles, and laughter. As they open up over a shared meal, personal experiences reveal common threads of love, identity, and resilience. From prom night heartbreaks to unexpected friendships, the characters challenge stereotypes and grow closer through vulnerability and honesty. Ultimately, the play celebrates the power of unity, the importance of listening, and the small victories that lead to lasting change.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'Prophet for Hire',
+    category: 'Comedy',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '4M/2W/3 Flexible',
+    synopsis:
+      'Prophet for Hire is a dark comedy that reimagines Greek tragedy through the jaded perspective of Tiresias, the blind prophet cursed with unwelcome divine insight. Exhausted by a lifetime of ignored truths and absurd royal requests, Tiresias endures everything from Oedipus blaming prophecy on paperwork to Agamemnon offering goat-bribes. With sharp, modern humor, the play satirizes the foolishness of power and the burden of being right in a world that won’t listen. At its heart, it’s the story of a reluctant truth-teller trying to keep his sanity while navigating divine bureaucracy.',
+    featured: false,
+    published: false,
+  },
+  {
+    title:
+      'Shakespeare Shorts: A Collection of Short and Not so Short plays based and/or inspired by William Shakespeare.',
+    category: 'Various Genres',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: 'Various Cast Sizes',
+    synopsis:
+      'Shakespeare Shorts is a spirited collection of comedic and thought-provoking plays that remix the Bard’s world with irreverence, imagination, and insight. From courtroom showdowns questioning Shakespeare’s legacy to labor strikes in the fairy realm, these plays dive into familiar tales and tropes with a modern, satirical twist. The collection features literary mashups, absurdist retellings, cryptid conspiracies, and reimaginings of classic characters—often from the margins of the original texts—bringing fresh voices and perspectives to the Shakespearean canon. Whether poking fun at theatrical tradition or mining hidden truths in the forest of metaphor, Shakespeare Shorts invites audiences to laugh, question, and fall in love with the Bard all over again.',
+    featured: false,
+    published: false,
+  },
+  {
+    title:
+      '“So, What Had Happened Was… Or Who Killed The Director” A ridiculous 10-minute play that should probably be arrested for overacting',
+    category: 'Comedy',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '5M/3W',
+    synopsis:
+      'When a pretentious community theatre director mysteriously drops dead during tech week, an over-the-top cast of misfits scrambles to figure out what happened. With malfunctioning fog machines, wild flashbacks, and a detective who knows more about Chekhov than crime scenes, chaos (and comedy) ensues. This ten-minute whodunit is a ridiculous love letter to the beautiful dysfunction of community theatre.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'Still Waters',
+    category: 'Poetic Drama',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '2M/2W/6-12 Flexible',
+    synopsis:
+      'A nonverbal autistic teen named Eli navigates a world that demands conformity, sound, and speed. Guided by his inner self, "Mind Voice," Eli’s emotional and sensory journey unfolds through expressive movement, layered soundscapes, and abstract storytelling. As those around him begin to truly listen, the play becomes a quiet call for empathy, understanding, and the power of being seen—even in silence.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'The Last Safe Place',
+    category: 'Dystopian Drama',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '3M/3W/Ensemble',
+    synopsis:
+      'In a dystopian future where ideas are crimes, five strangers are trapped in a surveillance-ridden cell and forced through psychological “truth exercises” by an unseen Voice. As their minds unravel and confessions are coerced, the system’s true goal is revealed: obedience, spectacle, and public shame. The line between audience and prisoner collapses in the chilling realization that no one is beyond the reach of control.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'The Light and the Shadow: A Journey of Balance',
+    category: 'Mythic Drama',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '7M/3W/Flexible Ensemble',
+    synopsis:
+      'A mythic retelling of the Mayan legend of the Hero Twins, Hunahpu and Xbalanque. Together, they journey to the underworld to face treacherous trials, confront the Lords of Xibalba, and overcome the darkness within themselves. Through sacrifice and unity, the twins transform into the Sun and Moon, restoring balance to the world.',
+    featured: false,
+    published: false,
+  },
+  {
+    title:
+      'The Other Side of Quiet - A play about borders, becoming, and belonging.',
+    category: 'Current Events',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '4M/3W/Flexible Chorus',
+    synopsis:
+      'This poetic drama explores the lives of immigrants in America through interwoven vignettes, monologues, and choral movement. From interrogation rooms to hospital shifts and distant memories, the play reveals the quiet strength and invisible labor of those living in the margins. It is a moving, multilingual call to see, honor, and remember the humanity behind the headlines.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'The Static Room (A Paranormal Thriller)',
+    category: '1 Minute Thriller',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '1M/1W',
+    synopsis:
+      'When Julia follows her friend Miles into an abandoned radio station, they encounter a mysterious voice crackling through decades of static. As the past seeps into the present, Julia discovers Miles didn’t come for answers—he came for someone he lost. A tense, supernatural thriller exploring grief, obsession, and the peril of listening to what should remain silent.',
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'Weeping Waters or Let the River Remember',
+    category: 'Paranormal Drama',
+    imageSrc: '/images/script_placeholder.png',
+    pdfSrc: '/pdfs/Placeholder-PDF.pdf',
+    cast: '4W/1M/Flexible Ensemble',
+    synopsis:
+      'A poetic ghost story rooted in Latin American folklore and intergenerational grief. When a teenager named Elena enters the river in search of the truth behind the legend of La Llorona, she is pulled into a dream-realm where myth and memory collide. There, she uncovers the hidden pain of her family’s past and begins a journey toward remembrance, empathy, and release.',
+    featured: false,
     published: false,
   },
 ];
