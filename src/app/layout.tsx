@@ -58,6 +58,7 @@ export default function RootLayout({
                 'https://www.instagram.com/montgomerieplaywright/',
                 'https://ko-fi.com/williamlwalkermontgomerie',
                 'https://newplayexchange.org/users/96446/william-l-walker-montgomerie',
+                'https://www.dramatistsguild.com/members/williamwalker-1',
               ],
             }),
           }}

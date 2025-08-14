@@ -1,6 +1,11 @@
 //import Link from 'next/link';
 import styles from './SocialLinks.module.css';
-import { FaFacebook, FaInstagram, FaTheaterMasks } from 'react-icons/fa';
+import {
+  FaFacebook,
+  FaInstagram,
+  FaTheaterMasks,
+  FaFeatherAlt,
+} from 'react-icons/fa';
 import { SiKofi } from 'react-icons/si';
 
 // An array to hold all the social link data
@@ -23,6 +28,11 @@ const socialLinks = [
   {
     label: 'New Play Exchange',
     href: 'https://newplayexchange.org/users/96446/william-l-walker-montgomerie',
+    icon: <FaFeatherAlt className={styles.socialIcon} />,
+  },
+  {
+    label: 'Dramatists Guild',
+    href: 'https://www.dramatistsguild.com/members/williamwalker-1',
     icon: <FaTheaterMasks className={styles.socialIcon} />,
   },
 ];
