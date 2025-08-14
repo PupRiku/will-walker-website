@@ -65,8 +65,12 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
             <h3 className={styles.modalHeading}>Synopsis</h3>
             <p>{play.synopsis}</p>
 
-            <h3 className={styles.modalHeading}>Cast Breakdown</h3>
-            <p>{play.cast}</p>
+            {play.cast && (
+              <>
+                <h3 className={styles.modalHeading}>Cast Breakdown</h3>
+                <p>{play.cast}</p>
+              </>
+            )}
 
             {play.runtime && (
               <>

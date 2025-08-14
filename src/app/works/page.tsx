@@ -37,6 +37,11 @@ export default function WorksPage() {
               </div>
               <h2 className={styles.title}>{work.title}</h2>
               <p className={styles.synopsis}>{work.synopsis}</p>
+              {work.cast && (
+                <p className={styles.cast}>
+                  <b>Cast:</b> {work.cast}
+                </p>
+              )}
               <p className={styles.cast}>
                 <b>Cast:</b> {work.cast}
               </p>
