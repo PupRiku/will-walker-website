@@ -19,7 +19,12 @@ export default function WorksPage() {
               className={styles.cardImage}
             />
             <div className={styles.cardContent}>
-              <p className={styles.category}>{work.category}</p>
+              <div className={styles.metaInfo}>
+                <p className={styles.category}>{work.category}</p>
+                {work.runtime && (
+                  <p className={styles.runtime}>{work.runtime}</p>
+                )}
+              </div>
               <h2 className={styles.title}>{work.title}</h2>
               <p className={styles.synopsis}>{work.synopsis}</p>
               <p className={styles.cast}>

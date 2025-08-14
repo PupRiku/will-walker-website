@@ -8,6 +8,7 @@ export type Work = {
   featured?: boolean;
   published?: boolean;
   purchase?: string;
+  runtime?: string;
 };
 
 export const worksData: Work[] = [

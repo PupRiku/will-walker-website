@@ -11,6 +11,7 @@ type Play = {
   featured?: boolean;
   published?: boolean;
   purchase?: string;
+  runtime?: string;
 };
 
 type ModalProps = {
@@ -66,6 +67,13 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
 
             <h3 className={styles.modalHeading}>Cast Breakdown</h3>
             <p>{play.cast}</p>
+
+            {play.runtime && (
+              <>
+                <h3 className={styles.modalHeading}>Runtime</h3>
+                <p>{play.runtime}</p>
+              </>
+            )}
 
             <div className={styles.buttonGroup}>
               {play.pdfSrc && (

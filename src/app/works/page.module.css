@@ -78,7 +78,22 @@
   text-transform: uppercase;
   font-size: 0.75rem;
   font-weight: 700;
+}
+
+.metaInfo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem; /* Space between items */
   margin-bottom: 1rem;
+}
+
+.runtime {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--color-accent-subtle);
 }
 
 .synopsis {
