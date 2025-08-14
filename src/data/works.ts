@@ -324,7 +324,7 @@ export const worksData: Work[] = [
     cast: '3M/5W/Flexible Ensemble',
     synopsis:
       'A soulful coming-of-age play about a young white boy, Jamie, raised by a circle of strong Black women in small-town Texas. Through joy, trauma, fashion, and fierce love, the Queens shape him into the man he was always meant to be. Their legacy becomes his foundation—and their lap, his home.',
-    featured: false,
+    featured: true,
     published: false,
   },
   {
