@@ -36,7 +36,6 @@ export const worksData: Work[] = [
       "A raw, intimate drama set in a veterans' support group, where former service members confront PTSD, addiction, and the lingering impact of war. As stories unfold—from a young Afghanistan veteran to a Vietnam-era nurse—their shared pain becomes a bond of healing and resilience. When tragedy hits, they must lean on one another to rediscover purpose, hope, and the courage to keep going.",
     featured: true,
     published: false,
-    purchase: 'https://forms.gle/NJfNUHBLG73Wbjdz7',
     runtime: 'Full Length',
   },
   {

@@ -120,6 +120,11 @@
   z-index: 1;
 }
 
+.applyButton {
+  background-color: var(--color-text);
+  color: white;
+}
+
 @media (max-width: 768px) {
   .modalImage {
     display: none;

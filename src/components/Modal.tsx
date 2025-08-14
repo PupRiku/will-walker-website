@@ -86,7 +86,7 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
                   Read Sample
                 </a>
               )}
-              {play.purchase && (
+              {play.published && play.purchase ? (
                 <a
                   href={play.purchase}
                   target="_blank"
@@ -94,6 +94,15 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
                   className={styles.modalButton}
                 >
                   Purchase Rights
+                </a>
+              ) : (
+                <a
+                  href="https://forms.gle/NJfNUHBLG73Wbjdz7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.modalButton} ${styles.applyButton}`}
+                >
+                  Apply for Rights
                 </a>
               )}
             </div>

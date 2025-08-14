@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { worksData } from '@/data/works';
 import styles from './page.module.css';
 
@@ -6,6 +7,15 @@ export default function WorksPage() {
   return (
     <div className={styles.pageWrapper}>
       <h1 className={styles.heading}>All Works</h1>
+
+      <Link
+        href="https://forms.gle/NJfNUHBLG73Wbjdz7"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.globalApplyButton}
+      >
+        Apply for Performance Rights
+      </Link>
 
       <div className={styles.grid}>
         {worksData.map((work, index) => (
@@ -42,7 +52,7 @@ export default function WorksPage() {
                     Read Sample
                   </a>
                 )}
-                {work.purchase && (
+                {work.published && work.purchase && (
                   <a
                     href={work.purchase}
                     target="_blank"
