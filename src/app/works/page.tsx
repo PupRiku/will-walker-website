@@ -42,9 +42,6 @@ export default function WorksPage() {
                   <b>Cast:</b> {work.cast}
                 </p>
               )}
-              <p className={styles.cast}>
-                <b>Cast:</b> {work.cast}
-              </p>
 
               <div className={styles.buttonGroup}>
                 {work.pdfSrc && (
