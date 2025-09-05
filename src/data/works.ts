@@ -605,4 +605,16 @@ export const worksData: Work[] = [
     featured: false,
     published: false,
   },
+  {
+    title: 'Thirst',
+    category: 'Biographical Drama',
+    imageSrc: '/images/Thirst_Cover_art.png',
+    pdfSrc: '',
+    cast: '7W/Flexible Ensemble',
+    synopsis:
+      'Set in the sweltering streets of 1930s Chicago, Thirst follows a fearless coalition of Black women who rise against racial injustice, economic hardship, and political indifference to demand education and equality for their children. As rallies ignite and resistance mounts, their fight for a new school grows into a larger battle for dignity and recognition in a world determined to silence them. Both urgent and inspiring, Thirst is a story of resilience, unity, and the unquenchable drive for justice that still echoes today.',
+    featured: false,
+    published: false,
+    runtime: '90 minutes',
+  },
 ];
