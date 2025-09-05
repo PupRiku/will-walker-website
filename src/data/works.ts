@@ -595,17 +595,6 @@ export const worksData: Work[] = [
     runtime: '50-60 minutes',
   },
   {
-    title: 'FLYDERS!',
-    category: 'Horror-Comedy Screenplay',
-    imageSrc: '/images/FLYDERS.png',
-    pdfSrc: '',
-    cast: '',
-    synopsis:
-      "After a freak earthquake cracks open a secret military lab deep in the Montana wilderness, a swarm of government-engineered, flying, hyper-aggressive spiders—code name: Flyders—descend on the peaceful town of Clearwater. As the arachnids web up the countryside, a ragtag band of unlikely heroes emerges: Jim, a rugged, dad-bod park ranger with great flannel game; Lexi, an eccentric entomologist with a bug problem and a bigger attitude; a no-nonsense troop of Mountain Scouts led by the fierce and tactical Sara; and Ziggy, a blissed-out van-dweller whose new best friend is an actual Flyder named Sticky. Meanwhile, the military wants to torch the town and cover up everything. Survivors flee to the mountains—nudists, ranchers, babies, and all—seeking refuge in abandoned mines. There, secrets are uncovered, alliances are tested, and the only hope of saving humanity may lie in a homemade chemical discovered in a diner and the Girl Scouts' merit badge-level genius. Packed with explosive action, deadpan humor, insectoid chaos, and just the right amount of weed smoke, Flyders! is a horror-comedy thrill ride where the bite is bad, but the buzz is worse.",
-    featured: false,
-    published: false,
-  },
-  {
     title: 'Thirst',
     category: 'Biographical Drama',
     imageSrc: '/images/Thirst_Cover_art.png',
@@ -616,5 +605,16 @@ export const worksData: Work[] = [
     featured: false,
     published: false,
     runtime: '90 minutes',
+  },
+  {
+    title: 'FLYDERS!',
+    category: 'Horror-Comedy Screenplay',
+    imageSrc: '/images/FLYDERS.png',
+    pdfSrc: '',
+    cast: '',
+    synopsis:
+      "After a freak earthquake cracks open a secret military lab deep in the Montana wilderness, a swarm of government-engineered, flying, hyper-aggressive spiders—code name: Flyders—descend on the peaceful town of Clearwater. As the arachnids web up the countryside, a ragtag band of unlikely heroes emerges: Jim, a rugged, dad-bod park ranger with great flannel game; Lexi, an eccentric entomologist with a bug problem and a bigger attitude; a no-nonsense troop of Mountain Scouts led by the fierce and tactical Sara; and Ziggy, a blissed-out van-dweller whose new best friend is an actual Flyder named Sticky. Meanwhile, the military wants to torch the town and cover up everything. Survivors flee to the mountains—nudists, ranchers, babies, and all—seeking refuge in abandoned mines. There, secrets are uncovered, alliances are tested, and the only hope of saving humanity may lie in a homemade chemical discovered in a diner and the Girl Scouts' merit badge-level genius. Packed with explosive action, deadpan humor, insectoid chaos, and just the right amount of weed smoke, Flyders! is a horror-comedy thrill ride where the bite is bad, but the buzz is worse.",
+    featured: false,
+    published: false,
   },
 ];
