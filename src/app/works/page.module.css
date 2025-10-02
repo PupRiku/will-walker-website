@@ -7,7 +7,7 @@
   text-align: center;
   font-family: var(--font-family-accent);
   font-size: 3rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .globalApplyButton {
@@ -27,6 +27,23 @@
 .globalApplyButton:hover {
   opacity: 0.9;
   text-decoration: none;
+}
+
+.royaltiesLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  margin: 0 auto 1.5rem auto;
+  color: var(--color-text);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.royaltiesLink:hover {
+  color: var(--color-accent-primary);
+  text-decoration: underline;
 }
 
 .grid {

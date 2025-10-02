@@ -2,11 +2,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { worksData } from '@/data/works';
 import styles from './page.module.css';
+import { BsDownload } from 'react-icons/bs';
 
 export default function WorksPage() {
   return (
     <div className={styles.pageWrapper}>
       <h1 className={styles.heading}>All Works</h1>
+
+      <a
+        href="/pdfs/royalties_scale.pdf"
+        className={styles.royaltiesLink}
+        download
+      >
+        <BsDownload />
+        Download Royalties Scale
+      </a>
 
       <Link
         href="https://forms.gle/NJfNUHBLG73Wbjdz7"
