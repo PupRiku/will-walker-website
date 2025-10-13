@@ -245,6 +245,54 @@ export const worksData: Work[] = [
     runtime: 'Full Length',
   },
   {
+    title: 'In the Lap of Queens',
+    category: 'Southern Ensemble Drama',
+    imageSrc: '/images/In_the_Lap_of_Queens_Cover_Art.png',
+    pdfSrc: '',
+    cast: '3M/5W/Flexible Ensemble',
+    synopsis:
+      'A soulful coming-of-age play about a young white boy, Jamie, raised by a circle of strong Black women in small-town Texas. Through joy, trauma, fashion, and fierce love, the Queens shape him into the man he was always meant to be. Their legacy becomes his foundation—and their lap, his home.',
+    featured: true,
+    published: false,
+    runtime: 'Full Length',
+  },
+  {
+    title: 'Thirst',
+    category: 'Biographical Drama',
+    imageSrc: '/images/Thirst_Cover_art.png',
+    pdfSrc: '',
+    cast: '7W/Flexible Ensemble',
+    synopsis:
+      'Set in the sweltering streets of 1930s Chicago, Thirst follows a fearless coalition of Black women who rise against racial injustice, economic hardship, and political indifference to demand education and equality for their children. As rallies ignite and resistance mounts, their fight for a new school grows into a larger battle for dignity and recognition in a world determined to silence them. Both urgent and inspiring, Thirst is a story of resilience, unity, and the unquenchable drive for justice that still echoes today.',
+    featured: false,
+    published: false,
+    runtime: '90 minutes',
+  },
+  {
+    title: 'Echoes of Valor: Community Interaction Edition',
+    category: 'Drama',
+    imageSrc: '/images/EoV_CIE.png',
+    pdfSrc: '',
+    cast: '4M/3W',
+    synopsis:
+      'Echoes of Valor: Community Interaction Edition is a powerful, 45-minute exploration of the struggles faced by modern veterans, designed to spark conversation with audiences. Set in an intimate support group where courage is redefined, the play follows veterans from diverse backgrounds—Maria, battling depression; James, fighting addiction; Nate, grappling with injury and self-doubt; Ella, confronting trauma and isolation; and Tyrone, masking inner turmoil—sharing their unflinching personal stories of PTSD, survivor’s guilt, and the challenges of reintegrating into a society that often overlooks their pain. Led by the compassionate facilitator Andrew, the group discovers profound strength in one another, and the epilogue features survivors delivering sobering statistics and a memorial to those lost, offering a poignant call to recognize the enduring human cost of service while encouraging dialogue and community reflection.',
+    featured: false,
+    published: false,
+    runtime: '45 minutes',
+  },
+  {
+    title: 'Blood & Shadow: An Alternate Tragedy of Macbeth',
+    category: 'Drama',
+    imageSrc: '/images/Blood_and_Shadow_Cover_Art.png',
+    pdfSrc: '',
+    cast: 'Flexible - 15-16',
+    synopsis:
+      "What if Macbeth chose honor over ambition? What if, when faced with prophecy, he turned away from blood and crown alike? Blood & Shadow: An Alternate Tragedy of Macbeth dares to reimagine Shakespeare's classic, asking whether any man can truly defy fate. In this bold retelling, Macbeth remains steadfast in loyalty, yet the Norns—the ancient weavers of destiny—tighten their grip. As whispers of power twist through Scotland's nobles, friendship frays, love darkens, and betrayal blooms. A gripping tale of fate versus free will, Blood & Shadow asks: if a man resists destiny, does destiny destroy him all the same?",
+    featured: false,
+    published: false,
+    runtime: 'approx.. 60-90 minutes',
+  },
+  {
     title: 'Doug’s Guide to the Supernatural (and Totally True) Series',
     category: 'Comedy',
     imageSrc: '/images/script_placeholder.png',
@@ -315,18 +363,6 @@ export const worksData: Work[] = [
     featured: false,
     published: false,
     runtime: '10-15 minutes',
-  },
-  {
-    title: 'In the Lap of Queens',
-    category: 'Southern Ensemble Drama',
-    imageSrc: '/images/In_the_Lap_of_Queens_Cover_Art.png',
-    pdfSrc: '',
-    cast: '3M/5W/Flexible Ensemble',
-    synopsis:
-      'A soulful coming-of-age play about a young white boy, Jamie, raised by a circle of strong Black women in small-town Texas. Through joy, trauma, fashion, and fierce love, the Queens shape him into the man he was always meant to be. Their legacy becomes his foundation—and their lap, his home.',
-    featured: true,
-    published: false,
-    runtime: 'Full Length',
   },
   {
     title: 'One Table',
@@ -589,22 +625,10 @@ export const worksData: Work[] = [
     pdfSrc: '',
     cast: '1M/10W/Voices',
     synopsis:
-      "Follows Cassie Ramos, an independent wrestler battling to earn respect in a male-dominated sport. Guided by the spirits of wrestling legends Mildred Burke, Mae Young, and The Fabulous Moolah, Cassie trains and uncovers the lost history of women pioneers in wrestling. As she builds her own wrestling school and challenges the industry's structures, she discovers a deeper sisterhood and culminates in a historic event honoring women’s legacy in the sport.",
+      "Follows Cassie Ramos, an independent wrestler battling to earn respect in a male-dominated sport. Guided by the spirits of wrestling legends Mildred Burke, Mae Young, and The Fabulous Moolah, Cassie trains and uncovers the lost history of women pioneers in wrestling. As she builds her own wrestling school and challenges the industry's structures, she discovers a deeper sisterhood and culminates in a historic event honoring women's legacy in the sport.",
     featured: false,
     published: false,
     runtime: '50-60 minutes',
-  },
-  {
-    title: 'Thirst',
-    category: 'Biographical Drama',
-    imageSrc: '/images/Thirst_Cover_art.png',
-    pdfSrc: '',
-    cast: '7W/Flexible Ensemble',
-    synopsis:
-      'Set in the sweltering streets of 1930s Chicago, Thirst follows a fearless coalition of Black women who rise against racial injustice, economic hardship, and political indifference to demand education and equality for their children. As rallies ignite and resistance mounts, their fight for a new school grows into a larger battle for dignity and recognition in a world determined to silence them. Both urgent and inspiring, Thirst is a story of resilience, unity, and the unquenchable drive for justice that still echoes today.',
-    featured: false,
-    published: false,
-    runtime: '90 minutes',
   },
   {
     title: 'FLYDERS!',
