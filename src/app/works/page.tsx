@@ -143,12 +143,12 @@ export default function WorksPage() {
           <h2 className={styles.modalTitle}>Note on Casting Flexibility</h2>
           <div className={styles.modalText}>
             <p>
-              While the roles in this play were originally written with specific
-              genders in mind, they are not gender-restricted. Directors and
-              producers are encouraged to cast the best performers for each
-              role, regardless of gender identity or expression. The tone,
-              humor, and relationships of the play can be fully maintained with
-              any combination of casting choices. This flexibility allows
+              While the roles in these plays were originally written with
+              specific genders in mind, they are not gender-restricted.
+              Directors and producers are encouraged to cast the best performers
+              for each role, regardless of gender identity or expression. The
+              tone, humor, and relationships of the play can be fully maintained
+              with any combination of casting choices. This flexibility allows
               programs of all sizes and compositions—whether predominantly
               female, male, or mixed—to stage the production successfully.
             </p>
