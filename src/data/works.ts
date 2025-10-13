@@ -295,7 +295,7 @@ export const worksData: Work[] = [
   {
     title: 'Doug’s Guide to the Supernatural (and Totally True) Series',
     category: 'Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Dougs_Guide_to_the_Supernatural_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2W/1V.O.',
     synopsis:
@@ -307,7 +307,7 @@ export const worksData: Work[] = [
   {
     title: 'Doug’s Guide to the Unexplained (and Totally True) Series',
     category: 'Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Dougs_Guide_to_the_Unexplained_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2W',
     synopsis:
@@ -331,7 +331,7 @@ export const worksData: Work[] = [
   {
     title: 'Beast Quest',
     category: 'Fantasy based Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Beast_Quest_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2W/2 Flexible',
     synopsis:
@@ -343,7 +343,7 @@ export const worksData: Work[] = [
   {
     title: 'Currents & Frequencies – A Play Inspired by Nikola Tesla',
     category: 'Historical Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Currents_and_Frequencies_Cover_Art.png',
     pdfSrc: '',
     cast: '4M/3W/2 Flexible',
     synopsis:
@@ -367,7 +367,7 @@ export const worksData: Work[] = [
   {
     title: 'One Table',
     category: 'Comedy/Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/One_Table_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/3W/2 Flexible',
     synopsis:
@@ -392,7 +392,7 @@ export const worksData: Work[] = [
     title:
       'Shakespeare Shorts: A Collection of Short and Not so Short plays based and/or inspired by William Shakespeare.',
     category: 'Various Genres',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Shakespeare_Shorts.png',
     pdfSrc: '',
     cast: 'Various Cast Sizes',
     synopsis:
@@ -416,7 +416,7 @@ export const worksData: Work[] = [
   {
     title: 'Still Waters',
     category: 'Poetic Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Still_Waters.png',
     pdfSrc: '',
     cast: '2M/2W/6-12 Flexible',
     synopsis:
@@ -428,7 +428,7 @@ export const worksData: Work[] = [
   {
     title: 'The Last Safe Place',
     category: 'Dystopian Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Last_Safe_Place_Cover_Art.png',
     pdfSrc: '',
     cast: '3M/3W/Ensemble',
     synopsis:
@@ -440,7 +440,7 @@ export const worksData: Work[] = [
   {
     title: 'The Light and the Shadow: A Journey of Balance',
     category: 'Mythic Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Light_and_the_Shadow_Cover_Art.png',
     pdfSrc: '',
     cast: '7M/3W/Flexible Ensemble',
     synopsis:
@@ -489,7 +489,7 @@ export const worksData: Work[] = [
   {
     title: 'Duck, Duck, Gone - “They sat in a circle. Until they didn’t.”',
     category: 'Social Issues Play',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Duck_Duck_Gone_Cover_Art.png',
     pdfSrc: '',
     cast: '5M / 5F / Flexible Ensemble',
     synopsis:
@@ -513,7 +513,7 @@ export const worksData: Work[] = [
   {
     title: 'Heroes in the Pages',
     category: 'Theater for Youth',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Heroes_in_the_Pages_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/3F',
     synopsis:
@@ -561,7 +561,7 @@ export const worksData: Work[] = [
   {
     title: 'SMILE!',
     category: 'A Play Based on a Historical Event',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/SMILE_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2F/Large Ensemble',
     synopsis:
@@ -621,7 +621,7 @@ export const worksData: Work[] = [
     title:
       'The Sacred Art of Falling: The Fight She Inherited. The Future She Claimed.',
     category: 'A One Act Play About Women Wrestlers',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Sacred_Art_of_Falling.png',
     pdfSrc: '',
     cast: '1M/10W/Voices',
     synopsis:
