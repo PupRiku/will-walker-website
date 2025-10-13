@@ -13,7 +13,6 @@
 .globalApplyButton {
   display: block;
   width: fit-content;
-  margin: 0 auto 4rem auto;
   padding: 0.75rem 1.5rem;
   background-color: var(--color-accent-primary);
   color: var(--color-background);
@@ -34,16 +33,19 @@
   align-items: center;
   gap: 0.5rem;
   width: fit-content;
-  margin: 0 auto 1.5rem auto;
   color: var(--color-text);
   font-weight: 700;
   text-decoration: none;
   transition: color 0.2s ease-in-out;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-accent-subtle);
+  border-radius: 0.375rem;
 }
 
 .royaltiesLink:hover {
-  color: var(--color-accent-primary);
-  text-decoration: underline;
+  color: var(--color-text);
+  background-color: #e0e0e0;
+  text-decoration: none;
 }
 
 .grid {
@@ -170,6 +172,106 @@
   display: flex;
   gap: 1rem;
   margin-top: 1.5rem;
+}
+
+.castingNoteButton {
+  display: block;
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 0 auto 2rem auto;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.castingNoteButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.linksContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+/* --- Casting Note Modal Styles --- */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.modalOverlay.isOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modalContent {
+  background: var(--color-background);
+  color: var(--color-text);
+  padding: 2.5rem;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(20px);
+  transition: transform 0.3s ease-in-out;
+}
+
+.modalOverlay.isOpen .modalContent {
+  transform: translateY(0);
+}
+
+.modalTitle {
+  font-family: var(--font-family-heading);
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--color-accent-primary);
+  text-align: center;
+}
+
+.modalText {
+  font-family: var(--font-family-body);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.2s ease-in-out;
+}
+
+.modalCloseButton:hover {
+  color: var(--color-text);
 }
 
 @media (max-width: 1024px) {
