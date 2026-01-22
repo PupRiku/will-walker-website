@@ -31,6 +31,7 @@ export default function Contact() {
             name="_next"
             value="https://willwalkermontgomeriewrites.com/thank-you"
           />
+          <input type="hidden" name="_captcha" value="false" />
 
           <div className={styles.formGroup}>
             <label htmlFor="name" className={styles.label}>
