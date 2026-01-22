@@ -1,9 +1,21 @@
 'use client';
 
+import { useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import styles from './Contact.module.css';
 
 export default function Contact() {
   const recipientEmail = process.env.NEXT_PUBLIC_RECIPIENT_EMAIL;
+
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+
+  const onCaptchaChange = (token: string | null) => {
+    if (token) {
+      setCaptchaVerified(true);
+    } else {
+      setCaptchaVerified(false);
+    }
+  };
 
   return (
     <section id="contact" className={styles.contactSection}>
@@ -19,7 +31,6 @@ export default function Contact() {
             name="_next"
             value="https://willwalkermontgomeriewrites.com/thank-you"
           />
-          <input type="hidden" name="_captcha" value="false" />
 
           <div className={styles.formGroup}>
             <label htmlFor="name" className={styles.label}>
@@ -59,7 +70,22 @@ export default function Contact() {
             ></textarea>
           </div>
 
-          <button type="submit" className={styles.button}>
+          <div className={styles.formGroup} style={{ marginBottom: '1.5rem' }}>
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+              onChange={onCaptchaChange}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className={styles.button}
+            disabled={!captchaVerified}
+            style={{
+              opacity: captchaVerified ? 1 : 0.5,
+              cursor: captchaVerified ? 'pointer' : 'not-allowed',
+            }}
+          >
             Send Message
           </button>
         </form>
