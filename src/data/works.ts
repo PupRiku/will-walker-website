@@ -319,7 +319,7 @@ export const worksData: Work[] = [
   {
     title: 'A Capital Mess',
     category: 'Political Satire',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/A_Capitol_Mess_Art.png',
     pdfSrc: '',
     cast: '5M/2F/2 Flexible',
     synopsis:
@@ -355,7 +355,7 @@ export const worksData: Work[] = [
   {
     title: 'Final Boarding Call',
     category: 'Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Final_Boarding_Call_Art.png',
     pdfSrc: '',
     cast: '2M/2W/2 Flexible',
     synopsis:
@@ -379,7 +379,7 @@ export const worksData: Work[] = [
   {
     title: 'Prophet for Hire',
     category: 'Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Prophit_for_Hire.png',
     pdfSrc: '',
     cast: '4M/2W/3 Flexible',
     synopsis:
@@ -404,7 +404,7 @@ export const worksData: Work[] = [
     title:
       '“So, What Had Happened Was… Or Who Killed The Director” A ridiculous 10-minute play that should probably be arrested for overacting',
     category: 'Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/What_had_happened_was.png',
     pdfSrc: '',
     cast: '5M/3W',
     synopsis:
@@ -453,7 +453,7 @@ export const worksData: Work[] = [
     title:
       'The Other Side of Quiet - A play about borders, becoming, and belonging.',
     category: 'Current Events',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Side_of_Quiet.png',
     pdfSrc: '',
     cast: '4M/3W/Flexible Chorus',
     synopsis:
@@ -465,7 +465,7 @@ export const worksData: Work[] = [
   {
     title: 'The Static Room (A Paranormal Thriller)',
     category: 'Thriller',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Static_Room.png',
     pdfSrc: '',
     cast: '1M/1W',
     synopsis:
@@ -477,7 +477,7 @@ export const worksData: Work[] = [
   {
     title: 'Weeping Waters or Let the River Remember',
     category: 'Paranormal Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Weeping_Waters.png',
     pdfSrc: '',
     cast: '4W/1M/Flexible Ensemble',
     synopsis:
@@ -501,7 +501,7 @@ export const worksData: Work[] = [
   {
     title: 'Golden Hot Girl Summer',
     category: 'Geriatric Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Golden_Hot_Girl_Summer.png',
     pdfSrc: '',
     cast: '1M/3W',
     synopsis:
@@ -525,7 +525,7 @@ export const worksData: Work[] = [
   {
     title: 'Just Rob, in the Hood',
     category: 'Theater for Young People',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Rob_in_the_Hood.png',
     pdfSrc: '',
     cast: '15-20 Actors of Various Genders',
     synopsis:
@@ -537,7 +537,7 @@ export const worksData: Work[] = [
   {
     title: 'Mission: Implausible',
     category: 'SciFi Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Mission_Implausible.png',
     pdfSrc: '',
     cast: '1M/Voices/Small Ensemble',
     synopsis:
@@ -549,7 +549,7 @@ export const worksData: Work[] = [
   {
     title: 'Sherlock Holmes and the Devil of Dry Creek',
     category: 'Stage Play',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Sherlock_Holmes.png',
     pdfSrc: '',
     cast: '5M/2W/1 Creepy Voice',
     synopsis:
@@ -573,7 +573,7 @@ export const worksData: Work[] = [
   {
     title: 'Skybound',
     category: 'A Modern Adaptation of Aristophanes’ comedy “The Birds”',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Skybound.png',
     pdfSrc: '',
     cast: '15-20 Actors',
     synopsis:
@@ -597,7 +597,7 @@ export const worksData: Work[] = [
   {
     title: 'The Complete Works of Molière (Condensed)',
     category: 'Full Length Physical Comedy',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/Moliere.png',
     pdfSrc: '',
     cast: '4 Actors',
     synopsis:
@@ -608,7 +608,7 @@ export const worksData: Work[] = [
   {
     title: 'The Gathering',
     category: 'A Modern Family Drama',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/The_Gathering.png',
     pdfSrc: '',
     cast: '3M/4W/1Any',
     synopsis:
@@ -636,7 +636,8 @@ export const worksData: Work[] = [
     imageSrc: '/images/Under_the_Fairie_Tree_Art.png',
     pdfSrc: '',
     cast: '5F/1 Offstage Voice',
-    synopsis: "Under the Fairie Tree is a poignant exploration of tradition versus progress set in a small village, where a sacred fairy tree stands as a living archive of the women who built the community in silence. Maeve, the tree’s steadfast guardian, grieves as the village council approves a road that threatens to destroy it. Nora, her daughter, supports the plan in the name of progress, while Ellen, the engineer, believes the road is the only way to save the dying town. Clara, Maeve’s youngest daughter, is caught between them—too young to choose a side, yet too old to ignore what is being lost. As construction nears, Clara listens to the land and the women who have tended it for generations. With the guidance of her mother and the wise elder, Ellie O'Connell, Clara discovers a way to reroute the road twenty meters east, saving both the tree and the village's history. In the end, the women stand together, forcing progress and heritage to coexist. Under the Fairie Tree is a story of memory, inheritance, and the quiet strength of women who refuse to be erased.",
+    synopsis:
+      "Under the Fairie Tree is a poignant exploration of tradition versus progress set in a small village, where a sacred fairy tree stands as a living archive of the women who built the community in silence. Maeve, the tree’s steadfast guardian, grieves as the village council approves a road that threatens to destroy it. Nora, her daughter, supports the plan in the name of progress, while Ellen, the engineer, believes the road is the only way to save the dying town. Clara, Maeve’s youngest daughter, is caught between them—too young to choose a side, yet too old to ignore what is being lost. As construction nears, Clara listens to the land and the women who have tended it for generations. With the guidance of her mother and the wise elder, Ellie O'Connell, Clara discovers a way to reroute the road twenty meters east, saving both the tree and the village's history. In the end, the women stand together, forcing progress and heritage to coexist. Under the Fairie Tree is a story of memory, inheritance, and the quiet strength of women who refuse to be erased.",
     featured: false,
     published: false,
   },
@@ -646,7 +647,8 @@ export const worksData: Work[] = [
     imageSrc: '/images/Much_Ado_About_Nothingness_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2GF',
-    synopsis: "Much Ado About Nothingness is a surreal, existential play that imagines a profound meeting between two literary giants, William Shakespeare and Samuel Beckett, in an infinite, timeless void. As they debate the nature of storytelling, meaning, and existence, they are joined by a mischievous Fool and an enigmatic Messenger, both of whom challenge and mirror their philosophies. The play delves into the paradoxes of life and death, silence and sound, and the role of the artist in a seemingly indifferent universe. With moments of dark humor, poetic reflection, and metaphysical intrigue, the play explores whether life is a meaningful story or simply an absurd wait for meaning, leaving audiences to ponder the fleeting nature of existence and the ways we create meaning out of nothingness.",
+    synopsis:
+      'Much Ado About Nothingness is a surreal, existential play that imagines a profound meeting between two literary giants, William Shakespeare and Samuel Beckett, in an infinite, timeless void. As they debate the nature of storytelling, meaning, and existence, they are joined by a mischievous Fool and an enigmatic Messenger, both of whom challenge and mirror their philosophies. The play delves into the paradoxes of life and death, silence and sound, and the role of the artist in a seemingly indifferent universe. With moments of dark humor, poetic reflection, and metaphysical intrigue, the play explores whether life is a meaningful story or simply an absurd wait for meaning, leaving audiences to ponder the fleeting nature of existence and the ways we create meaning out of nothingness.',
     featured: false,
     published: false,
   },
