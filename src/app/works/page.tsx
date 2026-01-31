@@ -150,7 +150,8 @@ export default function WorksPage() {
               tone, humor, and relationships of the play can be fully maintained
               with any combination of casting choices. This flexibility allows
               programs of all sizes and compositions—whether predominantly
-              female, male, or mixed—to stage the production successfully.
+              female, male, or mixed—to stage any of the productions
+              successfully.
             </p>
           </div>
         </div>
