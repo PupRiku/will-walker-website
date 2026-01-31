@@ -641,6 +641,16 @@ export const worksData: Work[] = [
     published: false,
   },
   {
+    title: 'Much Ado About Nothingness',
+    category: 'Short Surreal Play',
+    imageSrc: '/images/Much_Ado_About_Nothingness_Cover_Art.png',
+    pdfSrc: '',
+    cast: '2M/2GF',
+    synopsis: "Much Ado About Nothingness is a surreal, existential play that imagines a profound meeting between two literary giants, William Shakespeare and Samuel Beckett, in an infinite, timeless void. As they debate the nature of storytelling, meaning, and existence, they are joined by a mischievous Fool and an enigmatic Messenger, both of whom challenge and mirror their philosophies. The play delves into the paradoxes of life and death, silence and sound, and the role of the artist in a seemingly indifferent universe. With moments of dark humor, poetic reflection, and metaphysical intrigue, the play explores whether life is a meaningful story or simply an absurd wait for meaning, leaving audiences to ponder the fleeting nature of existence and the ways we create meaning out of nothingness.",
+    featured: false,
+    published: false,
+  },
+  {
     title: 'FLYDERS!',
     category: 'Horror-Comedy Screenplay',
     imageSrc: '/images/FLYDERS.png',
