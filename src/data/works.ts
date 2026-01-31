@@ -670,7 +670,19 @@ export const worksData: Work[] = [
     imageSrc: '/images/IAGO_Coverart.png',
     pdfSrc: '',
     cast: '6 M/2 F/7-10 V',
-    synopsis: "IAGO is a gripping psychological prequel to Shakespeare's Othello, exploring the transformation of one of the most cunning villains in literary history. Set in the political and military turmoil of Venice, the play delves into Iago’s manipulation of those around him, his thirst for power, and his complex motivations. As a soldier with a deeply scarred past, Iago’s PTSD and internal demons drive him to orchestrate a web of betrayal, testing loyalty and trust. In the process, he manipulates Roderigo, the trusting fool, while plotting his own rise to power. Iago’s actions lay the groundwork for the tragic events of Othello, as he carefully sets his machinations into motion. As the play unravels, Iago's ambition, resentment, and trauma become more apparent, revealing the fragile psyche beneath his ruthless exterior. Through his manipulation of Othello, Roderigo, and other figures, Iago’s thirst for control grows ever more intense. But as his schemes play out, he is haunted by the psychological scars of war and betrayal, questioning whether he will ever truly escape his past. The tragedy lies not just in his actions but in the psychological toll that has shaped him—leaving the audience to ponder the true cost of power, trust, and manipulation.",
+    synopsis:
+      "IAGO is a gripping psychological prequel to Shakespeare's Othello, exploring the transformation of one of the most cunning villains in literary history. Set in the political and military turmoil of Venice, the play delves into Iago’s manipulation of those around him, his thirst for power, and his complex motivations. As a soldier with a deeply scarred past, Iago’s PTSD and internal demons drive him to orchestrate a web of betrayal, testing loyalty and trust. In the process, he manipulates Roderigo, the trusting fool, while plotting his own rise to power. Iago’s actions lay the groundwork for the tragic events of Othello, as he carefully sets his machinations into motion. As the play unravels, Iago's ambition, resentment, and trauma become more apparent, revealing the fragile psyche beneath his ruthless exterior. Through his manipulation of Othello, Roderigo, and other figures, Iago’s thirst for control grows ever more intense. But as his schemes play out, he is haunted by the psychological scars of war and betrayal, questioning whether he will ever truly escape his past. The tragedy lies not just in his actions but in the psychological toll that has shaped him—leaving the audience to ponder the true cost of power, trust, and manipulation.",
+    featured: false,
+    published: false,
+  },
+  {
+    title: 'Refresh to Load',
+    category: 'Drama',
+    imageSrc: '/images/Refresh_To_Load.png',
+    pdfSrc: '',
+    cast: '1F / 3M / 1NB / 1OSV',
+    synopsis:
+      "Refresh to Load is a tense, urgent one-act play that follows five young activists who livestream their resistance from a cramped safehouse as a government crackdown closes in. As their message spreads online, so does the threat—until the stream suddenly cuts out. Performed in a single continuous scene with no set and minimal lighting, the play explores digital activism, performative allyship, and what remains when the cameras go dark. Inspired by Gil Scott-Heron’s iconic warning, this play asks: if the revolution isn't televised… will anyone notice when it disappears?",
     featured: false,
     published: false,
   },
