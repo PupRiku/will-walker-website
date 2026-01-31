@@ -631,6 +631,16 @@ export const worksData: Work[] = [
     runtime: '50-60 minutes',
   },
   {
+    title: 'Under the Fairie Tree',
+    category: 'Folklore Play – Available in Short Format and One Act Format',
+    imageSrc: '/images/Under_the_Fairie_Tree_Art.png',
+    pdfSrc: '',
+    cast: '5F/1 Offstage Voice',
+    synopsis: "Under the Fairie Tree is a poignant exploration of tradition versus progress set in a small village, where a sacred fairy tree stands as a living archive of the women who built the community in silence. Maeve, the tree’s steadfast guardian, grieves as the village council approves a road that threatens to destroy it. Nora, her daughter, supports the plan in the name of progress, while Ellen, the engineer, believes the road is the only way to save the dying town. Clara, Maeve’s youngest daughter, is caught between them—too young to choose a side, yet too old to ignore what is being lost. As construction nears, Clara listens to the land and the women who have tended it for generations. With the guidance of her mother and the wise elder, Ellie O'Connell, Clara discovers a way to reroute the road twenty meters east, saving both the tree and the village's history. In the end, the women stand together, forcing progress and heritage to coexist. Under the Fairie Tree is a story of memory, inheritance, and the quiet strength of women who refuse to be erased.",
+    featured: false,
+    published: false,
+  },
+  {
     title: 'FLYDERS!',
     category: 'Horror-Comedy Screenplay',
     imageSrc: '/images/FLYDERS.png',
