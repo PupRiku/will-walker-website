@@ -653,6 +653,17 @@ export const worksData: Work[] = [
     published: false,
   },
   {
+    title: 'The Forsaken: A Retelling of Richard III',
+    category: 'Historical Drama / Tragic Reimagining',
+    imageSrc: '/images/The_Forsaken.jpg',
+    pdfSrc: '',
+    cast: '10-20 performers (flexible doubling possible)',
+    synopsis: "The Forsaken: A Retelling of Richard III invites audiences to reexamine one of history’s most maligned figures. In this haunting and poetic reimagining, Richard, Duke of Gloucester—soldier, brother, and reluctant heir—battles not for power but for truth. As England teeters between peace and chaos, Richard finds himself ensnared in the ruthless web of courtly ambition and betrayal. Guided by a mysterious Figure who bridges myth and history, Richard’s journey reveals not the villain of Shakespeare’s pen, but a man condemned by the quills of victors. When the smoke clears at Bosworth Field, what remains is not a tyrant’s fall, but the tragedy of a man forsaken by history itself.",
+    featured: false,
+    published: false,
+    runtime: 'Approximately 90–100 minutes',
+  },
+  {
     title: 'FLYDERS!',
     category: 'Horror-Comedy Screenplay',
     imageSrc: '/images/FLYDERS.png',
