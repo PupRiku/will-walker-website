@@ -658,10 +658,21 @@ export const worksData: Work[] = [
     imageSrc: '/images/The_Forsaken.jpg',
     pdfSrc: '',
     cast: '10-20 performers (flexible doubling possible)',
-    synopsis: "The Forsaken: A Retelling of Richard III invites audiences to reexamine one of history’s most maligned figures. In this haunting and poetic reimagining, Richard, Duke of Gloucester—soldier, brother, and reluctant heir—battles not for power but for truth. As England teeters between peace and chaos, Richard finds himself ensnared in the ruthless web of courtly ambition and betrayal. Guided by a mysterious Figure who bridges myth and history, Richard’s journey reveals not the villain of Shakespeare’s pen, but a man condemned by the quills of victors. When the smoke clears at Bosworth Field, what remains is not a tyrant’s fall, but the tragedy of a man forsaken by history itself.",
+    synopsis:
+      'The Forsaken: A Retelling of Richard III invites audiences to reexamine one of history’s most maligned figures. In this haunting and poetic reimagining, Richard, Duke of Gloucester—soldier, brother, and reluctant heir—battles not for power but for truth. As England teeters between peace and chaos, Richard finds himself ensnared in the ruthless web of courtly ambition and betrayal. Guided by a mysterious Figure who bridges myth and history, Richard’s journey reveals not the villain of Shakespeare’s pen, but a man condemned by the quills of victors. When the smoke clears at Bosworth Field, what remains is not a tyrant’s fall, but the tragedy of a man forsaken by history itself.',
     featured: false,
     published: false,
     runtime: 'Approximately 90–100 minutes',
+  },
+  {
+    title: 'Iago',
+    category: 'Psychological Drama',
+    imageSrc: '/images/IAGO_Coverart.png',
+    pdfSrc: '',
+    cast: '6 M/2 F/7-10 V',
+    synopsis: "IAGO is a gripping psychological prequel to Shakespeare's Othello, exploring the transformation of one of the most cunning villains in literary history. Set in the political and military turmoil of Venice, the play delves into Iago’s manipulation of those around him, his thirst for power, and his complex motivations. As a soldier with a deeply scarred past, Iago’s PTSD and internal demons drive him to orchestrate a web of betrayal, testing loyalty and trust. In the process, he manipulates Roderigo, the trusting fool, while plotting his own rise to power. Iago’s actions lay the groundwork for the tragic events of Othello, as he carefully sets his machinations into motion. As the play unravels, Iago's ambition, resentment, and trauma become more apparent, revealing the fragile psyche beneath his ruthless exterior. Through his manipulation of Othello, Roderigo, and other figures, Iago’s thirst for control grows ever more intense. But as his schemes play out, he is haunted by the psychological scars of war and betrayal, questioning whether he will ever truly escape his past. The tragedy lies not just in his actions but in the psychological toll that has shaped him—leaving the audience to ponder the true cost of power, trust, and manipulation.",
+    featured: false,
+    published: false,
   },
   {
     title: 'FLYDERS!',
