@@ -50,9 +50,10 @@ Play catalog data is currently managed via a static TypeScript file (`src/data/w
 
 ## Roadmap
 
-- [ ] **Search & filter** — Allow visitors to filter plays by genre, length, cast size, or publication status
-- [ ] **Admin backend** — A simple authenticated dashboard for Will to add, edit, and manage plays without touching code or JSON files directly; will require a database integration (likely Postgres or a headless CMS)
-- [ ] **Individual play pages** — Dedicated pages per play with full synopsis, production history, and licensing details
+- [ ] **Search & filter on `/works`** — Frontend-only filtering by genre, cast size, runtime, and publication status. No backend required; the existing data model in `src/data/works.ts` already supports it.
+- [ ] **Individual play pages** — Dedicated routes (e.g., `/works/hamlet-a-horatio-story`) for each play, making them linkable, shareable, and indexable by search engines. Replaces or supplements the current modal-only detail view.
+- [ ] **Image optimization audit** — Audit and compress cover art source files in `/public/images/`, several of which are 3–4MB PNGs. Next.js handles resizing at runtime but large source files still impact load time, especially on `/works`.
+- [ ] **Admin backend** — Authenticated dashboard for Will to add and manage plays without touching code. Will require a database or headless CMS integration (likely Postgres or Sanity). Defer until items 1 and 2 are complete.
 
 ---
 
