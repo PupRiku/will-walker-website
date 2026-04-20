@@ -1,5 +1,11 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+  title: 'Thank You | William L. Walker Montgomerie',
+  description: 'Your message has been sent.',
+};
 
 export default function ThankYouPage() {
   return (
