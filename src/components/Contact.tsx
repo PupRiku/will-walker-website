@@ -71,7 +71,7 @@ export default function Contact() {
             ></textarea>
           </div>
 
-          <div className={styles.formGroup} style={{ marginBottom: '1.5rem' }}>
+          <div className={`${styles.formGroup} ${styles.captchaGroup}`}>
             <ReCAPTCHA
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
               onChange={onCaptchaChange}
@@ -82,10 +82,6 @@ export default function Contact() {
             type="submit"
             className={styles.button}
             disabled={!captchaVerified}
-            style={{
-              opacity: captchaVerified ? 1 : 0.5,
-              cursor: captchaVerified ? 'pointer' : 'not-allowed',
-            }}
           >
             Send Message
           </button>
