@@ -4,66 +4,20 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { worksData } from '@/data/works';
+import { filterWorks, sortWorks, type RuntimeBucket, type CastBucket, type SortOrder } from '@/utils/filterSort';
 import styles from './page.module.css';
 import { BsDownload } from 'react-icons/bs';
 
 const genres = Array.from(new Set(worksData.map((w) => w.category))).sort();
-
-function classifyRuntime(
-  runtime: string | undefined
-): 'short' | 'medium' | 'long' | 'full' | null {
-  if (!runtime) return null;
-  if (runtime === 'Full Length') return 'full';
-  const match = runtime.match(/\d+/);
-  if (!match) return null;
-  const minutes = parseInt(match[0], 10);
-  if (minutes < 30) return 'short';
-  if (minutes < 60) return 'medium';
-  return 'long';
-}
-
-function parseCastSize(cast: string): number | null {
-  if (!cast) return null;
-  if (/flexible|various|ensemble/i.test(cast)) return null;
-  const numbers = cast.match(/\d+/g);
-  if (!numbers) return null;
-  return numbers.reduce((sum, n) => sum + parseInt(n, 10), 0);
-}
-
-function parseRuntimeForSort(runtime: string | undefined): number {
-  if (!runtime || runtime === 'TBD' || runtime === 'Collection') return Infinity;
-  const match = runtime.match(/\d+/);
-  if (!match) return Infinity;
-  return parseInt(match[0], 10);
-}
-
-function parseCastForSort(cast: string): number {
-  if (!cast || cast === 'TBD') return Infinity;
-  const matches = [...cast.matchAll(/(\d+)\s*(?:NB|V\.O\.|VO|[MF])(?![a-zA-Z])/g)];
-  if (matches.length === 0) return Infinity;
-  return matches.reduce((sum, m) => sum + parseInt(m[1], 10), 0);
-}
 
 export default function WorksClient() {
   const [isCastingModalOpen, setIsCastingModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [publishedOnly, setPublishedOnly] = useState(false);
-  const [runtimeBucket, setRuntimeBucket] = useState<
-    '' | 'short' | 'medium' | 'long' | 'full'
-  >('');
-  const [castBucket, setCastBucket] = useState<
-    '' | 'small' | 'medium' | 'large'
-  >('');
-  const [sortOrder, setSortOrder] = useState<
-    | ''
-    | 'title-asc'
-    | 'title-desc'
-    | 'runtime-asc'
-    | 'runtime-desc'
-    | 'cast-asc'
-    | 'cast-desc'
-  >('');
+  const [runtimeBucket, setRuntimeBucket] = useState<RuntimeBucket>('');
+  const [castBucket, setCastBucket] = useState<CastBucket>('');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('');
 
   const clearFilters = () => {
     setSearchQuery('');
@@ -103,50 +57,15 @@ export default function WorksClient() {
     };
   }, [isCastingModalOpen, handleKeyDown]);
 
-  const filteredWorks = worksData.filter((work) => {
-    const q = searchQuery.toLowerCase();
-    const matchesSearch =
-      work.title.toLowerCase().includes(q) ||
-      work.synopsis.toLowerCase().includes(q);
-    const matchesGenre = selectedGenre === '' || work.category === selectedGenre;
-    const matchesPublished = !publishedOnly || work.published === true;
-
-    const matchesRuntime = (() => {
-      if (runtimeBucket === '') return true;
-      const bucket = classifyRuntime(work.runtime);
-      return bucket === null || bucket === runtimeBucket;
-    })();
-
-    const matchesCast = (() => {
-      if (castBucket === '') return true;
-      const size = parseCastSize(work.cast);
-      if (size === null) return true;
-      if (castBucket === 'small') return size <= 5;
-      if (castBucket === 'medium') return size >= 6 && size <= 12;
-      return size >= 13;
-    })();
-
-    return matchesSearch && matchesGenre && matchesPublished && matchesRuntime && matchesCast;
+  const filteredWorks = filterWorks(worksData, {
+    searchQuery,
+    selectedGenre,
+    publishedOnly,
+    runtimeBucket,
+    castBucket,
   });
 
-  const sortedWorks = (() => {
-    if (sortOrder === '') return filteredWorks;
-    const sorted = [...filteredWorks];
-    if (sortOrder === 'title-asc') {
-      sorted.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (sortOrder === 'title-desc') {
-      sorted.sort((a, b) => b.title.localeCompare(a.title));
-    } else if (sortOrder === 'runtime-asc') {
-      sorted.sort((a, b) => parseRuntimeForSort(a.runtime) - parseRuntimeForSort(b.runtime));
-    } else if (sortOrder === 'runtime-desc') {
-      sorted.sort((a, b) => parseRuntimeForSort(b.runtime) - parseRuntimeForSort(a.runtime));
-    } else if (sortOrder === 'cast-asc') {
-      sorted.sort((a, b) => parseCastForSort(a.cast) - parseCastForSort(b.cast));
-    } else if (sortOrder === 'cast-desc') {
-      sorted.sort((a, b) => parseCastForSort(b.cast) - parseCastForSort(a.cast));
-    }
-    return sorted;
-  })();
+  const sortedWorks = sortWorks(filteredWorks, sortOrder);
 
   return (
     <div className={styles.pageWrapper}>
@@ -214,9 +133,7 @@ export default function WorksClient() {
             className={styles.filterSelect}
             value={runtimeBucket}
             onChange={(e) =>
-              setRuntimeBucket(
-                e.target.value as '' | 'short' | 'medium' | 'long' | 'full'
-              )
+              setRuntimeBucket(e.target.value as RuntimeBucket)
             }
             aria-label="Filter by runtime"
           >
@@ -230,7 +147,7 @@ export default function WorksClient() {
             className={styles.filterSelect}
             value={castBucket}
             onChange={(e) =>
-              setCastBucket(e.target.value as '' | 'small' | 'medium' | 'large')
+              setCastBucket(e.target.value as CastBucket)
             }
             aria-label="Filter by cast size"
           >
@@ -245,16 +162,7 @@ export default function WorksClient() {
               className={styles.filterSelect}
               value={sortOrder}
               onChange={(e) =>
-                setSortOrder(
-                  e.target.value as
-                    | ''
-                    | 'title-asc'
-                    | 'title-desc'
-                    | 'runtime-asc'
-                    | 'runtime-desc'
-                    | 'cast-asc'
-                    | 'cast-desc'
-                )
+                setSortOrder(e.target.value as SortOrder)
               }
               aria-label="Sort by"
             >
