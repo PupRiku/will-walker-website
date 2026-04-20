@@ -1,23 +1,11 @@
 import Image from 'next/image';
 import styles from './Modal.module.css';
-
-type Play = {
-  title: string;
-  category: string;
-  imageSrc: string;
-  pdfSrc: string;
-  cast: string;
-  synopsis: string;
-  featured?: boolean;
-  published?: boolean;
-  purchase?: string;
-  runtime?: string;
-};
+import { Work } from '@/data/works';
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  play: Play | null;
+  play: Work | null;
 };
 
 export default function Modal({ isOpen, onClose, play }: ModalProps) {
