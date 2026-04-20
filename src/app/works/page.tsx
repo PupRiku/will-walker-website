@@ -42,6 +42,21 @@ export default function WorksPage() {
     '' | 'small' | 'medium' | 'large'
   >('');
 
+  const clearFilters = () => {
+    setSearchQuery('');
+    setSelectedGenre('');
+    setPublishedOnly(false);
+    setRuntimeBucket('');
+    setCastBucket('');
+  };
+
+  const isFiltered =
+    searchQuery !== '' ||
+    selectedGenre !== '' ||
+    publishedOnly ||
+    runtimeBucket !== '' ||
+    castBucket !== '';
+
   const openCastingModal = () => setIsCastingModalOpen(true);
   const closeCastingModal = () => setIsCastingModalOpen(false);
 
@@ -129,6 +144,7 @@ export default function WorksPage() {
         </Link>
       </div>
 
+      <div className={styles.filterBarOuter}>
       <div className={styles.filterBar}>
         <input
           type="search"
@@ -192,7 +208,29 @@ export default function WorksPage() {
           </label>
         </div>
       </div>
+      </div>
 
+      <div className={styles.filterMeta}>
+        <p className={styles.resultCount}>
+          Showing {filteredWorks.length} of {worksData.length} plays
+        </p>
+        {isFiltered && (
+          <button className={styles.clearFiltersButton} onClick={clearFilters}>
+            Clear all filters
+          </button>
+        )}
+      </div>
+
+      {filteredWorks.length === 0 ? (
+        <div className={styles.emptyState}>
+          <p className={styles.emptyStateText}>
+            No plays match your current filters.
+          </p>
+          <button className={styles.button} onClick={clearFilters}>
+            Clear all filters
+          </button>
+        </div>
+      ) : (
       <div className={styles.grid}>
         {filteredWorks.map((work) => (
           <div className={styles.card} key={work.title}>
@@ -245,6 +283,7 @@ export default function WorksPage() {
           </div>
         ))}
       </div>
+      )}
       <div
         className={`${styles.modalOverlay} ${
           isCastingModalOpen ? styles.isOpen : ''
