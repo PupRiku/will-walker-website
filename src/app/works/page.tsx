@@ -9,6 +9,7 @@ import { BsDownload } from 'react-icons/bs';
 
 export default function WorksPage() {
   const [isCastingModalOpen, setIsCastingModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const openCastingModal = () => setIsCastingModalOpen(true);
   const closeCastingModal = () => setIsCastingModalOpen(false);
@@ -32,6 +33,14 @@ export default function WorksPage() {
       document.body.style.overflow = '';
     };
   }, [isCastingModalOpen, handleKeyDown]);
+
+  const filteredWorks = worksData.filter((work) => {
+    const q = searchQuery.toLowerCase();
+    return (
+      work.title.toLowerCase().includes(q) ||
+      work.synopsis.toLowerCase().includes(q)
+    );
+  });
 
   return (
     <div className={styles.pageWrapper}>
@@ -71,9 +80,20 @@ export default function WorksPage() {
         </Link>
       </div>
 
+      <div className={styles.searchBar}>
+        <input
+          type="search"
+          className={styles.searchInput}
+          placeholder="Search by title or synopsis…"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          aria-label="Search plays by title or synopsis"
+        />
+      </div>
+
       <div className={styles.grid}>
-        {worksData.map((work, index) => (
-          <div className={styles.card} key={index}>
+        {filteredWorks.map((work) => (
+          <div className={styles.card} key={work.title}>
             {work.published && <div className={styles.ribbon}>Published</div>}
             <Image
               src={work.imageSrc}
