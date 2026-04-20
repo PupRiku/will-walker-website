@@ -7,9 +7,13 @@ import { worksData } from '@/data/works';
 import styles from './page.module.css';
 import { BsDownload } from 'react-icons/bs';
 
+const genres = Array.from(new Set(worksData.map((w) => w.category))).sort();
+
 export default function WorksPage() {
   const [isCastingModalOpen, setIsCastingModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('');
+  const [publishedOnly, setPublishedOnly] = useState(false);
 
   const openCastingModal = () => setIsCastingModalOpen(true);
   const closeCastingModal = () => setIsCastingModalOpen(false);
@@ -36,10 +40,12 @@ export default function WorksPage() {
 
   const filteredWorks = worksData.filter((work) => {
     const q = searchQuery.toLowerCase();
-    return (
+    const matchesSearch =
       work.title.toLowerCase().includes(q) ||
-      work.synopsis.toLowerCase().includes(q)
-    );
+      work.synopsis.toLowerCase().includes(q);
+    const matchesGenre = selectedGenre === '' || work.category === selectedGenre;
+    const matchesPublished = !publishedOnly || work.published === true;
+    return matchesSearch && matchesGenre && matchesPublished;
   });
 
   return (
@@ -80,7 +86,7 @@ export default function WorksPage() {
         </Link>
       </div>
 
-      <div className={styles.searchBar}>
+      <div className={styles.filterBar}>
         <input
           type="search"
           className={styles.searchInput}
@@ -89,6 +95,30 @@ export default function WorksPage() {
           onChange={(e) => setSearchQuery(e.target.value)}
           aria-label="Search plays by title or synopsis"
         />
+        <div className={styles.filterControls}>
+          <select
+            className={styles.filterSelect}
+            value={selectedGenre}
+            onChange={(e) => setSelectedGenre(e.target.value)}
+            aria-label="Filter by genre"
+          >
+            <option value="">All Genres</option>
+            {genres.map((genre) => (
+              <option key={genre} value={genre}>
+                {genre}
+              </option>
+            ))}
+          </select>
+          <label className={styles.publishedLabel}>
+            <input
+              type="checkbox"
+              className={styles.publishedCheckbox}
+              checked={publishedOnly}
+              onChange={(e) => setPublishedOnly(e.target.checked)}
+            />
+            Published works only
+          </label>
+        </div>
       </div>
 
       <div className={styles.grid}>
