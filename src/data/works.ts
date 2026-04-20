@@ -18,32 +18,32 @@ export const worksData: Work[] = [
     imageSrc: '/images/Hamlet-A-Horatio-Story.jpg',
     pdfSrc:
       'https://www.nextstagepress.com/wp-content/uploads/2025/06/HAMLET-A-Horatio-Story-Sample.pdf',
-    cast: '20M/10W/Various',
+    cast: '20M/10F/Flexible',
     synopsis:
       'Set in the eerie Elsinore Center for Restorative Care, a 1950s asylum, Hamlet: A Horatio Story reimagines Shakespeare’s tragedy through Horatio’s fractured mind. As Hamlet descends into vengeance, Horatio struggles to bear witness, torn between loyalty and a truth distorted by grief. The asylum’s sterile halls mirror Denmark’s decay, where love, betrayal, and madness blur reality. Through Horatio’s eyes, memory and trauma intertwine—are events as they were, or as his mind has reshaped them? This adaptation invites audiences into a world where ghosts linger not just in shadows, but in the depths of the human soul.',
     featured: true,
     published: true,
     purchase: 'https://www.nextstagepress.com/hamlet-a-horatio-story/',
-    runtime: '90+ Minutes',
+    runtime: '90-120 minutes',
   },
   {
     title: 'Echoes of Valor',
     category: 'Drama',
     imageSrc: '/images/Echoes_of_Valor_Cover_copy_2.png',
     pdfSrc: '',
-    cast: '3M, 3F',
+    cast: '3M/3F',
     synopsis:
       "A raw, intimate drama set in a veterans' support group, where former service members confront PTSD, addiction, and the lingering impact of war. As stories unfold—from a young Afghanistan veteran to a Vietnam-era nurse—their shared pain becomes a bond of healing and resilience. When tragedy hits, they must lean on one another to rediscover purpose, hope, and the courage to keep going.",
     featured: true,
     published: false,
-    runtime: 'Full Length',
+    runtime: '90-120 minutes',
   },
   {
     title: 'MANKILLER: The Strength of a Nation',
-    category: 'Drama',
+    category: 'Historical Drama',
     imageSrc: '/images/Mankiller_Cover_Art.png',
     pdfSrc: '',
-    cast: '2W, 2M, Large Flexible Ensemble',
+    cast: '2M/2F/Flexible Ensemble',
     synopsis:
       'Tells the powerful true story of Wilma Mankiller, the first female Principal Chief of the Cherokee Nation. From relocation and activism to leadership and legacy, Wilma overcomes personal and political battles to transform her community. With strength, vision, and resilience, she inspires a new generation to rise.',
     featured: true,
@@ -55,7 +55,7 @@ export const worksData: Work[] = [
     category: 'Comedy',
     imageSrc: '/images/Midsummer_Nights_Rehearsal.png',
     pdfSrc: '',
-    cast: '9M, 3W, Flexible Ensemble',
+    cast: '9M/3F/Flexible Ensemble',
     synopsis:
       "Before faery magic and woodland chaos, there was a humble troupe of actors—The Mechanicals—whose dream of performing for the Duke of Athens accidentally entangles them with the enchanted world of A Midsummer Night's Dream. As they rehearse their hilariously earnest play, Bottom's bizarre transformation and the meddling of mischievous faeries throw their plans into delightful disarray. What follows is a heartwarming, magical comedy celebrating friendship, imagination, and the unexpected joy of theatre.",
     featured: true,
@@ -64,10 +64,10 @@ export const worksData: Work[] = [
   },
   {
     title: "I Love You, I'm Sorry",
-    category: 'Intimate Drama/One Act Play',
+    category: 'One Act Play',
     imageSrc: '/images/I_Love_You_Im_Sorry_Cover_Art.png',
     pdfSrc: '',
-    cast: '1F, 2M, 1F Voice Over',
+    cast: '2M/2F',
     synopsis:
       "I Love You, I'm Sorry is a poetic one-act play that follows the emotional unraveling of Nina and Luca, lovers entangled in silence and miscommunication. Through shifting timelines and voice memos, the play explores how unspoken emotions can corrode connection, and how healing begins in solitude. When River enters Nina's life, she begins a quiet journey of self-acceptance and emotional reclamation",
     featured: true,
@@ -76,11 +76,11 @@ export const worksData: Work[] = [
   },
   {
     title: 'The Camp Cacophony Hour: Sasquatch Stole the Side Dish!',
-    category: 'Radio Play-Comedy',
+    category: 'Radio Play',
     imageSrc:
       '/images/The_Camp_Cacophony_Hour-_Sasquatch_Stole_the_Side_Dish.png',
     pdfSrc: '',
-    cast: '4F, 5M, 2 Flexible',
+    cast: '5M/4F/2 Flexible',
     synopsis:
       "A swing-era spoof set in the golden age of radio, where a live broadcast unravels a wild tale of cryptid chaos at a Northwest family campground. When Grandma Minnie's sacred potato salad vanishes, suspicions of Sasquatch send this quirky crew into a frenzy of traps, jazz, and condiment-fueled confusion. Packed with live sound effects, sponsor bits, and off-air backstage antics, this nostalgic comedy blends heart, hilarity, and high camp in one unforgettable hour.",
     featured: true,
@@ -92,19 +92,19 @@ export const worksData: Work[] = [
     category: 'Drama',
     imageSrc: '/images/See_My_Heart_Cover_Art.png',
     pdfSrc: '',
-    cast: '7M, 5F, 5+ Flexible',
+    cast: '7M/5F/5+ Flexible',
     synopsis:
       "A heartfelt journey through one night in a sprawling city, where Alex—struggling with loneliness and identity—encounters a diverse group of strangers who each reveal a different form of love, loss, or resilience. From coffee shops to churches, drag shows to gardens, these fleeting yet powerful connections challenge Alex's perspective and spark healing. The play culminates in a rooftop gathering, where a chosen family of misfits and survivors affirms the beauty of showing up and being seen.",
     featured: true,
     published: false,
-    runtime: 'Full Length',
+    runtime: '90-120 minutes',
   },
   {
     title: 'The Yellow Ward',
     category: 'Drama',
     imageSrc: '/images/The_Yellow_Ward_Cover_Art.png',
     pdfSrc: '',
-    cast: '4W, 5M, Flexible Ensemble',
+    cast: '5M/4F/Flexible Ensemble',
     synopsis:
       'In a crumbling 1950s Kansas mental institution, 17-year-old Dot Gale is admitted after a tragic fire and the deaths of her guardians. Silent and traumatized, she reimagines her reality through a dark, fractured version of The Wizard of Oz, where fellow patients and staff take on hauntingly familiar roles. As she confronts memory, repression, and institutional cruelty, Dot must choose between returning to a broken world—or rewriting her own.',
     featured: true,
@@ -116,7 +116,7 @@ export const worksData: Work[] = [
     category: 'Drama',
     imageSrc: '/images/Becoming_Cover_Art.png',
     pdfSrc: '',
-    cast: '3W, 4M, Flexible Ensemble',
+    cast: '4M/3F/Flexible Ensemble',
     synopsis:
       "A poetic and abstract coming-of-age play that follows a young man's journey from childhood through self-discovery, framed by memory, imagination, and reality. As he navigates identity, grief, bullying, and love, he finds refuge in an imaginary world that helps him process the complexities of growing up. With guidance from his future self and a transformative Chorus, the Boy ultimately learns to embrace his pain and emerge with self-acceptance and inner strength.",
     featured: true,
@@ -128,7 +128,7 @@ export const worksData: Work[] = [
     category: 'Drama',
     imageSrc: '/images/The_Room_Cover_Art.png',
     pdfSrc: '',
-    cast: '1M, Large Flexible Ensemble',
+    cast: '1M/Flexible Ensemble',
     synopsis:
       'A haunting, poetic exploration of memory, institutional trauma, and the fight for disability justice. Centered on Alex—a disability rights advocate and parent—who searches for the truth behind the disappearance of Eli, a childhood friend erased from all records, the play weaves through shifting memories, interviews, and reckonings. As Alex confronts systemic denial and resurfaces long-buried truths, The Room becomes a powerful call to remember those who were silenced.',
     featured: true,
@@ -140,7 +140,7 @@ export const worksData: Work[] = [
     category: 'Drama',
     imageSrc: '/images/You_Never_Know_Cover_Art.png',
     pdfSrc: '',
-    cast: 'Large Ensemble (12-24)',
+    cast: 'Flexible Ensemble (12-24)',
     synopsis:
       "A touching collection of vignettes linked by a quiet, mysterious figure known only as The Stranger, who appears at life's most fragile moments to offer comfort, clarity, and connection. Each scene reveals a different person on the edge—grieving, anxious, or simply lost—unaware that their stories are part of something larger. Flowing seamlessly without blackouts, this dreamlike play reminds us that sometimes the smallest gestures carry the greatest hope.",
     featured: true,
@@ -152,7 +152,7 @@ export const worksData: Work[] = [
     category: 'Drama',
     imageSrc: '/images/When_the_Light_Comes_On_Cover_Art.png',
     pdfSrc: '',
-    cast: '3W, 2M, 1 Flexible',
+    cast: '2M/3F/1 Flexible',
     synopsis:
       'Follows a group of strangers brought together by quiet coincidence, each carrying hidden pain and personal struggles. As they open up to one another, their healing is gently steered by Eli, a mysterious young man whose presence challenges and comforts in equal measure. In discovering the truth about themselves—and about Eli—they learn that even in darkness, we all need someone to be our light.',
     featured: true,
@@ -164,7 +164,7 @@ export const worksData: Work[] = [
     category: "Children's Play",
     imageSrc: '/images/The_Great_Gnome_Quest_Cover_Art.png',
     pdfSrc: '',
-    cast: '5M, 2W, Flexible Ensemble',
+    cast: '5M/2F/Flexible Ensemble',
     synopsis:
       "In the magical village of Whimsywood, the cherished Glowlight Crystal has mysteriously vanished, plunging the town into darkness just before their grand festival. Three brave gnomes—Pip, Tilly, and Brumble—embark on a daring quest to recover it, solving riddles, outwitting mischievous creatures, and enlisting the audience's help along the way. Join The Great Gnome Quest and become part of the adventure to bring light back to Whimsywood!",
     featured: true,
@@ -174,10 +174,10 @@ export const worksData: Work[] = [
   {
     title:
       "The To Do List: 1. Coffee 2. Don't Get Eaten by a Dinosaur - A One-Act Office Comedy of Jurassic Proportions",
-    category: 'Comedy',
+    category: 'One Act Play',
     imageSrc: '/images/The_To_Do_List_Cover_Art.png',
     pdfSrc: '',
-    cast: '1M, 3W, 1Gender-Neutral Role',
+    cast: '1M/3F/1NB',
     synopsis:
       "A razor-sharp corporate satire where burnout meets bite—literally. At DinoCorp™, four stressed employees must survive workplace politics, disappearing coworkers, and a possibly sentient dinosaur running HR. With a cheery AI assistant named DINAH and danger lurking in every spreadsheet, it's a dark comedy about being devoured by your job—sometimes figuratively, sometimes not.",
     featured: true,
@@ -189,7 +189,7 @@ export const worksData: Work[] = [
     category: 'Drama',
     imageSrc: '/images/The_Shape_of_the_Fall.png',
     pdfSrc: '',
-    cast: '4M, 1F, Flexible Ensemble',
+    cast: '4M/1F/Flexible Ensemble',
     synopsis:
       "When Aristotle witnesses Oedipus Rex, he's shaken not by logic, but by the raw emotional truth it reveals. In exile and mourning the death of his son, he is drawn into a journey of myth, memory, and personal reckoning that transforms his understanding of tragedy. The Shape of the Fall blends Greek form with the Hero's Journey to trace how heartbreak—not brilliance alone—led to the creation of The Poetics.",
     featured: true,
@@ -198,10 +198,10 @@ export const worksData: Work[] = [
   },
   {
     title: 'The Squatch of Avon: Super Extended Conspiracy Cut',
-    category: 'Short Comedy',
+    category: 'Comedy',
     imageSrc: '/images/The_Squatch_of_Avon_Cover_Art_New.png',
     pdfSrc: '',
-    cast: '2M, 2W',
+    cast: '2M/2F',
     synopsis:
       "In a cluttered basement, conspiracy theorist Doug leads a wildly absurd investigation into the true authorship of Shakespeare's plays—claiming they were actually written by Sasquatch. As the group dives deeper into cryptid conspiracies and Elizabethan drama, tensions flare between skeptics, believers, and one very tired realist. The Squatch of Avon: Extended Conspiracy Cut, the first in the Doug Plays Series, is a fast-paced comedy full of chaotic revelations, questionable “evidence,” and woodland-themed literary mayhem.",
     featured: true,
@@ -213,7 +213,7 @@ export const worksData: Work[] = [
     category: 'Drama',
     imageSrc: '/images/The_Drop_Cover_Art.png',
     pdfSrc: '',
-    cast: '3M, 2F, Flexible Ensemble',
+    cast: '3M/2F/Flexible Ensemble',
     synopsis:
       'This play follows Jonah, a young man reeling from the loss of his father as he wrestles with grief, doubt, and the need to find meaning in the chaos. Through conversations with his mother, his best friend Casey, and a mysterious figure known as The Stranger, Jonah begins to explore what it truly means to trust. Blending humor, vulnerability, and quiet moments of transcendence, The Drop invites audiences of all beliefs to reflect on healing, hope, and the unseen forces that carry us forward.',
     featured: true,
@@ -237,31 +237,31 @@ export const worksData: Work[] = [
     category: 'Historical Drama',
     imageSrc: '/images/The_Silence_of_Trees.png',
     pdfSrc: '',
-    cast: '4F, 2 Young Girls, 1M, 1 Boy, Flexible Ensemble',
+    cast: '1M/4F/Flexible Ensemble',
     synopsis:
       'Set in Nazi-occupied Netherlands, The Silence of Trees tells the true story of three teenage girls—Freddie Oversteegen, her sister Truus, and their friend Hannie Schaft—who become courageous resistance fighters risking everything to sabotage Nazi operations. Through haunting narration, shadow play, and puppetry, this poetic drama explores the emotional cost of their fight and the silent legacy they left behind. It is a story of daughters, sisters, and children choosing resistance over survival, revealing a hidden chapter of history.',
     featured: true,
     published: false,
-    runtime: 'Full Length',
+    runtime: '90-120 minutes',
   },
   {
     title: 'In the Lap of Queens',
-    category: 'Southern Ensemble Drama',
+    category: 'Drama',
     imageSrc: '/images/In_the_Lap_of_Queens_Cover_Art.png',
     pdfSrc: '',
-    cast: '3M/5W/Flexible Ensemble',
+    cast: '3M/5F/Flexible Ensemble',
     synopsis:
       'A soulful coming-of-age play about a young white boy, Jamie, raised by a circle of strong Black women in small-town Texas. Through joy, trauma, fashion, and fierce love, the Queens shape him into the man he was always meant to be. Their legacy becomes his foundation—and their lap, his home.',
     featured: true,
     published: false,
-    runtime: 'Full Length',
+    runtime: '90-120 minutes',
   },
   {
     title: 'Thirst',
-    category: 'Biographical Drama',
+    category: 'Historical Drama',
     imageSrc: '/images/Thirst_Cover_art.png',
     pdfSrc: '',
-    cast: '7W/Flexible Ensemble',
+    cast: '7F/Flexible Ensemble',
     synopsis:
       'Set in the sweltering streets of 1930s Chicago, Thirst follows a fearless coalition of Black women who rise against racial injustice, economic hardship, and political indifference to demand education and equality for their children. As rallies ignite and resistance mounts, their fight for a new school grows into a larger battle for dignity and recognition in a world determined to silence them. Both urgent and inspiring, Thirst is a story of resilience, unity, and the unquenchable drive for justice that still echoes today.',
     featured: false,
@@ -273,7 +273,7 @@ export const worksData: Work[] = [
     category: 'Drama',
     imageSrc: '/images/EoV_CIE.png',
     pdfSrc: '',
-    cast: '4M/3W',
+    cast: '4M/3F',
     synopsis:
       'Echoes of Valor: Community Interaction Edition is a powerful, 45-minute exploration of the struggles faced by modern veterans, designed to spark conversation with audiences. Set in an intimate support group where courage is redefined, the play follows veterans from diverse backgrounds—Maria, battling depression; James, fighting addiction; Nate, grappling with injury and self-doubt; Ella, confronting trauma and isolation; and Tyrone, masking inner turmoil—sharing their unflinching personal stories of PTSD, survivor’s guilt, and the challenges of reintegrating into a society that often overlooks their pain. Led by the compassionate facilitator Andrew, the group discovers profound strength in one another, and the epilogue features survivors delivering sobering statistics and a memorial to those lost, offering a poignant call to recognize the enduring human cost of service while encouraging dialogue and community reflection.',
     featured: false,
@@ -290,31 +290,31 @@ export const worksData: Work[] = [
       "What if Macbeth chose honor over ambition? What if, when faced with prophecy, he turned away from blood and crown alike? Blood & Shadow: An Alternate Tragedy of Macbeth dares to reimagine Shakespeare's classic, asking whether any man can truly defy fate. In this bold retelling, Macbeth remains steadfast in loyalty, yet the Norns—the ancient weavers of destiny—tighten their grip. As whispers of power twist through Scotland's nobles, friendship frays, love darkens, and betrayal blooms. A gripping tale of fate versus free will, Blood & Shadow asks: if a man resists destiny, does destiny destroy him all the same?",
     featured: false,
     published: false,
-    runtime: 'approx.. 60-90 minutes',
+    runtime: '60-90 minutes',
   },
   {
     title: 'Doug’s Guide to the Supernatural (and Totally True) Series',
-    category: 'Comedy',
+    category: 'Collection',
     imageSrc: '/images/Dougs_Guide_to_the_Supernatural_Cover_Art.png',
     pdfSrc: '',
-    cast: '2M/2W/1V.O.',
+    cast: '2M/2F/1V.O.',
     synopsis:
       'Doug’s Guide to the Supernatural (and Totally True) is an unreliable but enthusiastic field manual for navigating the hidden world of monsters, magic, and mayhem. With shaky evidence, cursed artifacts, and a suspicious number of unpaid interns, Doug investigates everything from vampire senators to kaiju coverups. No conspiracy is too wild—from fairy economics to government bans on silverware—as Doug tries to expose the truth behind the paranormal. Just don’t be surprised if he accidentally opens another portal to the Shadow Realm along the way.',
     featured: false,
     published: false,
-    runtime: 'Collection of short plays',
+    runtime: 'Collection',
   },
   {
     title: 'Doug’s Guide to the Unexplained (and Totally True) Series',
-    category: 'Comedy',
+    category: 'Collection',
     imageSrc: '/images/Dougs_Guide_to_the_Unexplained_Cover_Art.png',
     pdfSrc: '',
-    cast: '2M/2W',
+    cast: '2M/2F',
     synopsis:
       'Doug’s Guide to the Unexplained (and Totally True) is a fast-paced, factually questionable comedy series that dives headfirst into the world of history’s wildest conspiracies. From Sasquatch ghostwriting Shakespeare to Mothman advising the Founding Fathers, Doug has the red string and paranoia to prove it all. With help from a chaotic crew, he uncovers the bizarre truth behind cryptids, secret societies, and the dark influence of Girl Scout Cookies. Whether he’s on the verge of a breakthrough or a breakdown, one thing’s certain—Doug won’t stop until every mystery is (sort of) solved.',
     featured: false,
     published: false,
-    runtime: 'Collection of short plays',
+    runtime: 'Collection',
   },
   {
     title: 'A Capital Mess',
@@ -330,10 +330,10 @@ export const worksData: Work[] = [
   },
   {
     title: 'Beast Quest',
-    category: 'Fantasy based Comedy',
+    category: 'SciFi/Fantasy',
     imageSrc: '/images/Beast_Quest_Cover_Art.png',
     pdfSrc: '',
-    cast: '2M/2W/2 Flexible',
+    cast: '2M/2F/2 Flexible',
     synopsis:
       'When whispers of a monster lurking in ancient ruins begin to spread, a band of adventurers sets out to uncover the truth. Led by the unshakable ranger Seraphina, the group faces eerie noises, unreliable witnesses, and each other’s wildly clashing personalities. As the night grows stranger, they’re forced to confront a truth more bizarre than any legend. Packed with chaotic humor and D&D-style action, Beast Quest: Legends of the Realms is a hilarious and harrowing journey into the unknown.',
     featured: false,
@@ -345,7 +345,7 @@ export const worksData: Work[] = [
     category: 'Historical Drama',
     imageSrc: '/images/Currents_and_Frequencies_Cover_Art.png',
     pdfSrc: '',
-    cast: '4M/3W/2 Flexible',
+    cast: '4M/3F/2 Flexible',
     synopsis:
       "Currents & Frequencies follows the ghost of Nikola Tesla as he lingers between worlds, still chasing the future he once envisioned. A modern-day Boy, grappling with grief and purpose, becomes the unlikely conduit for Tesla’s forgotten dreams. Guided by Katharine, a museum educator who also embodies Tesla’s cherished pigeon, the Boy unearths buried truths through surreal encounters, glowing memories, and static-laced voices from the past. As history and imagination collide, the play asks whether the most powerful force isn't electricity—but faith.",
     featured: false,
@@ -357,7 +357,7 @@ export const worksData: Work[] = [
     category: 'Comedy',
     imageSrc: '/images/Final_Boarding_Call_Art.png',
     pdfSrc: '',
-    cast: '2M/2W/2 Flexible',
+    cast: '2M/2F/2 Flexible',
     synopsis:
       'Final Boarding Call is a fast-paced absurdist comedy set in the chaos of Gate 42, where a group of eccentric strangers confronts a perpetually delayed flight. As the frazzled gate agent battles missing airplane parts and mounting technical failures, she must also manage a cast of travelers spiraling into mayhem. From invisible emotional support animals to livestream meltdowns and weaponized granola bars, the terminal becomes a whirlwind of ferrets, raccoons, and existential crises. In this sharp, witty farce, human connection takes center stage—even when the plane never does.',
     featured: false,
@@ -369,7 +369,7 @@ export const worksData: Work[] = [
     category: 'Comedy/Drama',
     imageSrc: '/images/One_Table_Cover_Art.png',
     pdfSrc: '',
-    cast: '2M/3W/2 Flexible',
+    cast: '2M/3F/2 Flexible',
     synopsis:
       'One Table is a heartfelt 20-minute play set at a community potluck where a diverse group of LGBTQIA+ individuals and allies come together to share stories, struggles, and laughter. As they open up over a shared meal, personal experiences reveal common threads of love, identity, and resilience. From prom night heartbreaks to unexpected friendships, the characters challenge stereotypes and grow closer through vulnerability and honesty. Ultimately, the play celebrates the power of unity, the importance of listening, and the small victories that lead to lasting change.',
     featured: false,
@@ -381,7 +381,7 @@ export const worksData: Work[] = [
     category: 'Comedy',
     imageSrc: '/images/Prophit_for_Hire.png',
     pdfSrc: '',
-    cast: '4M/2W/3 Flexible',
+    cast: '4M/2F/3 Flexible',
     synopsis:
       'Prophet for Hire is a dark comedy that reimagines Greek tragedy through the jaded perspective of Tiresias, the blind prophet cursed with unwelcome divine insight. Exhausted by a lifetime of ignored truths and absurd royal requests, Tiresias endures everything from Oedipus blaming prophecy on paperwork to Agamemnon offering goat-bribes. With sharp, modern humor, the play satirizes the foolishness of power and the burden of being right in a world that won’t listen. At its heart, it’s the story of a reluctant truth-teller trying to keep his sanity while navigating divine bureaucracy.',
     featured: false,
@@ -391,10 +391,11 @@ export const worksData: Work[] = [
   {
     title:
       'Shakespeare Shorts: A Collection of Short and Not so Short plays based and/or inspired by William Shakespeare.',
-    category: 'Various Genres',
+    category: 'Collection',
     imageSrc: '/images/Shakespeare_Shorts.png',
     pdfSrc: '',
     cast: 'Various Cast Sizes',
+    runtime: 'Collection',
     synopsis:
       'Shakespeare Shorts is a spirited collection of comedic and thought-provoking plays that remix the Bard’s world with irreverence, imagination, and insight. From courtroom showdowns questioning Shakespeare’s legacy to labor strikes in the fairy realm, these plays dive into familiar tales and tropes with a modern, satirical twist. The collection features literary mashups, absurdist retellings, cryptid conspiracies, and reimaginings of classic characters—often from the margins of the original texts—bringing fresh voices and perspectives to the Shakespearean canon. Whether poking fun at theatrical tradition or mining hidden truths in the forest of metaphor, Shakespeare Shorts invites audiences to laugh, question, and fall in love with the Bard all over again.',
     featured: false,
@@ -406,7 +407,7 @@ export const worksData: Work[] = [
     category: 'Comedy',
     imageSrc: '/images/What_had_happened_was.png',
     pdfSrc: '',
-    cast: '5M/3W',
+    cast: '5M/3F',
     synopsis:
       'When a pretentious community theatre director mysteriously drops dead during tech week, an over-the-top cast of misfits scrambles to figure out what happened. With malfunctioning fog machines, wild flashbacks, and a detective who knows more about Chekhov than crime scenes, chaos (and comedy) ensues. This ten-minute whodunit is a ridiculous love letter to the beautiful dysfunction of community theatre.',
     featured: false,
@@ -415,10 +416,10 @@ export const worksData: Work[] = [
   },
   {
     title: 'Still Waters',
-    category: 'Poetic Drama',
+    category: 'Drama',
     imageSrc: '/images/Still_Waters.png',
     pdfSrc: '',
-    cast: '2M/2W/6-12 Flexible',
+    cast: '2M/2F/6-12 Flexible',
     synopsis:
       'A nonverbal autistic teen named Eli navigates a world that demands conformity, sound, and speed. Guided by his inner self, "Mind Voice," Eli’s emotional and sensory journey unfolds through expressive movement, layered soundscapes, and abstract storytelling. As those around him begin to truly listen, the play becomes a quiet call for empathy, understanding, and the power of being seen—even in silence.',
     featured: false,
@@ -427,10 +428,10 @@ export const worksData: Work[] = [
   },
   {
     title: 'The Last Safe Place',
-    category: 'Dystopian Drama',
+    category: 'Drama',
     imageSrc: '/images/The_Last_Safe_Place_Cover_Art.png',
     pdfSrc: '',
-    cast: '3M/3W/Ensemble',
+    cast: '3M/3F/Ensemble',
     synopsis:
       'In a dystopian future where ideas are crimes, five strangers are trapped in a surveillance-ridden cell and forced through psychological “truth exercises” by an unseen Voice. As their minds unravel and confessions are coerced, the system’s true goal is revealed: obedience, spectacle, and public shame. The line between audience and prisoner collapses in the chilling realization that no one is beyond the reach of control.',
     featured: false,
@@ -439,10 +440,10 @@ export const worksData: Work[] = [
   },
   {
     title: 'The Light and the Shadow: A Journey of Balance',
-    category: 'Mythic Drama',
+    category: 'SciFi/Fantasy',
     imageSrc: '/images/The_Light_and_the_Shadow_Cover_Art.png',
     pdfSrc: '',
-    cast: '7M/3W/Flexible Ensemble',
+    cast: '7M/3F/Flexible Ensemble',
     synopsis:
       'A mythic retelling of the Mayan legend of the Hero Twins, Hunahpu and Xbalanque. Together, they journey to the underworld to face treacherous trials, confront the Lords of Xibalba, and overcome the darkness within themselves. Through sacrifice and unity, the twins transform into the Sun and Moon, restoring balance to the world.',
     featured: false,
@@ -452,10 +453,10 @@ export const worksData: Work[] = [
   {
     title:
       'The Other Side of Quiet - A play about borders, becoming, and belonging.',
-    category: 'Current Events',
+    category: 'Drama',
     imageSrc: '/images/Side_of_Quiet.png',
     pdfSrc: '',
-    cast: '4M/3W/Flexible Chorus',
+    cast: '4M/3F/Flexible Chorus',
     synopsis:
       'This poetic drama explores the lives of immigrants in America through interwoven vignettes, monologues, and choral movement. From interrogation rooms to hospital shifts and distant memories, the play reveals the quiet strength and invisible labor of those living in the margins. It is a moving, multilingual call to see, honor, and remember the humanity behind the headlines.',
     featured: false,
@@ -464,22 +465,22 @@ export const worksData: Work[] = [
   },
   {
     title: 'The Static Room (A Paranormal Thriller)',
-    category: 'Thriller',
+    category: 'Screenplay',
     imageSrc: '/images/The_Static_Room.png',
     pdfSrc: '',
-    cast: '1M/1W',
+    cast: '1M/1F',
     synopsis:
       'When Julia follows her friend Miles into an abandoned radio station, they encounter a mysterious voice crackling through decades of static. As the past seeps into the present, Julia discovers Miles didn’t come for answers—he came for someone he lost. A tense, supernatural thriller exploring grief, obsession, and the peril of listening to what should remain silent.',
     featured: false,
     published: false,
-    runtime: '1 minute',
+    runtime: 'TBD',
   },
   {
     title: 'Weeping Waters or Let the River Remember',
-    category: 'Paranormal Drama',
+    category: 'Drama',
     imageSrc: '/images/Weeping_Waters.png',
     pdfSrc: '',
-    cast: '4W/1M/Flexible Ensemble',
+    cast: '4F/1M/Flexible Ensemble',
     synopsis:
       'A poetic ghost story rooted in Latin American folklore and intergenerational grief. When a teenager named Elena enters the river in search of the truth behind the legend of La Llorona, she is pulled into a dream-realm where myth and memory collide. There, she uncovers the hidden pain of her family’s past and begins a journey toward remembrance, empathy, and release.',
     featured: false,
@@ -488,10 +489,10 @@ export const worksData: Work[] = [
   },
   {
     title: 'Duck, Duck, Gone - “They sat in a circle. Until they didn’t.”',
-    category: 'Social Issues Play',
+    category: 'Drama',
     imageSrc: '/images/Duck_Duck_Gone_Cover_Art.png',
     pdfSrc: '',
-    cast: '5M / 5F / Flexible Ensemble',
+    cast: '5M/5F/Flexible Ensemble',
     synopsis:
       'A haunting meditation on childhood lost to violence, tracing its unbroken history from early school shootings to modern tragedies. Through fractured testimonies and memories, the play explores collective responsibility, mental health, and the impact of silence in the face of suffering. As it nears its end, the audience is invited to join the circle of loss and reflection, urging a reckoning rather than assigning blame.',
     featured: false,
@@ -500,10 +501,10 @@ export const worksData: Work[] = [
   },
   {
     title: 'Golden Hot Girl Summer',
-    category: 'Geriatric Comedy',
+    category: 'Comedy',
     imageSrc: '/images/Golden_Hot_Girl_Summer.png',
     pdfSrc: '',
-    cast: '1M/3W',
+    cast: '1M/3F',
     synopsis:
       'Forget what you think you know about aging—these fierce seniors are rewriting the rulebook one flamingo float and Jell-O shot at a time. When a stuffy community center turns into the ultimate retirement rave, chaos, sass, and a little hip replacement collide in a wild “Golden Hot Girl Summer.” With a nervous intern caught in the crossfire, this comedy serves up laughs, attitude, and proof that fun—and trouble—only get better with age.',
     featured: false,
@@ -524,7 +525,7 @@ export const worksData: Work[] = [
   },
   {
     title: 'Just Rob, in the Hood',
-    category: 'Theater for Young People',
+    category: 'Theater for Youth',
     imageSrc: '/images/Rob_in_the_Hood.png',
     pdfSrc: '',
     cast: '15-20 Actors of Various Genders',
@@ -536,7 +537,7 @@ export const worksData: Work[] = [
   },
   {
     title: 'Mission: Implausible',
-    category: 'SciFi Comedy',
+    category: 'SciFi/Fantasy',
     imageSrc: '/images/Mission_Implausible.png',
     pdfSrc: '',
     cast: '1M/Voices/Small Ensemble',
@@ -548,10 +549,10 @@ export const worksData: Work[] = [
   },
   {
     title: 'Sherlock Holmes and the Devil of Dry Creek',
-    category: 'Stage Play',
+    category: 'Comedy',
     imageSrc: '/images/Sherlock_Holmes.png',
     pdfSrc: '',
-    cast: '5M/2W/1 Creepy Voice',
+    cast: '5M/2F/1 Creepy Voice',
     synopsis:
       'Holmes and Watson find themselves in the lawless town of Dry Creek, where they investigate the murder of banker Thaddeus Pike. Amidst wild West superstition, Holmes uncovers a hidden smuggling tunnel beneath the bank and reveals Pike’s blackmail of locals, including saloon owner Sadie McGraw. The investigation leads to a confrontation where Sadie is exposed as the murderer, motivated by her desire to protect her family’s illegal operations. With the case solved, Holmes reflects on the chaotic, unpredictable nature of the American West, while Watson longs for the calm of London.',
     featured: false,
@@ -560,7 +561,7 @@ export const worksData: Work[] = [
   },
   {
     title: 'SMILE!',
-    category: 'A Play Based on a Historical Event',
+    category: 'Historical Drama',
     imageSrc: '/images/SMILE_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2F/Large Ensemble',
@@ -572,7 +573,7 @@ export const worksData: Work[] = [
   },
   {
     title: 'Skybound',
-    category: 'A Modern Adaptation of Aristophanes’ comedy “The Birds”',
+    category: 'Comedy',
     imageSrc: '/images/Skybound.png',
     pdfSrc: '',
     cast: '15-20 Actors',
@@ -584,10 +585,10 @@ export const worksData: Work[] = [
   },
   {
     title: 'The Committee Will Now Consider the Uterus',
-    category: 'Political Comedy',
+    category: 'Political Satire',
     imageSrc: '/images/script_placeholder.png',
     pdfSrc: '',
-    cast: '1M/2W/1NB/1 Other',
+    cast: '1M/2F/1NB/1 Other',
     synopsis:
       'In a surreal small-town townhall, five wildly different citizens gather to debate the future of reproductive rights—over one uterus placed on the docket like city zoning. As bureaucracy collides with bodily autonomy, absurdity and truth tango in a sharp, satirical battle of wits, revealing what’s personal isn’t up for committee.',
     featured: false,
@@ -596,10 +597,11 @@ export const worksData: Work[] = [
   },
   {
     title: 'The Complete Works of Molière (Condensed)',
-    category: 'Full Length Physical Comedy',
+    category: 'Comedy',
     imageSrc: '/images/Moliere.png',
     pdfSrc: '',
     cast: '4 Actors',
+    runtime: '90-120 minutes',
     synopsis:
       'A fast-paced comedy that brings Molière’s greatest plays to life with slapstick humor, witty banter, and audience interaction. Four actors humorously condense his iconic works, from Tartuffe to The Miser, while poking fun at their theatrical ambitions and the absurdity of the endeavor. This high-energy romp combines farce, musical interludes, and satire, offering a fun, chaotic experience for both theater lovers and newcomers.',
     featured: false,
@@ -607,10 +609,10 @@ export const worksData: Work[] = [
   },
   {
     title: 'The Gathering',
-    category: 'A Modern Family Drama',
+    category: 'Drama',
     imageSrc: '/images/The_Gathering.png',
     pdfSrc: '',
-    cast: '3M/4W/1Any',
+    cast: '3M/4F/1Any',
     synopsis:
       'Set during Thanksgiving in 1996, The Gathering follows the unraveling of the Calloway family, led by the authoritarian patriarch Harrison Calloway. Tensions escalate when Jack and his child, Alex, return home, triggering a battle over identity, faith, and control as Alex pushes against their conservative family’s oppressive expectations. Amidst these conflicts, long-hidden truths emerge, exposing the cost of breaking free from familial and societal constraints.',
     featured: false,
@@ -620,10 +622,10 @@ export const worksData: Work[] = [
   {
     title:
       'The Sacred Art of Falling: The Fight She Inherited. The Future She Claimed.',
-    category: 'A One Act Play About Women Wrestlers',
+    category: 'One Act Play',
     imageSrc: '/images/The_Sacred_Art_of_Falling.png',
     pdfSrc: '',
-    cast: '1M/10W/Voices',
+    cast: '1M/10F/Voices',
     synopsis:
       "Follows Cassie Ramos, an independent wrestler battling to earn respect in a male-dominated sport. Guided by the spirits of wrestling legends Mildred Burke, Mae Young, and The Fabulous Moolah, Cassie trains and uncovers the lost history of women pioneers in wrestling. As she builds her own wrestling school and challenges the industry's structures, she discovers a deeper sisterhood and culminates in a historic event honoring women's legacy in the sport.",
     featured: false,
@@ -632,10 +634,11 @@ export const worksData: Work[] = [
   },
   {
     title: 'Under the Fairie Tree',
-    category: 'Folklore Play – Available in Short Format and One Act Format',
+    category: 'One Act Play',
     imageSrc: '/images/Under_the_Fairie_Tree_Art.png',
     pdfSrc: '',
     cast: '5F/1 Offstage Voice',
+    runtime: 'TBD',
     synopsis:
       "Under the Fairie Tree is a poignant exploration of tradition versus progress set in a small village, where a sacred fairy tree stands as a living archive of the women who built the community in silence. Maeve, the tree’s steadfast guardian, grieves as the village council approves a road that threatens to destroy it. Nora, her daughter, supports the plan in the name of progress, while Ellen, the engineer, believes the road is the only way to save the dying town. Clara, Maeve’s youngest daughter, is caught between them—too young to choose a side, yet too old to ignore what is being lost. As construction nears, Clara listens to the land and the women who have tended it for generations. With the guidance of her mother and the wise elder, Ellie O'Connell, Clara discovers a way to reroute the road twenty meters east, saving both the tree and the village's history. In the end, the women stand together, forcing progress and heritage to coexist. Under the Fairie Tree is a story of memory, inheritance, and the quiet strength of women who refuse to be erased.",
     featured: false,
@@ -643,10 +646,11 @@ export const worksData: Work[] = [
   },
   {
     title: 'Much Ado About Nothingness',
-    category: 'Short Surreal Play',
+    category: 'Comedy',
     imageSrc: '/images/Much_Ado_About_Nothingness_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2GF',
+    runtime: 'TBD',
     synopsis:
       'Much Ado About Nothingness is a surreal, existential play that imagines a profound meeting between two literary giants, William Shakespeare and Samuel Beckett, in an infinite, timeless void. As they debate the nature of storytelling, meaning, and existence, they are joined by a mischievous Fool and an enigmatic Messenger, both of whom challenge and mirror their philosophies. The play delves into the paradoxes of life and death, silence and sound, and the role of the artist in a seemingly indifferent universe. With moments of dark humor, poetic reflection, and metaphysical intrigue, the play explores whether life is a meaningful story or simply an absurd wait for meaning, leaving audiences to ponder the fleeting nature of existence and the ways we create meaning out of nothingness.',
     featured: false,
@@ -654,7 +658,7 @@ export const worksData: Work[] = [
   },
   {
     title: 'The Forsaken: A Retelling of Richard III',
-    category: 'Historical Drama / Tragic Reimagining',
+    category: 'Historical Drama',
     imageSrc: '/images/The_Forsaken.jpg',
     pdfSrc: '',
     cast: '10-20 performers (flexible doubling possible)',
@@ -662,14 +666,15 @@ export const worksData: Work[] = [
       'The Forsaken: A Retelling of Richard III invites audiences to reexamine one of history’s most maligned figures. In this haunting and poetic reimagining, Richard, Duke of Gloucester—soldier, brother, and reluctant heir—battles not for power but for truth. As England teeters between peace and chaos, Richard finds himself ensnared in the ruthless web of courtly ambition and betrayal. Guided by a mysterious Figure who bridges myth and history, Richard’s journey reveals not the villain of Shakespeare’s pen, but a man condemned by the quills of victors. When the smoke clears at Bosworth Field, what remains is not a tyrant’s fall, but the tragedy of a man forsaken by history itself.',
     featured: false,
     published: false,
-    runtime: 'Approximately 90–100 minutes',
+    runtime: '90-100 minutes',
   },
   {
     title: 'Iago',
-    category: 'Psychological Drama',
+    category: 'Drama',
     imageSrc: '/images/IAGO_Coverart.png',
     pdfSrc: '',
-    cast: '6 M/2 F/7-10 V',
+    cast: '6M/2F/7-10V',
+    runtime: 'TBD',
     synopsis:
       "IAGO is a gripping psychological prequel to Shakespeare's Othello, exploring the transformation of one of the most cunning villains in literary history. Set in the political and military turmoil of Venice, the play delves into Iago’s manipulation of those around him, his thirst for power, and his complex motivations. As a soldier with a deeply scarred past, Iago’s PTSD and internal demons drive him to orchestrate a web of betrayal, testing loyalty and trust. In the process, he manipulates Roderigo, the trusting fool, while plotting his own rise to power. Iago’s actions lay the groundwork for the tragic events of Othello, as he carefully sets his machinations into motion. As the play unravels, Iago's ambition, resentment, and trauma become more apparent, revealing the fragile psyche beneath his ruthless exterior. Through his manipulation of Othello, Roderigo, and other figures, Iago’s thirst for control grows ever more intense. But as his schemes play out, he is haunted by the psychological scars of war and betrayal, questioning whether he will ever truly escape his past. The tragedy lies not just in his actions but in the psychological toll that has shaped him—leaving the audience to ponder the true cost of power, trust, and manipulation.",
     featured: false,
@@ -680,7 +685,8 @@ export const worksData: Work[] = [
     category: 'Drama',
     imageSrc: '/images/Refresh_To_Load.png',
     pdfSrc: '',
-    cast: '1F / 3M / 1NB / 1OSV',
+    cast: '1F/3M/1NB/1OSV',
+    runtime: 'TBD',
     synopsis:
       "Refresh to Load is a tense, urgent one-act play that follows five young activists who livestream their resistance from a cramped safehouse as a government crackdown closes in. As their message spreads online, so does the threat—until the stream suddenly cuts out. Performed in a single continuous scene with no set and minimal lighting, the play explores digital activism, performative allyship, and what remains when the cameras go dark. Inspired by Gil Scott-Heron’s iconic warning, this play asks: if the revolution isn't televised… will anyone notice when it disappears?",
     featured: false,
@@ -688,10 +694,11 @@ export const worksData: Work[] = [
   },
   {
     title: 'FLYDERS!',
-    category: 'Horror-Comedy Screenplay',
+    category: 'Screenplay',
     imageSrc: '/images/FLYDERS.png',
     pdfSrc: '',
-    cast: '',
+    cast: 'TBD',
+    runtime: 'TBD',
     synopsis:
       "After a freak earthquake cracks open a secret military lab deep in the Montana wilderness, a swarm of government-engineered, flying, hyper-aggressive spiders—code name: Flyders—descend on the peaceful town of Clearwater. As the arachnids web up the countryside, a ragtag band of unlikely heroes emerges: Jim, a rugged, dad-bod park ranger with great flannel game; Lexi, an eccentric entomologist with a bug problem and a bigger attitude; a no-nonsense troop of Mountain Scouts led by the fierce and tactical Sara; and Ziggy, a blissed-out van-dweller whose new best friend is an actual Flyder named Sticky. Meanwhile, the military wants to torch the town and cover up everything. Survivors flee to the mountains—nudists, ranchers, babies, and all—seeking refuge in abandoned mines. There, secrets are uncovered, alliances are tested, and the only hope of saving humanity may lie in a homemade chemical discovered in a diner and the Girl Scouts' merit badge-level genius. Packed with explosive action, deadpan humor, insectoid chaos, and just the right amount of weed smoke, Flyders! is a horror-comedy thrill ride where the bite is bad, but the buzz is worse.",
     featured: false,
