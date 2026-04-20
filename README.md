@@ -14,7 +14,8 @@ A performant, accessible portfolio site that serves as Will's primary profession
 
 ## Features
 
-- **Selected Works catalog** — 50+ plays with cover art, genre tags, and publication status, sourced from a structured TypeScript data file
+- **Selected Works catalog** — 57 plays with cover art, genre tags, and publication status, sourced from a structured TypeScript data file
+- **Standardized play data** — all 57 plays normalized to a consistent 13-category genre taxonomy; runtime values unified to range format (e.g. `45–55 minutes`); cast notation standardized to M/F/NB/Flexible across all entries
 - **Search & filter** — real-time text search by title and synopsis; filter by genre, runtime, cast size, and published status simultaneously; sticky filter bar, result count, and a friendly empty state when no results match — all client-side, no API calls
 - **Full CV page** — professional history formatted for the theatre industry
 - **Rights inquiry form** — contact form with reCAPTCHA protection to handle licensing and production requests
@@ -51,8 +52,8 @@ Play catalog data is currently managed via a static TypeScript file (`src/data/w
 
 ## Roadmap
 
-- [ ] **Data standardization** — Audit and standardize the `category`, `runtime`, and `cast` fields in `src/data/works.ts` for consistency. Currently 36 unique genre values and 30 unique runtime formats across 57 plays. Prerequisite for reliable filter results.
-- [ ] **Individual play pages** — Dedicated routes (e.g., `/works/hamlet-a-horatio-story`) for each play, making them linkable, shareable, and indexable by search engines. Replaces or supplements the current modal-only detail view.
+- [ ] **Individual play pages** — Dedicated routes (e.g., `/works/hamlet-a-horatio-story`) per play, making them linkable, shareable, and indexable by search engines. Replaces or supplements the current modal-only detail view.
+- [ ] **Pending data updates** — Fill in TBD runtimes and cast info for 6 plays, add the R.U.R. adaptation, add new plays from client, and update the featured works list.
 - [ ] **Image optimization audit** — Audit and compress cover art source files in `/public/images/`, several of which are 3–4MB PNGs. Next.js handles resizing at runtime but large source files still impact load time, especially on `/works`.
 - [ ] **Admin backend** — Authenticated dashboard for Will to add and manage plays without touching code. Will require a database or headless CMS integration (likely Postgres or Sanity). Defer until items 1 and 2 are complete.
 
