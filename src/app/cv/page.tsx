@@ -1,6 +1,11 @@
-// src/app/cv/page.tsx
-
+import type { Metadata } from 'next';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+  title: 'CV | William L. Walker Montgomerie',
+  description:
+    'Full curriculum vitae for William L. Walker Montgomerie — playwright, director, and educator based in Paris, Texas.',
+};
 
 export default function CVPage() {
   return (
