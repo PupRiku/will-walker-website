@@ -54,7 +54,8 @@ will-walker-website/
 │   │   │   ├── page.tsx             # Full CV page (hardcoded content)
 │   │   │   └── page.module.css
 │   │   ├── works/
-│   │   │   ├── page.tsx             # Full play catalog grid, casting modal, download/apply links
+│   │   │   ├── page.tsx             # Thin server wrapper — exports metadata, renders WorksClient
+│   │   │   ├── WorksClient.tsx      # 'use client' — all filter/sort/modal state lives here
 │   │   │   └── page.module.css
 │   │   ├── thank-you/
 │   │   │   ├── page.tsx             # Post-contact-form success page
@@ -71,8 +72,17 @@ will-walker-website/
 │   │   ├── Modal.tsx / .module.css     # Play detail modal (used in carousel on home page)
 │   │   ├── Plays.tsx / .module.css     # Embla carousel of featured plays (home page)
 │   │   └── SocialLinks.tsx / .module.css
-│   └── data/
-│       └── works.ts                 # THE SOURCE OF TRUTH for all play content
+│   ├── data/
+│   │   └── works.ts                 # THE SOURCE OF TRUTH for all play content
+│   ├── utils/
+│   │   └── filterSort.ts            # Pure filter/sort logic extracted from WorksClient (testable)
+│   └── test/
+│       ├── setup.ts                 # @testing-library/jest-dom import
+│       ├── data/works.test.ts       # Data integrity tests
+│       ├── components/
+│       │   ├── Modal.test.tsx
+│       │   └── Header.test.tsx
+│       └── utils/filterSort.test.ts
 ├── next.config.ts
 ├── tsconfig.json                    # strict: true, paths: @/* -> ./src/*
 ├── eslint.config.mjs
@@ -112,7 +122,7 @@ export type Work = {
   category: string;       // Genre label (e.g., 'Drama', 'Comedy', 'Historical Drama')
   imageSrc: string;       // Path relative to /public (e.g., '/images/Hamlet-A-Horatio-Story.jpg')
   pdfSrc: string;         // Sample PDF URL (external) — use '' if none
-  cast: string;           // Cast breakdown string (e.g., '3M, 3F', '2W, 2M, Large Flexible Ensemble')
+  cast: string;           // Cast breakdown string (e.g., '3M/3F', '2M/2F/Flexible Ensemble') — slash-separated, F not W
   synopsis: string;       // 2-4 sentence description in Will's voice
   featured?: boolean;     // true = appears in home page carousel
   published?: boolean;    // true = shows "Published" ribbon badge
@@ -150,7 +160,13 @@ export const worksData: Work[] = [ ... ];
 - Receives a `Work | null` prop plus `isOpen` boolean
 - Shows cover image, synopsis, cast breakdown, runtime
 - Buttons: "Read Sample" (if `pdfSrc` is set), "Purchase Rights" (if `published && purchase`), or "Apply for Rights" (Google Form fallback for unpublished works)
-- **Note:** `Modal.tsx` defines its own local `Play` type that mirrors `Work`. If the `Work` type in `works.ts` changes, update this type too to stay in sync.
+- Imports `Work` directly from `@/data/works` — no local type copy
+
+### `WorksClient.tsx` (Works Page — Client Logic)
+- `'use client'` component rendered by the server wrapper `works/page.tsx`
+- All filter state (`searchQuery`, `selectedGenre`, `publishedOnly`, `runtimeBucket`, `castBucket`) and sort state (`sortOrder`) live here
+- Calls `filterWorks` and `sortWorks` from `src/utils/filterSort.ts` — no inline filter logic
+- Types `RuntimeBucket`, `CastBucket`, `SortOrder` are imported from `filterSort.ts`
 
 ### `Contact.tsx` (Contact Form)
 - Uses **FormSubmit.co** — no backend email logic; form POSTs directly to FormSubmit
@@ -229,9 +245,45 @@ This site has solid accessibility practices — maintain them on any changes:
 
 Planned future features — do not implement unless explicitly asked:
 
-- [ ] **Search and filter** on `/works` — by genre, length, cast size, publication status
-- [ ] **Admin backend** — authenticated dashboard for Will to manage plays without touching code (likely Postgres or headless CMS)
 - [ ] **Individual play pages** — dedicated route per play with full synopsis, production history, and licensing details
+- [ ] **Admin backend** — authenticated dashboard for Will to manage plays without touching code (likely Postgres or headless CMS)
+- [ ] **Pending data updates** — runtime/cast fields still marked TBD need values from Will
+- [ ] **Image optimization audit** — verify all cover images are appropriately sized
+
+---
+
+## Per-page Metadata Pattern
+
+`export const metadata` only works in **server components**. Pages that need client-side state (`'use client'`) must be split:
+
+1. **`page.tsx`** — server component; exports `metadata`, renders the client component
+2. **`ClientName.tsx`** — `'use client'`; all hooks and interactivity
+
+The `/works` route follows this pattern: `works/page.tsx` → `works/WorksClient.tsx`.
+
+---
+
+## Testing
+
+**Stack:** Vitest + React Testing Library + jsdom
+
+```bash
+npm test          # run all tests once
+npm run test:ui   # Vitest UI (browser-based watcher)
+```
+
+**Config:** `vitest.config.ts` at project root — jsdom environment, setup file at `src/test/setup.ts`, `@/*` alias wired to `./src/`.
+
+**Test locations:**
+
+| File | What it covers |
+|---|---|
+| `src/test/data/works.test.ts` | Data integrity: required fields, imageSrc paths, cast notation, published → purchase URL |
+| `src/test/utils/filterSort.test.ts` | All exported functions: `classifyRuntime`, `parseCastSize`, `parseRuntimeForSort`, `parseCastForSort`, `filterWorks`, `sortWorks` |
+| `src/test/components/Modal.test.tsx` | Render, conditional buttons, overlay click, aria attributes |
+| `src/test/components/Header.test.tsx` | Nav links, hamburger toggle, aria-label, logo alt text |
+
+**Mocking pattern:** `next/image` and `next/link` are mocked with simple HTML equivalents in each component test file. `SocialLinks` is mocked in `Header.test.tsx`.
 
 ---
 
@@ -264,6 +316,5 @@ Edit `src/components/KoFiWidget.tsx`
 - No Tailwind (CSS Modules only)
 - No database or CMS — all content is in `works.ts` or hardcoded in TSX files
 - No authentication
-- No search or filtering (planned roadmap item)
 - No individual play pages (planned roadmap item)
 - No i18n / multilingual support
