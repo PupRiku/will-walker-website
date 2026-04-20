@@ -30,6 +30,20 @@ function parseCastSize(cast: string): number | null {
   return numbers.reduce((sum, n) => sum + parseInt(n, 10), 0);
 }
 
+function parseRuntimeForSort(runtime: string | undefined): number {
+  if (!runtime || runtime === 'TBD' || runtime === 'Collection') return Infinity;
+  const match = runtime.match(/\d+/);
+  if (!match) return Infinity;
+  return parseInt(match[0], 10);
+}
+
+function parseCastForSort(cast: string): number {
+  if (!cast || cast === 'TBD') return Infinity;
+  const matches = [...cast.matchAll(/(\d+)\s*(?:NB|V\.O\.|VO|[MF])(?![a-zA-Z])/g)];
+  if (matches.length === 0) return Infinity;
+  return matches.reduce((sum, m) => sum + parseInt(m[1], 10), 0);
+}
+
 export default function WorksPage() {
   const [isCastingModalOpen, setIsCastingModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,6 +54,15 @@ export default function WorksPage() {
   >('');
   const [castBucket, setCastBucket] = useState<
     '' | 'small' | 'medium' | 'large'
+  >('');
+  const [sortOrder, setSortOrder] = useState<
+    | ''
+    | 'title-asc'
+    | 'title-desc'
+    | 'runtime-asc'
+    | 'runtime-desc'
+    | 'cast-asc'
+    | 'cast-desc'
   >('');
 
   const clearFilters = () => {
@@ -105,6 +128,25 @@ export default function WorksPage() {
 
     return matchesSearch && matchesGenre && matchesPublished && matchesRuntime && matchesCast;
   });
+
+  const sortedWorks = (() => {
+    if (sortOrder === '') return filteredWorks;
+    const sorted = [...filteredWorks];
+    if (sortOrder === 'title-asc') {
+      sorted.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortOrder === 'title-desc') {
+      sorted.sort((a, b) => b.title.localeCompare(a.title));
+    } else if (sortOrder === 'runtime-asc') {
+      sorted.sort((a, b) => parseRuntimeForSort(a.runtime) - parseRuntimeForSort(b.runtime));
+    } else if (sortOrder === 'runtime-desc') {
+      sorted.sort((a, b) => parseRuntimeForSort(b.runtime) - parseRuntimeForSort(a.runtime));
+    } else if (sortOrder === 'cast-asc') {
+      sorted.sort((a, b) => parseCastForSort(a.cast) - parseCastForSort(b.cast));
+    } else if (sortOrder === 'cast-desc') {
+      sorted.sort((a, b) => parseCastForSort(b.cast) - parseCastForSort(a.cast));
+    }
+    return sorted;
+  })();
 
   return (
     <div className={styles.pageWrapper}>
@@ -197,6 +239,34 @@ export default function WorksPage() {
             <option value="medium">Medium (6–12)</option>
             <option value="large">Large (13+)</option>
           </select>
+          <label className={styles.sortLabel}>
+            <span>Sort by</span>
+            <select
+              className={styles.filterSelect}
+              value={sortOrder}
+              onChange={(e) =>
+                setSortOrder(
+                  e.target.value as
+                    | ''
+                    | 'title-asc'
+                    | 'title-desc'
+                    | 'runtime-asc'
+                    | 'runtime-desc'
+                    | 'cast-asc'
+                    | 'cast-desc'
+                )
+              }
+              aria-label="Sort by"
+            >
+              <option value="">Default Order</option>
+              <option value="title-asc">Title: A → Z</option>
+              <option value="title-desc">Title: Z → A</option>
+              <option value="runtime-asc">Runtime: Shortest First</option>
+              <option value="runtime-desc">Runtime: Longest First</option>
+              <option value="cast-asc">Cast Size: Smallest First</option>
+              <option value="cast-desc">Cast Size: Largest First</option>
+            </select>
+          </label>
           <label className={styles.publishedLabel}>
             <input
               type="checkbox"
@@ -221,7 +291,7 @@ export default function WorksPage() {
         )}
       </div>
 
-      {filteredWorks.length === 0 ? (
+      {sortedWorks.length === 0 ? (
         <div className={styles.emptyState}>
           <p className={styles.emptyStateText}>
             No plays match your current filters.
@@ -232,7 +302,7 @@ export default function WorksPage() {
         </div>
       ) : (
       <div className={styles.grid}>
-        {filteredWorks.map((work) => (
+        {sortedWorks.map((work) => (
           <div className={styles.card} key={work.title}>
             {work.published && <div className={styles.ribbon}>Published</div>}
             <Image
