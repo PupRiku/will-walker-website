@@ -14,9 +14,11 @@ A performant, accessible portfolio site that serves as Will's primary profession
 
 ## Features
 
-- **Selected Works catalog** — 20+ plays with cover art, genre tags, and publication status, sourced from a structured JSON data file
+- **Selected Works catalog** — 50+ plays with cover art, genre tags, and publication status, sourced from a structured TypeScript data file
 - **Full CV page** — professional history formatted for the theatre industry
 - **Rights inquiry form** — contact form with reCAPTCHA protection to handle licensing and production requests
+- **Featured plays carousel** — Embla-powered carousel on the home page highlighting selected works
+- **Ko-fi support widget** — floating Ko-fi button for direct audience support
 - **Fully responsive** — optimized for desktop and mobile
 - **Next.js Image optimization** — fast load times across all devices
 
@@ -24,20 +26,25 @@ A performant, accessible portfolio site that serves as Will's primary profession
 
 ## Tech Stack
 
-| Layer           | Technology                 |
-| --------------- | -------------------------- |
-| Framework       | Next.js (App Router)       |
-| Language        | TypeScript                 |
-| Styling         | CSS Modules / Tailwind CSS |
-| Form Protection | reCAPTCHA                  |
-| Data            | JSON (static content file) |
-| Deployment      | Vercel                     |
+| Layer           | Technology                                          |
+| --------------- | --------------------------------------------------- |
+| Framework       | Next.js 15 (App Router)                             |
+| Language        | TypeScript 5 (strict mode)                          |
+| Styling         | CSS Modules (per-component `.module.css` files)     |
+| Fonts           | Google Fonts via `next/font` (Lora, Lato, Special Elite) |
+| Carousel        | Embla Carousel                                      |
+| Icons           | React Icons                                         |
+| Form Service    | FormSubmit.co                                       |
+| Form Protection | reCAPTCHA v2                                        |
+| Analytics       | Vercel Analytics                                    |
+| Data            | TypeScript (static content file)                    |
+| Deployment      | Vercel                                              |
 
 ---
 
 ## Architecture Notes
 
-Play catalog data is currently managed via a static JSON file, which keeps the site simple and fast with no database dependency. This was an intentional MVP decision — the data changes infrequently and the JSON approach allows Will to understand and review the data directly.
+Play catalog data is currently managed via a static TypeScript file (`src/data/works.ts`), which keeps the site simple and fast with no database dependency. This was an intentional MVP decision — the data changes infrequently and the TypeScript approach allows the data to be reviewed directly while benefiting from type safety.
 
 ---
 
