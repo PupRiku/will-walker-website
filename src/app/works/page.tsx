@@ -9,11 +9,38 @@ import { BsDownload } from 'react-icons/bs';
 
 const genres = Array.from(new Set(worksData.map((w) => w.category))).sort();
 
+function classifyRuntime(
+  runtime: string | undefined
+): 'short' | 'medium' | 'long' | 'full' | null {
+  if (!runtime) return null;
+  if (runtime === 'Full Length') return 'full';
+  const match = runtime.match(/\d+/);
+  if (!match) return null;
+  const minutes = parseInt(match[0], 10);
+  if (minutes < 30) return 'short';
+  if (minutes < 60) return 'medium';
+  return 'long';
+}
+
+function parseCastSize(cast: string): number | null {
+  if (!cast) return null;
+  if (/flexible|various|ensemble/i.test(cast)) return null;
+  const numbers = cast.match(/\d+/g);
+  if (!numbers) return null;
+  return numbers.reduce((sum, n) => sum + parseInt(n, 10), 0);
+}
+
 export default function WorksPage() {
   const [isCastingModalOpen, setIsCastingModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [publishedOnly, setPublishedOnly] = useState(false);
+  const [runtimeBucket, setRuntimeBucket] = useState<
+    '' | 'short' | 'medium' | 'long' | 'full'
+  >('');
+  const [castBucket, setCastBucket] = useState<
+    '' | 'small' | 'medium' | 'large'
+  >('');
 
   const openCastingModal = () => setIsCastingModalOpen(true);
   const closeCastingModal = () => setIsCastingModalOpen(false);
@@ -45,7 +72,23 @@ export default function WorksPage() {
       work.synopsis.toLowerCase().includes(q);
     const matchesGenre = selectedGenre === '' || work.category === selectedGenre;
     const matchesPublished = !publishedOnly || work.published === true;
-    return matchesSearch && matchesGenre && matchesPublished;
+
+    const matchesRuntime = (() => {
+      if (runtimeBucket === '') return true;
+      const bucket = classifyRuntime(work.runtime);
+      return bucket === null || bucket === runtimeBucket;
+    })();
+
+    const matchesCast = (() => {
+      if (castBucket === '') return true;
+      const size = parseCastSize(work.cast);
+      if (size === null) return true;
+      if (castBucket === 'small') return size <= 5;
+      if (castBucket === 'medium') return size >= 6 && size <= 12;
+      return size >= 13;
+    })();
+
+    return matchesSearch && matchesGenre && matchesPublished && matchesRuntime && matchesCast;
   });
 
   return (
@@ -108,6 +151,35 @@ export default function WorksPage() {
                 {genre}
               </option>
             ))}
+          </select>
+          <select
+            className={styles.filterSelect}
+            value={runtimeBucket}
+            onChange={(e) =>
+              setRuntimeBucket(
+                e.target.value as '' | 'short' | 'medium' | 'long' | 'full'
+              )
+            }
+            aria-label="Filter by runtime"
+          >
+            <option value="">All Runtimes</option>
+            <option value="short">Short (under 30 min)</option>
+            <option value="medium">Medium (30–60 min)</option>
+            <option value="long">Long (60+ min)</option>
+            <option value="full">Full Length</option>
+          </select>
+          <select
+            className={styles.filterSelect}
+            value={castBucket}
+            onChange={(e) =>
+              setCastBucket(e.target.value as '' | 'small' | 'medium' | 'large')
+            }
+            aria-label="Filter by cast size"
+          >
+            <option value="">All Cast Sizes</option>
+            <option value="small">Small (1–5)</option>
+            <option value="medium">Medium (6–12)</option>
+            <option value="large">Large (13+)</option>
           </select>
           <label className={styles.publishedLabel}>
             <input
