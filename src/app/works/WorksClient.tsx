@@ -77,7 +77,7 @@ export default function WorksClient() {
         aria-label="Note on Casting Flexibility"
       >
         <Image
-          src="/images/casting_note_icon.png"
+          src="/images/assets/casting_note_icon.png"
           alt=""
           width={120}
           height={120}

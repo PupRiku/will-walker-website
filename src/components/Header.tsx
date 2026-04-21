@@ -24,7 +24,7 @@ export default function Header() {
           <Link href="/#home">
             <Image
               className={styles.logoImage}
-              src="/images/logo.png"
+              src="/images/assets/logo.png"
               alt="William L. Walker Montgomerie's circular logo"
               width={500}
               height={500}

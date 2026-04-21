@@ -17,7 +17,7 @@ export const worksData: Work[] = [
     slug: 'hamlet-a-horatio-story',
     title: 'Hamlet: A Horatio Story',
     category: 'Drama',
-    imageSrc: '/images/Hamlet-A-Horatio-Story.jpg',
+    imageSrc: '/images/covers/Hamlet-A-Horatio-Story.jpg',
     pdfSrc:
       'https://www.nextstagepress.com/wp-content/uploads/2025/06/HAMLET-A-Horatio-Story-Sample.pdf',
     cast: '20M/10F/Flexible',
@@ -32,7 +32,7 @@ export const worksData: Work[] = [
     slug: 'echoes-of-valor',
     title: 'Echoes of Valor',
     category: 'Drama',
-    imageSrc: '/images/Echoes_of_Valor_Cover_copy_2.png',
+    imageSrc: '/images/covers/Echoes_of_Valor_Cover_copy_2.png',
     pdfSrc: '',
     cast: '3M/3F',
     synopsis:
@@ -45,7 +45,7 @@ export const worksData: Work[] = [
     slug: 'mankiller-the-strength-of-a-nation',
     title: 'MANKILLER: The Strength of a Nation',
     category: 'Historical Drama',
-    imageSrc: '/images/Mankiller_Cover_Art.png',
+    imageSrc: '/images/covers/Mankiller_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2F/Flexible Ensemble',
     synopsis:
@@ -58,7 +58,7 @@ export const worksData: Work[] = [
     slug: 'a-midsummer-nights-rehearsal',
     title: "A Midsummer Night's Rehearsal",
     category: 'Comedy',
-    imageSrc: '/images/Midsummer_Nights_Rehearsal.png',
+    imageSrc: '/images/covers/Midsummer_Nights_Rehearsal.png',
     pdfSrc: '',
     cast: '9M/3F/Flexible Ensemble',
     synopsis:
@@ -71,7 +71,7 @@ export const worksData: Work[] = [
     slug: 'i-love-you-im-sorry',
     title: "I Love You, I'm Sorry",
     category: 'One Act Play',
-    imageSrc: '/images/I_Love_You_Im_Sorry_Cover_Art.png',
+    imageSrc: '/images/covers/I_Love_You_Im_Sorry_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2F',
     synopsis:
@@ -85,7 +85,7 @@ export const worksData: Work[] = [
     title: 'The Camp Cacophony Hour: Sasquatch Stole the Side Dish!',
     category: 'Radio Play',
     imageSrc:
-      '/images/The_Camp_Cacophony_Hour-_Sasquatch_Stole_the_Side_Dish.png',
+      '/images/covers/The_Camp_Cacophony_Hour-_Sasquatch_Stole_the_Side_Dish.png',
     pdfSrc: '',
     cast: '5M/4F/2 Flexible',
     synopsis:
@@ -98,7 +98,7 @@ export const worksData: Work[] = [
     slug: 'see-my-heart',
     title: 'See My Heart',
     category: 'Drama',
-    imageSrc: '/images/See_My_Heart_Cover_Art.png',
+    imageSrc: '/images/covers/See_My_Heart_Cover_Art.png',
     pdfSrc: '',
     cast: '7M/5F/5+ Flexible',
     synopsis:
@@ -111,7 +111,7 @@ export const worksData: Work[] = [
     slug: 'the-yellow-ward',
     title: 'The Yellow Ward',
     category: 'Drama',
-    imageSrc: '/images/The_Yellow_Ward_Cover_Art.png',
+    imageSrc: '/images/covers/The_Yellow_Ward_Cover_Art.png',
     pdfSrc: '',
     cast: '5M/4F/Flexible Ensemble',
     synopsis:
@@ -124,7 +124,7 @@ export const worksData: Work[] = [
     slug: 'becoming',
     title: 'Becoming',
     category: 'Drama',
-    imageSrc: '/images/Becoming_Cover_Art.png',
+    imageSrc: '/images/covers/Becoming_Cover_Art.png',
     pdfSrc: '',
     cast: '4M/3F/Flexible Ensemble',
     synopsis:
@@ -137,7 +137,7 @@ export const worksData: Work[] = [
     slug: 'the-room-a-play-in-scenes',
     title: 'The Room: A Play in Scenes',
     category: 'Drama',
-    imageSrc: '/images/The_Room_Cover_Art.png',
+    imageSrc: '/images/covers/The_Room_Cover_Art.png',
     pdfSrc: '',
     cast: '1M/Flexible Ensemble',
     synopsis:
@@ -150,7 +150,7 @@ export const worksData: Work[] = [
     slug: 'you-never-know',
     title: 'You Never Know',
     category: 'Drama',
-    imageSrc: '/images/You_Never_Know_Cover_Art.png',
+    imageSrc: '/images/covers/You_Never_Know_Cover_Art.png',
     pdfSrc: '',
     cast: 'Flexible Ensemble (12-24)',
     synopsis:
@@ -163,7 +163,7 @@ export const worksData: Work[] = [
     slug: 'when-the-light-comes-on',
     title: 'When the Light Comes On',
     category: 'Drama',
-    imageSrc: '/images/When_the_Light_Comes_On_Cover_Art.png',
+    imageSrc: '/images/covers/When_the_Light_Comes_On_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/3F/1 Flexible',
     synopsis:
@@ -176,7 +176,7 @@ export const worksData: Work[] = [
     slug: 'the-great-gnome-quest-an-interactive-play-for-children',
     title: 'The Great Gnome Quest: An Interactive Play for Children',
     category: "Children's Play",
-    imageSrc: '/images/The_Great_Gnome_Quest_Cover_Art.png',
+    imageSrc: '/images/covers/The_Great_Gnome_Quest_Cover_Art.png',
     pdfSrc: '',
     cast: '5M/2F/Flexible Ensemble',
     synopsis:
@@ -190,7 +190,7 @@ export const worksData: Work[] = [
     title:
       "The To Do List: 1. Coffee 2. Don't Get Eaten by a Dinosaur - A One-Act Office Comedy of Jurassic Proportions",
     category: 'One Act Play',
-    imageSrc: '/images/The_To_Do_List_Cover_Art.png',
+    imageSrc: '/images/covers/The_To_Do_List_Cover_Art.png',
     pdfSrc: '',
     cast: '1M/3F/1NB',
     synopsis:
@@ -203,7 +203,7 @@ export const worksData: Work[] = [
     slug: 'the-shape-of-the-fall',
     title: 'The Shape of the Fall',
     category: 'Drama',
-    imageSrc: '/images/The_Shape_of_the_Fall.png',
+    imageSrc: '/images/covers/The_Shape_of_the_Fall.png',
     pdfSrc: '',
     cast: '4M/1F/Flexible Ensemble',
     synopsis:
@@ -216,7 +216,7 @@ export const worksData: Work[] = [
     slug: 'the-squatch-of-avon-super-extended-conspiracy-cut',
     title: 'The Squatch of Avon: Super Extended Conspiracy Cut',
     category: 'Comedy',
-    imageSrc: '/images/The_Squatch_of_Avon_Cover_Art_New.png',
+    imageSrc: '/images/covers/The_Squatch_of_Avon_Cover_Art_New.png',
     pdfSrc: '',
     cast: '2M/2F',
     synopsis: `In a cluttered basement, conspiracy theorist Doug leads a wildly absurd investigation into the true authorship of Shakespeare's plays—claiming they were actually written by Sasquatch. As the group dives deeper into cryptid conspiracies and Elizabethan drama, tensions flare between skeptics, believers, and one very tired realist. The Squatch of Avon: Extended Conspiracy Cut, the first in the Doug Plays Series, is a fast-paced comedy full of chaotic revelations, questionable "evidence," and woodland-themed literary mayhem.`,
@@ -228,7 +228,7 @@ export const worksData: Work[] = [
     slug: 'the-drop',
     title: 'The Drop',
     category: 'Drama',
-    imageSrc: '/images/The_Drop_Cover_Art.png',
+    imageSrc: '/images/covers/The_Drop_Cover_Art.png',
     pdfSrc: '',
     cast: '3M/2F/Flexible Ensemble',
     synopsis:
@@ -241,7 +241,7 @@ export const worksData: Work[] = [
     slug: 'human-a-play-in-voices',
     title: '"Human" - A Play in Voices',
     category: 'Drama',
-    imageSrc: '/images/Human_Cover_Art.png',
+    imageSrc: '/images/covers/Human_Cover_Art.png',
     pdfSrc: '',
     cast: 'Flexible Casting',
     synopsis:
@@ -254,7 +254,7 @@ export const worksData: Work[] = [
     slug: 'the-silence-of-trees',
     title: 'The Silence of Trees',
     category: 'Historical Drama',
-    imageSrc: '/images/The_Silence_of_Trees.png',
+    imageSrc: '/images/covers/The_Silence_of_Trees.png',
     pdfSrc: '',
     cast: '1M/4F/Flexible Ensemble',
     synopsis:
@@ -267,7 +267,7 @@ export const worksData: Work[] = [
     slug: 'in-the-lap-of-queens',
     title: 'In the Lap of Queens',
     category: 'Drama',
-    imageSrc: '/images/In_the_Lap_of_Queens_Cover_Art.png',
+    imageSrc: '/images/covers/In_the_Lap_of_Queens_Cover_Art.png',
     pdfSrc: '',
     cast: '3M/5F/Flexible Ensemble',
     synopsis:
@@ -280,7 +280,7 @@ export const worksData: Work[] = [
     slug: 'thirst',
     title: 'Thirst',
     category: 'Historical Drama',
-    imageSrc: '/images/Thirst_Cover_art.png',
+    imageSrc: '/images/covers/Thirst_Cover_art.png',
     pdfSrc: '',
     cast: '7F/Flexible Ensemble',
     synopsis:
@@ -293,7 +293,7 @@ export const worksData: Work[] = [
     slug: 'echoes-of-valor-community-interaction-edition',
     title: 'Echoes of Valor: Community Interaction Edition',
     category: 'Drama',
-    imageSrc: '/images/EoV_CIE.png',
+    imageSrc: '/images/covers/EoV_CIE.png',
     pdfSrc: '',
     cast: '4M/3F',
     synopsis:
@@ -306,7 +306,7 @@ export const worksData: Work[] = [
     slug: 'blood-and-shadow-an-alternate-tragedy-of-macbeth',
     title: 'Blood & Shadow: An Alternate Tragedy of Macbeth',
     category: 'Drama',
-    imageSrc: '/images/Blood_and_Shadow_Cover_Art.png',
+    imageSrc: '/images/covers/Blood_and_Shadow_Cover_Art.png',
     pdfSrc: '',
     cast: 'Flexible - 15-16',
     synopsis:
@@ -319,7 +319,7 @@ export const worksData: Work[] = [
     slug: 'dougs-guide-to-the-supernatural-and-totally-true-series',
     title: "Doug's Guide to the Supernatural (and Totally True) Series",
     category: 'Collection',
-    imageSrc: '/images/Dougs_Guide_to_the_Supernatural_Cover_Art.png',
+    imageSrc: '/images/covers/Dougs_Guide_to_the_Supernatural_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2F/1V.O.',
     synopsis:
@@ -332,7 +332,7 @@ export const worksData: Work[] = [
     slug: 'dougs-guide-to-the-unexplained-and-totally-true-series',
     title: "Doug's Guide to the Unexplained (and Totally True) Series",
     category: 'Collection',
-    imageSrc: '/images/Dougs_Guide_to_the_Unexplained_Cover_Art.png',
+    imageSrc: '/images/covers/Dougs_Guide_to_the_Unexplained_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2F',
     synopsis:
@@ -345,7 +345,7 @@ export const worksData: Work[] = [
     slug: 'a-capital-mess',
     title: 'A Capital Mess',
     category: 'Political Satire',
-    imageSrc: '/images/A_Capitol_Mess_Art.png',
+    imageSrc: '/images/covers/A_Capitol_Mess_Art.png',
     pdfSrc: '',
     cast: '5M/2F/2 Flexible',
     synopsis:
@@ -358,7 +358,7 @@ export const worksData: Work[] = [
     slug: 'beast-quest',
     title: 'Beast Quest',
     category: 'SciFi/Fantasy',
-    imageSrc: '/images/Beast_Quest_Cover_Art.png',
+    imageSrc: '/images/covers/Beast_Quest_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2F/2 Flexible',
     synopsis:
@@ -371,7 +371,7 @@ export const worksData: Work[] = [
     slug: 'currents-and-frequencies-a-play-inspired-by-nikola-tesla',
     title: 'Currents & Frequencies – A Play Inspired by Nikola Tesla',
     category: 'Historical Drama',
-    imageSrc: '/images/Currents_and_Frequencies_Cover_Art.png',
+    imageSrc: '/images/covers/Currents_and_Frequencies_Cover_Art.png',
     pdfSrc: '',
     cast: '4M/3F/2 Flexible',
     synopsis:
@@ -384,7 +384,7 @@ export const worksData: Work[] = [
     slug: 'final-boarding-call',
     title: 'Final Boarding Call',
     category: 'Comedy',
-    imageSrc: '/images/Final_Boarding_Call_Art.png',
+    imageSrc: '/images/covers/Final_Boarding_Call_Art.png',
     pdfSrc: '',
     cast: '2M/2F/2 Flexible',
     synopsis:
@@ -397,7 +397,7 @@ export const worksData: Work[] = [
     slug: 'one-table',
     title: 'One Table',
     category: 'Comedy/Drama',
-    imageSrc: '/images/One_Table_Cover_Art.png',
+    imageSrc: '/images/covers/One_Table_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/3F/2 Flexible',
     synopsis:
@@ -410,7 +410,7 @@ export const worksData: Work[] = [
     slug: 'prophet-for-hire',
     title: 'Prophet for Hire',
     category: 'Comedy',
-    imageSrc: '/images/Prophit_for_Hire.png',
+    imageSrc: '/images/covers/Prophit_for_Hire.png',
     pdfSrc: '',
     cast: '4M/2F/3 Flexible',
     synopsis:
@@ -424,7 +424,7 @@ export const worksData: Work[] = [
     title:
       'Shakespeare Shorts: A Collection of Short and Not so Short plays based and/or inspired by William Shakespeare.',
     category: 'Collection',
-    imageSrc: '/images/Shakespeare_Shorts.png',
+    imageSrc: '/images/covers/Shakespeare_Shorts.png',
     pdfSrc: '',
     cast: 'Various Cast Sizes',
     runtime: 'Collection',
@@ -438,7 +438,7 @@ export const worksData: Work[] = [
     title:
       '"So, What Had Happened Was… Or Who Killed The Director" A ridiculous 10-minute play that should probably be arrested for overacting',
     category: 'Comedy',
-    imageSrc: '/images/What_had_happened_was.png',
+    imageSrc: '/images/covers/What_had_happened_was.png',
     pdfSrc: '',
     cast: '5M/3F',
     synopsis:
@@ -451,7 +451,7 @@ export const worksData: Work[] = [
     slug: 'still-waters',
     title: 'Still Waters',
     category: 'Drama',
-    imageSrc: '/images/Still_Waters.png',
+    imageSrc: '/images/covers/Still_Waters.png',
     pdfSrc: '',
     cast: '2M/2F/6-12 Flexible',
     synopsis: `A nonverbal autistic teen named Eli navigates a world that demands conformity, sound, and speed. Guided by his inner self, "Mind Voice," Eli's emotional and sensory journey unfolds through expressive movement, layered soundscapes, and abstract storytelling. As those around him begin to truly listen, the play becomes a quiet call for empathy, understanding, and the power of being seen—even in silence.`,
@@ -463,7 +463,7 @@ export const worksData: Work[] = [
     slug: 'the-last-safe-place',
     title: 'The Last Safe Place',
     category: 'Drama',
-    imageSrc: '/images/The_Last_Safe_Place_Cover_Art.png',
+    imageSrc: '/images/covers/The_Last_Safe_Place_Cover_Art.png',
     pdfSrc: '',
     cast: '3M/3F/Ensemble',
     synopsis: `In a dystopian future where ideas are crimes, five strangers are trapped in a surveillance-ridden cell and forced through psychological "truth exercises" by an unseen Voice. As their minds unravel and confessions are coerced, the system's true goal is revealed: obedience, spectacle, and public shame. The line between audience and prisoner collapses in the chilling realization that no one is beyond the reach of control.`,
@@ -475,7 +475,7 @@ export const worksData: Work[] = [
     slug: 'the-light-and-the-shadow-a-journey-of-balance',
     title: 'The Light and the Shadow: A Journey of Balance',
     category: 'SciFi/Fantasy',
-    imageSrc: '/images/The_Light_and_the_Shadow_Cover_Art.png',
+    imageSrc: '/images/covers/The_Light_and_the_Shadow_Cover_Art.png',
     pdfSrc: '',
     cast: '7M/3F/Flexible Ensemble',
     synopsis:
@@ -489,7 +489,7 @@ export const worksData: Work[] = [
     title:
       'The Other Side of Quiet - A play about borders, becoming, and belonging.',
     category: 'Drama',
-    imageSrc: '/images/Side_of_Quiet.png',
+    imageSrc: '/images/covers/Side_of_Quiet.png',
     pdfSrc: '',
     cast: '4M/3F/Flexible Chorus',
     synopsis:
@@ -502,7 +502,7 @@ export const worksData: Work[] = [
     slug: 'the-static-room-a-paranormal-thriller',
     title: 'The Static Room (A Paranormal Thriller)',
     category: 'Screenplay',
-    imageSrc: '/images/The_Static_Room.png',
+    imageSrc: '/images/covers/The_Static_Room.png',
     pdfSrc: '',
     cast: '1M/1F',
     synopsis:
@@ -515,7 +515,7 @@ export const worksData: Work[] = [
     slug: 'weeping-waters-or-let-the-river-remember',
     title: 'Weeping Waters or Let the River Remember',
     category: 'Drama',
-    imageSrc: '/images/Weeping_Waters.png',
+    imageSrc: '/images/covers/Weeping_Waters.png',
     pdfSrc: '',
     cast: '4F/1M/Flexible Ensemble',
     synopsis:
@@ -528,7 +528,7 @@ export const worksData: Work[] = [
     slug: 'duck-duck-gone-they-sat-in-a-circle-until-they-didnt',
     title: 'Duck, Duck, Gone - "They sat in a circle. Until they didn\'t."',
     category: 'Drama',
-    imageSrc: '/images/Duck_Duck_Gone_Cover_Art.png',
+    imageSrc: '/images/covers/Duck_Duck_Gone_Cover_Art.png',
     pdfSrc: '',
     cast: '5M/5F/Flexible Ensemble',
     synopsis:
@@ -541,7 +541,7 @@ export const worksData: Work[] = [
     slug: 'golden-hot-girl-summer',
     title: 'Golden Hot Girl Summer',
     category: 'Comedy',
-    imageSrc: '/images/Golden_Hot_Girl_Summer.png',
+    imageSrc: '/images/covers/Golden_Hot_Girl_Summer.png',
     pdfSrc: '',
     cast: '1M/3F',
     synopsis:
@@ -554,7 +554,7 @@ export const worksData: Work[] = [
     slug: 'heroes-in-the-pages',
     title: 'Heroes in the Pages',
     category: 'Theater for Youth',
-    imageSrc: '/images/Heroes_in_the_Pages_Cover_Art.png',
+    imageSrc: '/images/covers/Heroes_in_the_Pages_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/3F',
     synopsis:
@@ -567,7 +567,7 @@ export const worksData: Work[] = [
     slug: 'just-rob-in-the-hood',
     title: 'Just Rob, in the Hood',
     category: 'Theater for Youth',
-    imageSrc: '/images/Rob_in_the_Hood.png',
+    imageSrc: '/images/covers/Rob_in_the_Hood.png',
     pdfSrc: '',
     cast: '15-20 Actors of Various Genders',
     synopsis:
@@ -580,7 +580,7 @@ export const worksData: Work[] = [
     slug: 'mission-implausible',
     title: 'Mission: Implausible',
     category: 'SciFi/Fantasy',
-    imageSrc: '/images/Mission_Implausible.png',
+    imageSrc: '/images/covers/Mission_Implausible.png',
     pdfSrc: '',
     cast: '1M/Voices/Small Ensemble',
     synopsis:
@@ -593,7 +593,7 @@ export const worksData: Work[] = [
     slug: 'sherlock-holmes-and-the-devil-of-dry-creek',
     title: 'Sherlock Holmes and the Devil of Dry Creek',
     category: 'Comedy',
-    imageSrc: '/images/Sherlock_Holmes.png',
+    imageSrc: '/images/covers/Sherlock_Holmes.png',
     pdfSrc: '',
     cast: '5M/2F/1 Creepy Voice',
     synopsis:
@@ -606,7 +606,7 @@ export const worksData: Work[] = [
     slug: 'smile',
     title: 'SMILE!',
     category: 'Historical Drama',
-    imageSrc: '/images/SMILE_Cover_Art.png',
+    imageSrc: '/images/covers/SMILE_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2F/Large Ensemble',
     synopsis:
@@ -619,7 +619,7 @@ export const worksData: Work[] = [
     slug: 'skybound',
     title: 'Skybound',
     category: 'Comedy',
-    imageSrc: '/images/Skybound.png',
+    imageSrc: '/images/covers/Skybound.png',
     pdfSrc: '',
     cast: '15-20 Actors',
     synopsis:
@@ -632,7 +632,7 @@ export const worksData: Work[] = [
     slug: 'the-committee-will-now-consider-the-uterus',
     title: 'The Committee Will Now Consider the Uterus',
     category: 'Political Satire',
-    imageSrc: '/images/script_placeholder.png',
+    imageSrc: '/images/assets/script_placeholder.png',
     pdfSrc: '',
     cast: '1M/2F/1NB/1 Other',
     synopsis:
@@ -645,7 +645,7 @@ export const worksData: Work[] = [
     slug: 'the-complete-works-of-moliere-condensed',
     title: 'The Complete Works of Molière (Condensed)',
     category: 'Comedy',
-    imageSrc: '/images/Moliere.png',
+    imageSrc: '/images/covers/Moliere.png',
     pdfSrc: '',
     cast: '4 Actors',
     runtime: '90-120 minutes',
@@ -658,7 +658,7 @@ export const worksData: Work[] = [
     slug: 'the-gathering',
     title: 'The Gathering',
     category: 'Drama',
-    imageSrc: '/images/The_Gathering.png',
+    imageSrc: '/images/covers/The_Gathering.png',
     pdfSrc: '',
     cast: '3M/4F/1Any',
     synopsis:
@@ -672,7 +672,7 @@ export const worksData: Work[] = [
     title:
       'The Sacred Art of Falling: The Fight She Inherited. The Future She Claimed.',
     category: 'One Act Play',
-    imageSrc: '/images/The_Sacred_Art_of_Falling.png',
+    imageSrc: '/images/covers/The_Sacred_Art_of_Falling.png',
     pdfSrc: '',
     cast: '1M/10F/Voices',
     synopsis:
@@ -685,7 +685,7 @@ export const worksData: Work[] = [
     slug: 'under-the-fairie-tree',
     title: 'Under the Fairie Tree',
     category: 'One Act Play',
-    imageSrc: '/images/Under_the_Fairie_Tree_Art.png',
+    imageSrc: '/images/covers/Under_the_Fairie_Tree_Art.png',
     pdfSrc: '',
     cast: '5F/1 Offstage Voice',
     runtime: '60 minutes',
@@ -698,7 +698,7 @@ export const worksData: Work[] = [
     slug: 'much-ado-about-nothingness',
     title: 'Much Ado About Nothingness',
     category: 'Comedy/Drama',
-    imageSrc: '/images/Much_Ado_About_Nothingness_Cover_Art.png',
+    imageSrc: '/images/covers/Much_Ado_About_Nothingness_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2GF',
     runtime: '35-40 minutes',
@@ -711,7 +711,7 @@ export const worksData: Work[] = [
     slug: 'the-forsaken-a-retelling-of-richard-iii',
     title: 'The Forsaken: A Retelling of Richard III',
     category: 'Historical Drama',
-    imageSrc: '/images/The_Forsaken.jpg',
+    imageSrc: '/images/covers/The_Forsaken.jpg',
     pdfSrc: '',
     cast: '10-20 performers (flexible doubling possible)',
     synopsis:
@@ -724,7 +724,7 @@ export const worksData: Work[] = [
     slug: 'iago',
     title: 'Iago',
     category: 'Drama',
-    imageSrc: '/images/IAGO_Coverart.png',
+    imageSrc: '/images/covers/IAGO_Coverart.png',
     pdfSrc: '',
     cast: '6M/2F/7-10V',
     runtime: '120 minutes',
@@ -737,7 +737,7 @@ export const worksData: Work[] = [
     slug: 'refresh-to-load',
     title: 'Refresh to Load',
     category: 'Drama',
-    imageSrc: '/images/Refresh_To_Load.png',
+    imageSrc: '/images/covers/Refresh_To_Load.png',
     pdfSrc: '',
     cast: '1F/3M/1NB/1OSV',
     runtime: '15 minutes',
@@ -750,7 +750,7 @@ export const worksData: Work[] = [
     slug: 'flyders',
     title: 'FLYDERS!',
     category: 'Screenplay',
-    imageSrc: '/images/FLYDERS.png',
+    imageSrc: '/images/covers/FLYDERS.png',
     pdfSrc: '',
     cast: 'TBD',
     runtime: '150 minutes',
@@ -763,7 +763,7 @@ export const worksData: Work[] = [
     slug: 'rur-rossums-universal-robots',
     title: "R.U.R. (Rossum's Universal Robots)",
     category: 'Drama',
-    imageSrc: '/images/R_U_R.jpeg',
+    imageSrc: '/images/covers/R_U_R.jpeg',
     pdfSrc: '',
     cast: '7M/3F/Flexible Ensemble',
     runtime: '90-120 minutes',
@@ -777,7 +777,7 @@ export const worksData: Work[] = [
     slug: 'the-lion-and-the-rose',
     title: 'The Lion and the Rose',
     category: 'Drama',
-    imageSrc: '/images/The_Lion_and_the_Rose.png',
+    imageSrc: '/images/covers/The_Lion_and_the_Rose.png',
     pdfSrc: '',
     cast: 'TBD',
     runtime: 'TBD',
@@ -790,7 +790,7 @@ export const worksData: Work[] = [
     slug: 'the-mothman-of-monticello',
     title: 'The Mothman of Monticello',
     category: 'Drama',
-    imageSrc: '/images/The_Mothman_of_Monticello.png',
+    imageSrc: '/images/covers/The_Mothman_of_Monticello.png',
     pdfSrc: '',
     cast: 'TBD',
     runtime: 'TBD',
