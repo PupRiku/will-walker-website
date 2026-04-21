@@ -50,7 +50,7 @@ export const worksData: Work[] = [
     cast: '2M/2F/Flexible Ensemble',
     synopsis:
       'Tells the powerful true story of Wilma Mankiller, the first female Principal Chief of the Cherokee Nation. From relocation and activism to leadership and legacy, Wilma overcomes personal and political battles to transform her community. With strength, vision, and resilience, she inspires a new generation to rise.',
-    featured: true,
+    featured: false,
     published: false,
     runtime: '50-60 minutes',
   },
@@ -90,7 +90,7 @@ export const worksData: Work[] = [
     cast: '5M/4F/2 Flexible',
     synopsis:
       "A swing-era spoof set in the golden age of radio, where a live broadcast unravels a wild tale of cryptid chaos at a Northwest family campground. When Grandma Minnie's sacred potato salad vanishes, suspicions of Sasquatch send this quirky crew into a frenzy of traps, jazz, and condiment-fueled confusion. Packed with live sound effects, sponsor bits, and off-air backstage antics, this nostalgic comedy blends heart, hilarity, and high camp in one unforgettable hour.",
-    featured: true,
+    featured: false,
     published: false,
     runtime: '50-60 minutes',
   },
@@ -103,7 +103,7 @@ export const worksData: Work[] = [
     cast: '7M/5F/5+ Flexible',
     synopsis:
       "A heartfelt journey through one night in a sprawling city, where Alex—struggling with loneliness and identity—encounters a diverse group of strangers who each reveal a different form of love, loss, or resilience. From coffee shops to churches, drag shows to gardens, these fleeting yet powerful connections challenge Alex's perspective and spark healing. The play culminates in a rooftop gathering, where a chosen family of misfits and survivors affirms the beauty of showing up and being seen.",
-    featured: true,
+    featured: false,
     published: false,
     runtime: '90-120 minutes',
   },
@@ -129,7 +129,7 @@ export const worksData: Work[] = [
     cast: '4M/3F/Flexible Ensemble',
     synopsis:
       "A poetic and abstract coming-of-age play that follows a young man's journey from childhood through self-discovery, framed by memory, imagination, and reality. As he navigates identity, grief, bullying, and love, he finds refuge in an imaginary world that helps him process the complexities of growing up. With guidance from his future self and a transformative Chorus, the Boy ultimately learns to embrace his pain and emerge with self-acceptance and inner strength.",
-    featured: true,
+    featured: false,
     published: false,
     runtime: '50-55 minutes',
   },
@@ -142,7 +142,7 @@ export const worksData: Work[] = [
     cast: '1M/Flexible Ensemble',
     synopsis:
       'A haunting, poetic exploration of memory, institutional trauma, and the fight for disability justice. Centered on Alex—a disability rights advocate and parent—who searches for the truth behind the disappearance of Eli, a childhood friend erased from all records, the play weaves through shifting memories, interviews, and reckonings. As Alex confronts systemic denial and resurfaces long-buried truths, The Room becomes a powerful call to remember those who were silenced.',
-    featured: true,
+    featured: false,
     published: false,
     runtime: '60-65 minutes',
   },
@@ -155,7 +155,7 @@ export const worksData: Work[] = [
     cast: 'Flexible Ensemble (12-24)',
     synopsis:
       "A touching collection of vignettes linked by a quiet, mysterious figure known only as The Stranger, who appears at life's most fragile moments to offer comfort, clarity, and connection. Each scene reveals a different person on the edge—grieving, anxious, or simply lost—unaware that their stories are part of something larger. Flowing seamlessly without blackouts, this dreamlike play reminds us that sometimes the smallest gestures carry the greatest hope.",
-    featured: true,
+    featured: false,
     published: false,
     runtime: '45-50 minutes',
   },
@@ -168,7 +168,7 @@ export const worksData: Work[] = [
     cast: '2M/3F/1 Flexible',
     synopsis:
       'Follows a group of strangers brought together by quiet coincidence, each carrying hidden pain and personal struggles. As they open up to one another, their healing is gently steered by Eli, a mysterious young man whose presence challenges and comforts in equal measure. In discovering the truth about themselves—and about Eli—they learn that even in darkness, we all need someone to be our light.',
-    featured: true,
+    featured: false,
     published: false,
     runtime: '35-45 minutes',
   },
@@ -181,7 +181,7 @@ export const worksData: Work[] = [
     cast: '5M/2F/Flexible Ensemble',
     synopsis:
       "In the magical village of Whimsywood, the cherished Glowlight Crystal has mysteriously vanished, plunging the town into darkness just before their grand festival. Three brave gnomes—Pip, Tilly, and Brumble—embark on a daring quest to recover it, solving riddles, outwitting mischievous creatures, and enlisting the audience's help along the way. Join The Great Gnome Quest and become part of the adventure to bring light back to Whimsywood!",
-    featured: true,
+    featured: false,
     published: false,
     runtime: '25-30 minutes',
   },
@@ -195,7 +195,7 @@ export const worksData: Work[] = [
     cast: '1M/3F/1NB',
     synopsis:
       "A razor-sharp corporate satire where burnout meets bite—literally. At DinoCorp™, four stressed employees must survive workplace politics, disappearing coworkers, and a possibly sentient dinosaur running HR. With a cheery AI assistant named DINAH and danger lurking in every spreadsheet, it's a dark comedy about being devoured by your job—sometimes figuratively, sometimes not.",
-    featured: true,
+    featured: false,
     published: false,
     runtime: '25-30 minutes',
   },
@@ -208,7 +208,7 @@ export const worksData: Work[] = [
     cast: '4M/1F/Flexible Ensemble',
     synopsis:
       "When Aristotle witnesses Oedipus Rex, he's shaken not by logic, but by the raw emotional truth it reveals. In exile and mourning the death of his son, he is drawn into a journey of myth, memory, and personal reckoning that transforms his understanding of tragedy. The Shape of the Fall blends Greek form with the Hero's Journey to trace how heartbreak—not brilliance alone—led to the creation of The Poetics.",
-    featured: true,
+    featured: false,
     published: false,
     runtime: '45-50 minutes',
   },
@@ -219,8 +219,7 @@ export const worksData: Work[] = [
     imageSrc: '/images/The_Squatch_of_Avon_Cover_Art_New.png',
     pdfSrc: '',
     cast: '2M/2F',
-    synopsis:
-      `In a cluttered basement, conspiracy theorist Doug leads a wildly absurd investigation into the true authorship of Shakespeare's plays—claiming they were actually written by Sasquatch. As the group dives deeper into cryptid conspiracies and Elizabethan drama, tensions flare between skeptics, believers, and one very tired realist. The Squatch of Avon: Extended Conspiracy Cut, the first in the Doug Plays Series, is a fast-paced comedy full of chaotic revelations, questionable "evidence," and woodland-themed literary mayhem.`,
+    synopsis: `In a cluttered basement, conspiracy theorist Doug leads a wildly absurd investigation into the true authorship of Shakespeare's plays—claiming they were actually written by Sasquatch. As the group dives deeper into cryptid conspiracies and Elizabethan drama, tensions flare between skeptics, believers, and one very tired realist. The Squatch of Avon: Extended Conspiracy Cut, the first in the Doug Plays Series, is a fast-paced comedy full of chaotic revelations, questionable "evidence," and woodland-themed literary mayhem.`,
     featured: true,
     published: false,
     runtime: '20-25 minutes',
@@ -234,7 +233,7 @@ export const worksData: Work[] = [
     cast: '3M/2F/Flexible Ensemble',
     synopsis:
       'This play follows Jonah, a young man reeling from the loss of his father as he wrestles with grief, doubt, and the need to find meaning in the chaos. Through conversations with his mother, his best friend Casey, and a mysterious figure known as The Stranger, Jonah begins to explore what it truly means to trust. Blending humor, vulnerability, and quiet moments of transcendence, The Drop invites audiences of all beliefs to reflect on healing, hope, and the unseen forces that carry us forward.',
-    featured: true,
+    featured: false,
     published: false,
     runtime: '65-75 minutes',
   },
@@ -247,7 +246,7 @@ export const worksData: Work[] = [
     cast: 'Flexible Casting',
     synopsis:
       'A powerful minimalist play told through a series of monologues that reveal deeply personal stories around immigration, identity, and justice. It follows a detained immigrant mother, a DREAMer, a conflicted border patrol agent, a compassionate sponsor, and an ICE whistleblower, among others, exploring the humanity behind political headlines. Interwoven with a resonant chorus, the play invites audiences to recognize our shared dignity beyond borders and labels.',
-    featured: true,
+    featured: false,
     published: false,
     runtime: '30-35 minutes',
   },
@@ -299,7 +298,7 @@ export const worksData: Work[] = [
     cast: '4M/3F',
     synopsis:
       "Echoes of Valor: Community Interaction Edition is a powerful, 45-minute exploration of the struggles faced by modern veterans, designed to spark conversation with audiences. Set in an intimate support group where courage is redefined, the play follows veterans from diverse backgrounds—Maria, battling depression; James, fighting addiction; Nate, grappling with injury and self-doubt; Ella, confronting trauma and isolation; and Tyrone, masking inner turmoil—sharing their unflinching personal stories of PTSD, survivor's guilt, and the challenges of reintegrating into a society that often overlooks their pain. Led by the compassionate facilitator Andrew, the group discovers profound strength in one another, and the epilogue features survivors delivering sobering statistics and a memorial to those lost, offering a poignant call to recognize the enduring human cost of service while encouraging dialogue and community reflection.",
-    featured: false,
+    featured: true,
     published: false,
     runtime: '45 minutes',
   },
@@ -455,8 +454,7 @@ export const worksData: Work[] = [
     imageSrc: '/images/Still_Waters.png',
     pdfSrc: '',
     cast: '2M/2F/6-12 Flexible',
-    synopsis:
-      `A nonverbal autistic teen named Eli navigates a world that demands conformity, sound, and speed. Guided by his inner self, "Mind Voice," Eli's emotional and sensory journey unfolds through expressive movement, layered soundscapes, and abstract storytelling. As those around him begin to truly listen, the play becomes a quiet call for empathy, understanding, and the power of being seen—even in silence.`,
+    synopsis: `A nonverbal autistic teen named Eli navigates a world that demands conformity, sound, and speed. Guided by his inner self, "Mind Voice," Eli's emotional and sensory journey unfolds through expressive movement, layered soundscapes, and abstract storytelling. As those around him begin to truly listen, the play becomes a quiet call for empathy, understanding, and the power of being seen—even in silence.`,
     featured: false,
     published: false,
     runtime: '25-35 minutes',
@@ -468,8 +466,7 @@ export const worksData: Work[] = [
     imageSrc: '/images/The_Last_Safe_Place_Cover_Art.png',
     pdfSrc: '',
     cast: '3M/3F/Ensemble',
-    synopsis:
-      `In a dystopian future where ideas are crimes, five strangers are trapped in a surveillance-ridden cell and forced through psychological "truth exercises" by an unseen Voice. As their minds unravel and confessions are coerced, the system's true goal is revealed: obedience, spectacle, and public shame. The line between audience and prisoner collapses in the chilling realization that no one is beyond the reach of control.`,
+    synopsis: `In a dystopian future where ideas are crimes, five strangers are trapped in a surveillance-ridden cell and forced through psychological "truth exercises" by an unseen Voice. As their minds unravel and confessions are coerced, the system's true goal is revealed: obedience, spectacle, and public shame. The line between audience and prisoner collapses in the chilling realization that no one is beyond the reach of control.`,
     featured: false,
     published: false,
     runtime: '35-45 minutes',
@@ -512,7 +509,7 @@ export const worksData: Work[] = [
       "When Julia follows her friend Miles into an abandoned radio station, they encounter a mysterious voice crackling through decades of static. As the past seeps into the present, Julia discovers Miles didn't come for answers—he came for someone he lost. A tense, supernatural thriller exploring grief, obsession, and the peril of listening to what should remain silent.",
     featured: false,
     published: false,
-    runtime: 'TBD',
+    runtime: '20-30 minutes',
   },
   {
     slug: 'weeping-waters-or-let-the-river-remember',
@@ -523,7 +520,7 @@ export const worksData: Work[] = [
     cast: '4F/1M/Flexible Ensemble',
     synopsis:
       "A poetic ghost story rooted in Latin American folklore and intergenerational grief. When a teenager named Elena enters the river in search of the truth behind the legend of La Llorona, she is pulled into a dream-realm where myth and memory collide. There, she uncovers the hidden pain of her family's past and begins a journey toward remembrance, empathy, and release.",
-    featured: false,
+    featured: true,
     published: false,
     runtime: '50-60 minutes',
   },
@@ -575,7 +572,7 @@ export const worksData: Work[] = [
     cast: '15-20 Actors of Various Genders',
     synopsis:
       'An average guy named Rob accidentally becomes a legendary hero when his innocent offer of help is misheard as "Robin Hood." As Rob navigates the chaos of mistaken identity, his simple decency inspires a movement of rebellion and hope in Sherwood Forest. With a flamboyant bard, a judgmental squirrel, and an insecure sheriff in tow, the comedy unfolds with heart, hilarity, and a surprise encounter with the real Robin Hood—who brings muffins.',
-    featured: false,
+    featured: true,
     published: false,
     runtime: '15-20 minutes',
   },
@@ -680,7 +677,7 @@ export const worksData: Work[] = [
     cast: '1M/10F/Voices',
     synopsis:
       "Follows Cassie Ramos, an independent wrestler battling to earn respect in a male-dominated sport. Guided by the spirits of wrestling legends Mildred Burke, Mae Young, and The Fabulous Moolah, Cassie trains and uncovers the lost history of women pioneers in wrestling. As she builds her own wrestling school and challenges the industry's structures, she discovers a deeper sisterhood and culminates in a historic event honoring women's legacy in the sport.",
-    featured: false,
+    featured: true,
     published: false,
     runtime: '50-60 minutes',
   },
@@ -691,23 +688,23 @@ export const worksData: Work[] = [
     imageSrc: '/images/Under_the_Fairie_Tree_Art.png',
     pdfSrc: '',
     cast: '5F/1 Offstage Voice',
-    runtime: 'TBD',
+    runtime: '60 minutes',
     synopsis:
       "Under the Fairie Tree is a poignant exploration of tradition versus progress set in a small village, where a sacred fairy tree stands as a living archive of the women who built the community in silence. Maeve, the tree's steadfast guardian, grieves as the village council approves a road that threatens to destroy it. Nora, her daughter, supports the plan in the name of progress, while Ellen, the engineer, believes the road is the only way to save the dying town. Clara, Maeve's youngest daughter, is caught between them—too young to choose a side, yet too old to ignore what is being lost. As construction nears, Clara listens to the land and the women who have tended it for generations. With the guidance of her mother and the wise elder, Ellie O'Connell, Clara discovers a way to reroute the road twenty meters east, saving both the tree and the village's history. In the end, the women stand together, forcing progress and heritage to coexist. Under the Fairie Tree is a story of memory, inheritance, and the quiet strength of women who refuse to be erased.",
-    featured: false,
+    featured: true,
     published: false,
   },
   {
     slug: 'much-ado-about-nothingness',
     title: 'Much Ado About Nothingness',
-    category: 'Comedy',
+    category: 'Comedy/Drama',
     imageSrc: '/images/Much_Ado_About_Nothingness_Cover_Art.png',
     pdfSrc: '',
     cast: '2M/2GF',
-    runtime: 'TBD',
+    runtime: '35-40 minutes',
     synopsis:
       'Much Ado About Nothingness is a surreal, existential play that imagines a profound meeting between two literary giants, William Shakespeare and Samuel Beckett, in an infinite, timeless void. As they debate the nature of storytelling, meaning, and existence, they are joined by a mischievous Fool and an enigmatic Messenger, both of whom challenge and mirror their philosophies. The play delves into the paradoxes of life and death, silence and sound, and the role of the artist in a seemingly indifferent universe. With moments of dark humor, poetic reflection, and metaphysical intrigue, the play explores whether life is a meaningful story or simply an absurd wait for meaning, leaving audiences to ponder the fleeting nature of existence and the ways we create meaning out of nothingness.',
-    featured: false,
+    featured: true,
     published: false,
   },
   {
@@ -730,10 +727,10 @@ export const worksData: Work[] = [
     imageSrc: '/images/IAGO_Coverart.png',
     pdfSrc: '',
     cast: '6M/2F/7-10V',
-    runtime: 'TBD',
+    runtime: '120 minutes',
     synopsis:
       "IAGO is a gripping psychological prequel to Shakespeare's Othello, exploring the transformation of one of the most cunning villains in literary history. Set in the political and military turmoil of Venice, the play delves into Iago's manipulation of those around him, his thirst for power, and his complex motivations. As a soldier with a deeply scarred past, Iago's PTSD and internal demons drive him to orchestrate a web of betrayal, testing loyalty and trust. In the process, he manipulates Roderigo, the trusting fool, while plotting his own rise to power. Iago's actions lay the groundwork for the tragic events of Othello, as he carefully sets his machinations into motion. As the play unravels, Iago's ambition, resentment, and trauma become more apparent, revealing the fragile psyche beneath his ruthless exterior. Through his manipulation of Othello, Roderigo, and other figures, Iago's thirst for control grows ever more intense. But as his schemes play out, he is haunted by the psychological scars of war and betrayal, questioning whether he will ever truly escape his past. The tragedy lies not just in his actions but in the psychological toll that has shaped him—leaving the audience to ponder the true cost of power, trust, and manipulation.",
-    featured: false,
+    featured: true,
     published: false,
   },
   {
@@ -743,10 +740,10 @@ export const worksData: Work[] = [
     imageSrc: '/images/Refresh_To_Load.png',
     pdfSrc: '',
     cast: '1F/3M/1NB/1OSV',
-    runtime: 'TBD',
+    runtime: '15 minutes',
     synopsis:
       "Refresh to Load is a tense, urgent one-act play that follows five young activists who livestream their resistance from a cramped safehouse as a government crackdown closes in. As their message spreads online, so does the threat—until the stream suddenly cuts out. Performed in a single continuous scene with no set and minimal lighting, the play explores digital activism, performative allyship, and what remains when the cameras go dark. Inspired by Gil Scott-Heron's iconic warning, this play asks: if the revolution isn't televised… will anyone notice when it disappears?",
-    featured: false,
+    featured: true,
     published: false,
   },
   {
@@ -756,9 +753,49 @@ export const worksData: Work[] = [
     imageSrc: '/images/FLYDERS.png',
     pdfSrc: '',
     cast: 'TBD',
-    runtime: 'TBD',
+    runtime: '150 minutes',
     synopsis:
       "After a freak earthquake cracks open a secret military lab deep in the Montana wilderness, a swarm of government-engineered, flying, hyper-aggressive spiders—code name: Flyders—descend on the peaceful town of Clearwater. As the arachnids web up the countryside, a ragtag band of unlikely heroes emerges: Jim, a rugged, dad-bod park ranger with great flannel game; Lexi, an eccentric entomologist with a bug problem and a bigger attitude; a no-nonsense troop of Mountain Scouts led by the fierce and tactical Sara; and Ziggy, a blissed-out van-dweller whose new best friend is an actual Flyder named Sticky. Meanwhile, the military wants to torch the town and cover up everything. Survivors flee to the mountains—nudists, ranchers, babies, and all—seeking refuge in abandoned mines. There, secrets are uncovered, alliances are tested, and the only hope of saving humanity may lie in a homemade chemical discovered in a diner and the Girl Scouts' merit badge-level genius. Packed with explosive action, deadpan humor, insectoid chaos, and just the right amount of weed smoke, Flyders! is a horror-comedy thrill ride where the bite is bad, but the buzz is worse.",
+    featured: false,
+    published: false,
+  },
+  {
+    slug: 'rur-rossums-universal-robots',
+    title: "R.U.R. (Rossum's Universal Robots)",
+    category: 'Drama',
+    imageSrc: '/images/R_U_R.jpeg',
+    pdfSrc: '',
+    cast: '7M/3F/Flexible Ensemble',
+    runtime: '90-120 minutes',
+    synopsis:
+      "R.U.R. (Rossum's Universal Robots) is Will Walker Montgomerie's bold adaptation of Karel Čapek's landmark 1920 play — the work that gave the world the word \"robot.\" In Montgomerie's vision, the play's prescient warnings about automation, labour, and what it means to be human are brought into sharp relief for contemporary audiences. When the Rossum factory's synthetic workers begin to question their existence, the line between creator and creation collapses in ways that feel urgently familiar. A gripping, philosophically rich drama that speaks directly to our present moment.",
+    featured: true,
+    published: true,
+    purchase: 'https://www.nextstagepress.com/r-u-r/',
+  },
+  {
+    slug: 'the-lion-and-the-rose',
+    title: 'The Lion and the Rose',
+    category: 'Drama',
+    imageSrc: '/images/The_Lion_and_the_Rose.png',
+    pdfSrc: '',
+    cast: 'TBD',
+    runtime: 'TBD',
+    synopsis:
+      'The Lion and the Rose is a new play by William L. Walker Montgomerie. Further details coming soon.',
+    featured: false,
+    published: false,
+  },
+  {
+    slug: 'the-mothman-of-monticello',
+    title: 'The Mothman of Monticello',
+    category: 'Drama',
+    imageSrc: '/images/The_Mothman_of_Monticello.png',
+    pdfSrc: '',
+    cast: 'TBD',
+    runtime: 'TBD',
+    synopsis:
+      'The Mothman of Monticello is a new play by William L. Walker Montgomerie. Further details coming soon.',
     featured: false,
     published: false,
   },
