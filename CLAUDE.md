@@ -40,7 +40,10 @@ This file gives Claude Code context about the Will Walker Montgomerie portfolio 
 ```
 will-walker-website/
 ├── public/
-│   ├── images/          # All play cover art + site images (logo, headshots, icons) — all pre-optimized via Sharp; run optimize-images before committing new files
+│   ├── images/
+│   │   ├── covers/      # All play cover art — all pre-optimized via Sharp; run optimize-images before committing new files
+│   │   ├── assets/      # Site UI images: logo.png, Will_Walker.jpg, about_will.jpg, casting_note_icon.png, script_placeholder.png
+│   │   └── photos/      # Production photos (empty — will receive photos later)
 │   └── pdfs/
 │       ├── royalties_scale.pdf       # Downloadable — do not modify
 │       └── Placeholder-PDF.pdf       # Dev placeholder only
@@ -147,7 +150,7 @@ export const worksData: Work[] = [ ... ];
 
 ### Adding a new play
 
-1. Add a new image to `/public/images/` following the existing naming convention (e.g., `My_New_Play_Cover_Art.png`)
+1. Add a new image to `/public/images/covers/` following the existing naming convention (e.g., `My_New_Play_Cover_Art.png`)
 2. Add a new entry to the `worksData` array in `src/data/works.ts`
 3. Give it a unique `slug`: lowercase, hyphens, no punctuation (e.g., `'my-new-play'`). `&` → `and`, drop apostrophes.
 4. Set `featured: true` to include it in the home page carousel
@@ -233,7 +236,7 @@ Anchor sections on the home page: `#home`, `#about`, `#plays`, `#contact`
 
 | Command | File | Description |
 |---|---|---|
-| `npm run optimize-images` | `scripts/optimize-images.js` | Batch compresses all images in `/public/images/` using Sharp. Run this whenever new cover art is added. Resizes cover art to max 800px wide, logo to 400px, casting icon to 256px, portrait photos to 600px at 85% JPEG quality. Overwrites files in place. |
+| `npm run optimize-images` | `scripts/optimize-images.js` | Batch compresses all images in `/public/images/covers/`, `/public/images/assets/`, and `/public/images/photos/` using Sharp. Run this whenever new images are added. Covers/photos resize to max 800px/1200px wide; assets use per-file rules (logo 400px, casting icon 256px, portrait JPEGs 600px at 85% quality). Overwrites files in place. |
 
 ---
 
@@ -309,7 +312,7 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 ## Common Tasks
 
 **Add a new play**
-1. Add cover image to `/public/images/`
+1. Add cover image to `/public/images/covers/`
 2. Run `npm run optimize-images` to compress the new file before committing
 3. Add entry to `worksData` in `src/data/works.ts`
 4. Set `featured: true` to include in home carousel
