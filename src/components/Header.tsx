@@ -109,6 +109,14 @@ export default function Header() {
         <Link href="/#contact" onClick={closeMenu}>
           Contact Me
         </Link>
+        <a
+          href="https://www.ko-fi.com/williamlwalkermontgomerie"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.mobileKofiLink}
+        >
+          Support Me on Ko-fi
+        </a>
         <div className={styles.mobileSocials}>
           <SocialLinks />
         </div>

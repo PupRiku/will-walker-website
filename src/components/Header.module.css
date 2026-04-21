@@ -125,6 +125,10 @@
     text-decoration: none;
   }
 
+  .mobileKofiLink {
+    color: var(--color-accent-primary) !important;
+  }
+
   .nav {
     justify-content: space-between;
     width: 100%;

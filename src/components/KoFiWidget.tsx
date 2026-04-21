@@ -13,12 +13,14 @@ export default function KoFiWidget() {
       src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"
       strategy="afterInteractive"
       onLoad={() => {
-        kofiWidgetOverlay.draw('williamlwalkermontgomerie', {
-          type: 'floating-chat',
-          'floating-chat.donateButton.text': 'Support me',
-          'floating-chat.donateButton.background-color': '#795548',
-          'floating-chat.donateButton.text-color': '#fff',
-        });
+        if (window.innerWidth > 768) {
+          kofiWidgetOverlay.draw('williamlwalkermontgomerie', {
+            type: 'floating-chat',
+            'floating-chat.donateButton.text': 'Support me',
+            'floating-chat.donateButton.background-color': '#795548',
+            'floating-chat.donateButton.text-color': '#fff',
+          });
+        }
       }}
     />
   );

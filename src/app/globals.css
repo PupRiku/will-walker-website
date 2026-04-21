@@ -62,3 +62,9 @@ a:hover {
   outline-offset: 3px;
   border-radius: 0.25rem;
 }
+
+@media (max-width: 768px) {
+  .kofi-overlay {
+    display: none !important;
+  }
+}
