@@ -42,6 +42,9 @@ export default function Header() {
             <Link href="/#plays">Selected Works</Link>
           </li>
           <li>
+            <Link href="/productions">Productions</Link>
+          </li>
+          <li>
             <Link href="/cv">CV</Link>
           </li>
         </ul>
@@ -102,6 +105,9 @@ export default function Header() {
         </Link>
         <Link href="/#plays" onClick={closeMenu}>
           Selected Works
+        </Link>
+        <Link href="/productions" onClick={closeMenu}>
+          Productions
         </Link>
         <Link href="/cv" onClick={closeMenu}>
           CV

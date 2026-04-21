@@ -43,11 +43,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1.25rem;
   list-style-type: none;
   padding: 0;
   margin: 0;
   font-size: 1.125rem;
+  white-space: nowrap;
 }
 
 .links a {
