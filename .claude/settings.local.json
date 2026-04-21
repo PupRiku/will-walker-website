@@ -16,7 +16,8 @@
       "Read(//c//**)",
       "Bash(mv public/images/*.png public/images/covers/)",
       "Bash(mv public/images/*.jpg public/images/covers/)",
-      "Bash(mv public/images/*.jpeg public/images/covers/)"
+      "Bash(mv public/images/*.jpeg public/images/covers/)",
+      "Bash(npm run *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\gmrpr\\Desktop\\Will-Site\\will-walker-website\\src\\app\\works"
