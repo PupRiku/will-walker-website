@@ -6,7 +6,14 @@
       "Bash(npx tsc *)",
       "Bash(npm test *)",
       "Bash(npm list *)",
-      "Bash(node scripts/optimize-images.js)"
+      "Bash(node scripts/optimize-images.js)",
+      "Bash(cp /mnt/user-data/uploads/R_U_R.jpeg /c/Users/gmrpr/Desktop/Will-Site/will-walker-website/public/images/R_U_R.jpeg)",
+      "Bash(cp /mnt/user-data/uploads/Picture1.png /c/Users/gmrpr/Desktop/Will-Site/will-walker-website/public/images/The_Lion_and_the_Rose.png)",
+      "Bash(cp /mnt/user-data/uploads/Picture2.png /c/Users/gmrpr/Desktop/Will-Site/will-walker-website/public/images/The_Mothman_of_Monticello.png)",
+      "Read(//mnt/user-data/**)",
+      "Read(//tmp/**)",
+      "Bash(find /mnt -name \"R_U_R*\")",
+      "Read(//c//**)"
     ],
     "additionalDirectories": [
       "c:\\Users\\gmrpr\\Desktop\\Will-Site\\will-walker-website\\src\\app\\works"
