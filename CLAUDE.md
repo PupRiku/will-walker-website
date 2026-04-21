@@ -56,7 +56,10 @@ will-walker-website/
 │   │   ├── works/
 │   │   │   ├── page.tsx             # Thin server wrapper — exports metadata, renders WorksClient
 │   │   │   ├── WorksClient.tsx      # 'use client' — all filter/sort/modal state lives here
-│   │   │   └── page.module.css
+│   │   │   ├── page.module.css
+│   │   │   └── [slug]/
+│   │   │       ├── page.tsx         # Individual play page (server component, generateStaticParams)
+│   │   │       └── page.module.css
 │   │   ├── thank-you/
 │   │   │   ├── page.tsx             # Post-contact-form success page
 │   │   │   └── page.module.css
@@ -78,10 +81,12 @@ will-walker-website/
 │   │   └── filterSort.ts            # Pure filter/sort logic extracted from WorksClient (testable)
 │   └── test/
 │       ├── setup.ts                 # @testing-library/jest-dom import
-│       ├── data/works.test.ts       # Data integrity tests
+│       ├── data/works.test.ts       # Data integrity + generateStaticParams tests
 │       ├── components/
 │       │   ├── Modal.test.tsx
 │       │   └── Header.test.tsx
+│       ├── pages/
+│       │   └── playPage.test.tsx    # Individual play page render tests
 │       └── utils/filterSort.test.ts
 ├── next.config.ts
 ├── tsconfig.json                    # strict: true, paths: @/* -> ./src/*
@@ -118,6 +123,7 @@ Font variables (`--font-lora`, `--font-lato`, `--font-special-elite`) are inject
 // src/data/works.ts
 
 export type Work = {
+  slug: string;           // URL-safe identifier (e.g., 'hamlet-a-horatio-story') — unique, lowercase, hyphens only
   title: string;
   category: string;       // Genre label (e.g., 'Drama', 'Comedy', 'Historical Drama')
   imageSrc: string;       // Path relative to /public (e.g., '/images/Hamlet-A-Horatio-Story.jpg')
@@ -143,8 +149,9 @@ export const worksData: Work[] = [ ... ];
 
 1. Add a new image to `/public/images/` following the existing naming convention (e.g., `My_New_Play_Cover_Art.png`)
 2. Add a new entry to the `worksData` array in `src/data/works.ts`
-3. Set `featured: true` to include it in the home page carousel
-4. Leave `pdfSrc: ''` if no sample PDF is available
+3. Give it a unique `slug`: lowercase, hyphens, no punctuation (e.g., `'my-new-play'`). `&` → `and`, drop apostrophes.
+4. Set `featured: true` to include it in the home page carousel
+5. Leave `pdfSrc: ''` if no sample PDF is available
 
 ---
 
@@ -160,6 +167,7 @@ export const worksData: Work[] = [ ... ];
 - Receives a `Work | null` prop plus `isOpen` boolean
 - Shows cover image, synopsis, cast breakdown, runtime
 - Buttons: "Read Sample" (if `pdfSrc` is set), "Purchase Rights" (if `published && purchase`), or "Apply for Rights" (Google Form fallback for unpublished works)
+- "View Full Page →" link below buttons navigates to `/works/{slug}`
 - Imports `Work` directly from `@/data/works` — no local type copy
 
 ### `WorksClient.tsx` (Works Page — Client Logic)
@@ -167,6 +175,7 @@ export const worksData: Work[] = [ ... ];
 - All filter state (`searchQuery`, `selectedGenre`, `publishedOnly`, `runtimeBucket`, `castBucket`) and sort state (`sortOrder`) live here
 - Calls `filterWorks` and `sortWorks` from `src/utils/filterSort.ts` — no inline filter logic
 - Types `RuntimeBucket`, `CastBucket`, `SortOrder` are imported from `filterSort.ts`
+- Each work card is a `<Link href={/works/${work.slug}}>` — no nested buttons inside cards
 
 ### `Contact.tsx` (Contact Form)
 - Uses **FormSubmit.co** — no backend email logic; form POSTs directly to FormSubmit
@@ -208,12 +217,15 @@ Both are `NEXT_PUBLIC_` and are exposed to the browser. Do not store secrets her
 | Route | File | Notes |
 |---|---|---|
 | `/` | `src/app/page.tsx` | Hero + About + Plays carousel + Contact |
-| `/works` | `src/app/works/page.tsx` | Full play grid, casting flexibility modal, download/apply links |
+| `/works` | `src/app/works/page.tsx` | Full play grid; cards link to individual play pages |
+| `/works/[slug]` | `src/app/works/[slug]/page.tsx` | Individual play page; pre-rendered via `generateStaticParams` |
 | `/cv` | `src/app/cv/page.tsx` | Full CV (hardcoded) |
 | `/thank-you` | `src/app/thank-you/page.tsx` | Post-contact-form confirmation |
 | `/api/form` POST | `src/app/api/form/route.ts` | Redirects to `/thank-you` (FormSubmit handles the actual email) |
 
 Anchor sections on the home page: `#home`, `#about`, `#plays`, `#contact`
+
+`/works/[slug]` uses `generateStaticParams()` to pre-render all play pages at build time. Unknown slugs call `notFound()`. The `params` object is typed as `Promise<{ slug: string }>` per Next.js 15 App Router convention.
 
 ---
 
@@ -245,7 +257,6 @@ This site has solid accessibility practices — maintain them on any changes:
 
 Planned future features — do not implement unless explicitly asked:
 
-- [ ] **Individual play pages** — dedicated route per play with full synopsis, production history, and licensing details
 - [ ] **Admin backend** — authenticated dashboard for Will to manage plays without touching code (likely Postgres or headless CMS)
 - [ ] **Pending data updates** — runtime/cast fields still marked TBD need values from Will
 - [ ] **Image optimization audit** — verify all cover images are appropriately sized
@@ -278,12 +289,13 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 
 | File | What it covers |
 |---|---|
-| `src/test/data/works.test.ts` | Data integrity: required fields, imageSrc paths, cast notation, published → purchase URL |
+| `src/test/data/works.test.ts` | Data integrity: required fields, imageSrc paths, cast notation, slugs, `generateStaticParams` |
 | `src/test/utils/filterSort.test.ts` | All exported functions: `classifyRuntime`, `parseCastSize`, `parseRuntimeForSort`, `parseCastForSort`, `filterWorks`, `sortWorks` |
-| `src/test/components/Modal.test.tsx` | Render, conditional buttons, overlay click, aria attributes |
+| `src/test/components/Modal.test.tsx` | Render, conditional buttons, "View Full Page" link, overlay click, aria attributes |
 | `src/test/components/Header.test.tsx` | Nav links, hamburger toggle, aria-label, logo alt text |
+| `src/test/pages/playPage.test.tsx` | Title, synopsis, ribbon badge, conditional buttons, notFound for unknown slug |
 
-**Mocking pattern:** `next/image` and `next/link` are mocked with simple HTML equivalents in each component test file. `SocialLinks` is mocked in `Header.test.tsx`.
+**Mocking pattern:** `next/image` and `next/link` are mocked with simple HTML equivalents in each component/page test file. `SocialLinks` is mocked in `Header.test.tsx`. `next/navigation` is mocked in playPage.test.tsx (`notFound` throws to allow assertion).
 
 ---
 
@@ -316,5 +328,4 @@ Edit `src/components/KoFiWidget.tsx`
 - No Tailwind (CSS Modules only)
 - No database or CMS — all content is in `works.ts` or hardcoded in TSX files
 - No authentication
-- No individual play pages (planned roadmap item)
 - No i18n / multilingual support
