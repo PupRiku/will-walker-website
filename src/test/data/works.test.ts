@@ -67,4 +67,28 @@ describe('worksData integrity', () => {
     const featured = worksData.filter((w) => w.featured === true);
     expect(featured.length).toBeGreaterThan(0);
   });
+
+  it('every work has a slug', () => {
+    worksData.forEach((work) => {
+      expect(
+        work.slug,
+        `"${work.title}" is missing a slug`
+      ).toBeTruthy();
+    });
+  });
+
+  it('no two works share the same slug', () => {
+    const slugs = worksData.map((w) => w.slug);
+    const unique = new Set(slugs);
+    expect(unique.size).toBe(slugs.length);
+  });
+
+  it('all slugs match /^[a-z0-9-]+$/', () => {
+    worksData.forEach((work) => {
+      expect(
+        /^[a-z0-9-]+$/.test(work.slug),
+        `"${work.title}" slug "${work.slug}" contains invalid characters`
+      ).toBe(true);
+    });
+  });
 });
