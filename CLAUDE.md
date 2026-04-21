@@ -63,6 +63,9 @@ will-walker-website/
 │   │   │   └── [slug]/
 │   │   │       ├── page.tsx         # Individual play page (server component, generateStaticParams)
 │   │   │       └── page.module.css
+│   │   ├── productions/
+│   │   │   ├── page.tsx             # Production photo gallery (server component)
+│   │   │   └── page.module.css
 │   │   ├── thank-you/
 │   │   │   ├── page.tsx             # Post-contact-form success page
 │   │   │   └── page.module.css
@@ -79,7 +82,8 @@ will-walker-website/
 │   │   ├── Plays.tsx / .module.css     # Embla carousel of featured plays (home page)
 │   │   └── SocialLinks.tsx / .module.css
 │   ├── data/
-│   │   └── works.ts                 # THE SOURCE OF TRUTH for all play content
+│   │   ├── works.ts                 # THE SOURCE OF TRUTH for all play content
+│   │   └── productions.ts           # Production photos data (Production + ProductionPhoto types)
 │   ├── utils/
 │   │   └── filterSort.ts            # Pure filter/sort logic extracted from WorksClient (testable)
 │   └── test/
@@ -89,7 +93,8 @@ will-walker-website/
 │       │   ├── Modal.test.tsx
 │       │   └── Header.test.tsx
 │       ├── pages/
-│       │   └── playPage.test.tsx    # Individual play page render tests
+│       │   ├── playPage.test.tsx    # Individual play page render tests
+│       │   └── productions.test.tsx # ProductionsPage: empty state, headings, photos, captions
 │       └── utils/filterSort.test.ts
 ├── next.config.ts
 ├── tsconfig.json                    # strict: true, paths: @/* -> ./src/*
@@ -158,6 +163,39 @@ export const worksData: Work[] = [ ... ];
 
 ---
 
+## Production Photos
+
+Production photo data lives in `src/data/productions.ts`. Photo image files go in `/public/images/photos/`.
+
+```typescript
+// src/data/productions.ts
+
+export type ProductionPhoto = {
+  id: string;            // Unique per-photo identifier (e.g., 'eov-table-read-01')
+  src: string;           // Path relative to /public (e.g., '/images/photos/my-show-01.jpg')
+  alt: string;           // Descriptive alt text
+  caption?: string;      // Optional caption shown below the photo
+};
+
+export type Production = {
+  playTitle: string;     // Must match the play's title in works.ts (used as display heading)
+  productionYear: number;
+  venue: string;         // e.g., 'Paris Community Theatre, Paris, TX'
+  photos: ProductionPhoto[];
+};
+
+export const productionsData: Production[] = [ ... ];
+```
+
+### Adding production photos
+
+1. Place image files in `/public/images/photos/` (naming convention: `play-slug-venue-01.jpg`)
+2. Run `npm run optimize-images` — the script processes `photos/` at max 1200px wide
+3. Add or update a `Production` entry in `productionsData`
+4. Productions render in the order they appear in the array; photos render in array order within each production
+
+---
+
 ## Key Components
 
 ### `Plays.tsx` (Home Page Carousel)
@@ -223,6 +261,7 @@ Both are `NEXT_PUBLIC_` and are exposed to the browser. Do not store secrets her
 | `/works` | `src/app/works/page.tsx` | Full play grid; cards link to individual play pages |
 | `/works/[slug]` | `src/app/works/[slug]/page.tsx` | Individual play page; pre-rendered via `generateStaticParams` |
 | `/cv` | `src/app/cv/page.tsx` | Full CV (hardcoded) |
+| `/productions` | `src/app/productions/page.tsx` | Photo gallery of production history; grouped by play |
 | `/thank-you` | `src/app/thank-you/page.tsx` | Post-contact-form confirmation |
 | `/api/form` POST | `src/app/api/form/route.ts` | Redirects to `/thank-you` (FormSubmit handles the actual email) |
 
@@ -304,6 +343,7 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 | `src/test/components/Modal.test.tsx` | Render, conditional buttons, "View Full Page" link, overlay click, aria attributes |
 | `src/test/components/Header.test.tsx` | Nav links, hamburger toggle, aria-label, logo alt text |
 | `src/test/pages/playPage.test.tsx` | Title, synopsis, ribbon badge, conditional buttons, notFound for unknown slug |
+| `src/test/pages/productions.test.tsx` | Empty state, section headings per production, photo src/alt, captions present/absent |
 
 **Mocking pattern:** `next/image` and `next/link` are mocked with simple HTML equivalents in each component/page test file. `SocialLinks` is mocked in `Header.test.tsx`. `next/navigation` is mocked in playPage.test.tsx (`notFound` throws to allow assertion).
 
@@ -316,6 +356,11 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 2. Run `npm run optimize-images` to compress the new file before committing
 3. Add entry to `worksData` in `src/data/works.ts`
 4. Set `featured: true` to include in home carousel
+
+**Add production photos**
+1. Place image files in `/public/images/photos/`
+2. Run `npm run optimize-images`
+3. Add or update a `Production` entry in `src/data/productions.ts`
 
 **Mark a play as published**
 Set `published: true` and add `purchase: 'https://...'` in `works.ts`
