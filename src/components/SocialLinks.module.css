@@ -12,6 +12,13 @@
   transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
+@media (max-width: 768px) {
+  .socialLink {
+    padding: 10px;
+    margin: -10px;
+  }
+}
+
 .socialLink:hover {
   color: var(--color-accent-primary);
   transform: scale(1.1);
