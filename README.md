@@ -24,6 +24,7 @@ A performant, accessible portfolio site that serves as Will's primary profession
 - **Ko-fi support widget** — floating Ko-fi button for direct audience support
 - **Fully responsive** — optimized for desktop and mobile
 - **Next.js Image optimization** — fast load times across all devices
+- **Source image optimization** — all 61 images batch-compressed via a Sharp script; 54.4 MB reduction (34.1%) across cover art, portraits, and UI assets
 
 ---
 
@@ -54,8 +55,7 @@ Play catalog data is currently managed via a static TypeScript file (`src/data/w
 ## Roadmap
 
 - [ ] **Pending data updates** — Fill in TBD runtimes and cast info, add the R.U.R. adaptation, add new plays from client, and update the featured works list.
-- [ ] **Image optimization audit** — Compress cover art source files in `/public/images/`, several of which are 3–4MB PNGs. Next.js handles resizing at runtime but large source files still impact load time — especially important now that individual play pages put more focus on cover art.
-- [ ] **Admin backend** — Authenticated dashboard for Will to add and manage plays without touching code. Will require a database or headless CMS integration (likely Postgres or Sanity). Defer until pending data updates are complete.
+- [ ] **Admin backend** — Authenticated dashboard for Will to add and manage plays without touching code. Will require a database or headless CMS integration (likely Postgres or Sanity).
 
 ---
 

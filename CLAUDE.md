@@ -40,7 +40,7 @@ This file gives Claude Code context about the Will Walker Montgomerie portfolio 
 ```
 will-walker-website/
 ├── public/
-│   ├── images/          # All play cover art + site images (logo, headshots, icons)
+│   ├── images/          # All play cover art + site images (logo, headshots, icons) — all pre-optimized via Sharp; run optimize-images before committing new files
 │   └── pdfs/
 │       ├── royalties_scale.pdf       # Downloadable — do not modify
 │       └── Placeholder-PDF.pdf       # Dev placeholder only
@@ -229,6 +229,14 @@ Anchor sections on the home page: `#home`, `#about`, `#plays`, `#contact`
 
 ---
 
+## Scripts
+
+| Command | File | Description |
+|---|---|---|
+| `npm run optimize-images` | `scripts/optimize-images.js` | Batch compresses all images in `/public/images/` using Sharp. Run this whenever new cover art is added. Resizes cover art to max 800px wide, logo to 400px, casting icon to 256px, portrait photos to 600px at 85% JPEG quality. Overwrites files in place. |
+
+---
+
 ## SEO and Structured Data
 
 Defined in `src/app/layout.tsx`:
@@ -257,9 +265,8 @@ This site has solid accessibility practices — maintain them on any changes:
 
 Planned future features — do not implement unless explicitly asked:
 
+- [ ] **Pending data updates** — runtime/cast fields still marked TBD need values from Will; add R.U.R. adaptation and new plays from client; update featured works list
 - [ ] **Admin backend** — authenticated dashboard for Will to manage plays without touching code (likely Postgres or headless CMS)
-- [ ] **Pending data updates** — runtime/cast fields still marked TBD need values from Will
-- [ ] **Image optimization audit** — verify all cover images are appropriately sized
 
 ---
 
@@ -303,8 +310,9 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 
 **Add a new play**
 1. Add cover image to `/public/images/`
-2. Add entry to `worksData` in `src/data/works.ts`
-3. Set `featured: true` to include in home carousel
+2. Run `npm run optimize-images` to compress the new file before committing
+3. Add entry to `worksData` in `src/data/works.ts`
+4. Set `featured: true` to include in home carousel
 
 **Mark a play as published**
 Set `published: true` and add `purchase: 'https://...'` in `works.ts`
