@@ -5,7 +5,8 @@
       "Bash(node -e ' *)",
       "Bash(npx tsc *)",
       "Bash(npm test *)",
-      "Bash(npm list *)"
+      "Bash(npm list *)",
+      "Bash(node scripts/optimize-images.js)"
     ],
     "additionalDirectories": [
       "c:\\Users\\gmrpr\\Desktop\\Will-Site\\will-walker-website\\src\\app\\works"
