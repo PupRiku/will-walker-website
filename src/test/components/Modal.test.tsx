@@ -11,6 +11,7 @@ vi.mock('next/image', () => ({
 }));
 
 const mockPlay: Work = {
+  slug: 'test-play',
   title: 'Test Play',
   category: 'Drama',
   imageSrc: '/images/test.jpg',

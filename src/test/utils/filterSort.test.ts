@@ -10,6 +10,7 @@ import {
 import { Work } from '@/data/works';
 
 const makeWork = (overrides: Partial<Work>): Work => ({
+  slug: 'test-play',
   title: 'Test Play',
   category: 'Drama',
   imageSrc: '/images/test.png',
