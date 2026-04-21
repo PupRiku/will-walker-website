@@ -41,7 +41,11 @@ const NextButton = (props: { onClick: () => void; enabled: boolean }) => (
 );
 
 export default function Plays() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' });
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: 'center',
+    containScroll: false,
+  });
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
