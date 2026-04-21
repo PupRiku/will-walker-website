@@ -13,7 +13,10 @@
       "Read(//mnt/user-data/**)",
       "Read(//tmp/**)",
       "Bash(find /mnt -name \"R_U_R*\")",
-      "Read(//c//**)"
+      "Read(//c//**)",
+      "Bash(mv public/images/*.png public/images/covers/)",
+      "Bash(mv public/images/*.jpg public/images/covers/)",
+      "Bash(mv public/images/*.jpeg public/images/covers/)"
     ],
     "additionalDirectories": [
       "c:\\Users\\gmrpr\\Desktop\\Will-Site\\will-walker-website\\src\\app\\works"
