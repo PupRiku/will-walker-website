@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Modal from '@/components/Modal';
 import { Work } from '@/data/works';
@@ -7,6 +8,12 @@ vi.mock('next/image', () => ({
   default: ({ alt, src }: { alt: string; src: string }) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img alt={alt} src={src} />
+  ),
+}));
+
+vi.mock('next/link', () => ({
+  default: ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => (
+    <a href={href} className={className}>{children}</a>
   ),
 }));
 
@@ -120,5 +127,12 @@ describe('Modal', () => {
     render(<Modal isOpen={true} onClose={vi.fn()} play={mockPlay} />);
     const dialog = screen.getByRole('dialog');
     expect(dialog).toHaveAttribute('aria-modal', 'true');
+  });
+
+  it('renders "View Full Page" link pointing to the play slug', () => {
+    render(<Modal isOpen={true} onClose={vi.fn()} play={mockPlay} />);
+    const link = screen.getByText('View Full Page →');
+    expect(link).toBeInTheDocument();
+    expect(link.closest('a')).toHaveAttribute('href', '/works/test-play');
   });
 });

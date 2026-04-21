@@ -211,7 +211,11 @@ export default function WorksClient() {
       ) : (
       <div className={styles.grid}>
         {sortedWorks.map((work) => (
-          <div className={styles.card} key={work.title}>
+          <Link
+            href={`/works/${work.slug}`}
+            className={styles.card}
+            key={work.slug}
+          >
             {work.published && <div className={styles.ribbon}>Published</div>}
             <Image
               src={work.imageSrc}
@@ -234,31 +238,8 @@ export default function WorksClient() {
                   <b>Cast:</b> {work.cast}
                 </p>
               )}
-
-              <div className={styles.buttonGroup}>
-                {work.pdfSrc && (
-                  <a
-                    href={work.pdfSrc}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.button}
-                  >
-                    Read Sample
-                  </a>
-                )}
-                {work.published && work.purchase && (
-                  <a
-                    href={work.purchase}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${styles.button} ${styles.purchaseButton}`}
-                  >
-                    Purchase Rights
-                  </a>
-                )}
-              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       )}

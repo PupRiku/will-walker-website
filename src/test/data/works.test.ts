@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { worksData, Work } from '@/data/works';
+import { generateStaticParams } from '@/app/works/[slug]/page';
 
 describe('worksData integrity', () => {
   it('has at least one play', () => {
@@ -90,5 +91,13 @@ describe('worksData integrity', () => {
         `"${work.title}" slug "${work.slug}" contains invalid characters`
       ).toBe(true);
     });
+  });
+
+  it('generateStaticParams returns one entry per work with correct slug', () => {
+    const params = generateStaticParams();
+    expect(params.length).toBe(worksData.length);
+    const paramSlugs = params.map((p) => p.slug).sort();
+    const dataSlugs = worksData.map((w) => w.slug).sort();
+    expect(paramSlugs).toEqual(dataSlugs);
   });
 });
