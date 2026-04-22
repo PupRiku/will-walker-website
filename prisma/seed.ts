@@ -46,16 +46,41 @@ async function main() {
     })
   }
 
-  // Seed production photos
+  // Seed productions and their photos
   let totalPhotos = 0
+  let groupCounter = 0
 
   for (const production of productionsData) {
+    // Upsert the Production group record
+    const prod = await prisma.production.upsert({
+      where: {
+        playTitle_venue_productionYear: {
+          playTitle: production.playTitle,
+          venue: production.venue,
+          productionYear: production.productionYear,
+        },
+      },
+      update: {
+        displayOrder: groupCounter,
+      },
+      create: {
+        playTitle: production.playTitle,
+        venue: production.venue,
+        productionYear: production.productionYear,
+        displayOrder: groupCounter,
+      },
+    })
+
+    groupCounter++
+
+    // Upsert each photo, linking to the Production
     for (let i = 0; i < production.photos.length; i++) {
       const photo = production.photos[i]
 
       await prisma.productionPhoto.upsert({
         where: { id: photo.id },
         update: {
+          productionId: prod.id,
           playTitle: photo.playTitle,
           productionYear: photo.productionYear,
           venue: photo.venue,
@@ -66,6 +91,7 @@ async function main() {
         },
         create: {
           id: photo.id,
+          productionId: prod.id,
           playTitle: photo.playTitle,
           productionYear: photo.productionYear,
           venue: photo.venue,
@@ -81,7 +107,7 @@ async function main() {
   }
 
   console.log(`Seeded ${worksData.length} plays (${featuredCounter} featured)`)
-  console.log(`Seeded ${totalPhotos} production photos`)
+  console.log(`Seeded ${groupCounter} productions with ${totalPhotos} photos`)
 }
 
 main()

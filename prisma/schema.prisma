@@ -25,15 +25,30 @@ model Play {
   updatedAt     DateTime @updatedAt
 }
 
+model Production {
+  id             String            @id @default(cuid())
+  playTitle      String
+  venue          String
+  productionYear Int
+  displayOrder   Int               @default(0)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  photos         ProductionPhoto[]
+
+  @@unique([playTitle, venue, productionYear])
+}
+
 model ProductionPhoto {
-  id             String   @id @default(cuid())
+  id             String      @id @default(cuid())
+  productionId   String?
+  production     Production? @relation(fields: [productionId], references: [id], onDelete: SetNull)
   playTitle      String
   productionYear Int
   venue          String
   src            String
   alt            String
   caption        String?
-  displayOrder   Int      @default(0)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  displayOrder   Int         @default(0)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
 }
