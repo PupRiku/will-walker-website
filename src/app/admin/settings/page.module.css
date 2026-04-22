@@ -1,0 +1,59 @@
+.page {
+  max-width: 1100px;
+}
+
+.pageHeader {
+  margin-bottom: 2.5rem;
+}
+
+.breadcrumb {
+  font-family: var(--font-family-accent);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--color-accent-primary);
+  margin: 0 0 0.25rem 0;
+  text-transform: uppercase;
+}
+
+.pageTitle {
+  font-family: var(--font-family-heading);
+  font-size: 2rem;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.card {
+  background-color: var(--color-accent-subtle);
+  border-radius: 0.625rem;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  max-width: 480px;
+}
+
+.cardIcon {
+  font-size: 2.25rem;
+  color: var(--color-accent-primary);
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+
+.cardHeading {
+  font-family: var(--font-family-heading);
+  font-size: 1.25rem;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.cardBody {
+  font-family: var(--font-family-body);
+  font-size: 0.9rem;
+  color: var(--color-text);
+  opacity: 0.6;
+  margin: 0;
+  line-height: 1.6;
+}
