@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { fetchPlay, fetchPlays } from '@/lib/api';
+import { fetchPlay } from '@/lib/api';
 import styles from './page.module.css';
 import { BsDownload } from 'react-icons/bs';
+import { prisma } from '@/lib/prisma';
 
 export const revalidate = 60;
 
@@ -13,7 +14,7 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  const plays = await fetchPlays();
+  const plays = await prisma.play.findMany({ select: { slug: true } });
   return plays.map((play) => ({ slug: play.slug }));
 }
 
