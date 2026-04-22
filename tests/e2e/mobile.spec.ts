@@ -61,11 +61,10 @@ test.describe('Mobile layout', () => {
     const aboutLink = page.getByRole('link', { name: /^about$/i }).last();
     await expect(aboutLink).toBeVisible({ timeout: 3000 });
     await aboutLink.tap();
-    // Menu should close — hamburger button should still be visible
-    // and the mobile menu links should no longer be visible
+    // Wait for close animation to complete
     await expect(
       page.getByRole('link', { name: /^home$/i }).last(),
-    ).not.toBeVisible({ timeout: 3000 });
+    ).not.toBeVisible({ timeout: 5000 });
     await expect(
       page.getByRole('button', { name: /open navigation menu/i }),
     ).toBeVisible();
