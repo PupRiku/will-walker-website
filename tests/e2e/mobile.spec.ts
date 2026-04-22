@@ -1,12 +1,8 @@
 import { test, expect } from '@playwright/test';
 
-// Only run on mobile viewports
-test.use({ viewport: null }); // Reset — individual projects define the viewport
-
-const mobileProjects = ['iPhone 12', 'Pixel 5'];
-
 test.describe('Mobile layout', () => {
-  test.skip(({ browserName, isMobile }) => !isMobile, 'Mobile-only tests');
+  // Skip entirely on desktop browsers — only run on iPhone 12 and Pixel 5 projects
+  test.skip(({ isMobile }) => !isMobile, 'Mobile-only tests');
 
   test('home page: hamburger menu button is visible', async ({ page }) => {
     await page.goto('/');
@@ -17,30 +13,28 @@ test.describe('Mobile layout', () => {
 
   test('home page: desktop nav links are hidden', async ({ page }) => {
     await page.goto('/');
-    // Desktop nav should not be visible on mobile
-    const desktopNav = page.locator('nav ul').first();
-    // Either not visible or contains no visible links at mobile viewport
-    const hambuger = page.getByRole('button', {
-      name: /open navigation menu/i,
-    });
-    await expect(hambuger).toBeVisible();
+    // Hamburger is visible — that's sufficient to confirm mobile layout is active
+    await expect(
+      page.getByRole('button', { name: /open navigation menu/i }),
+    ).toBeVisible();
   });
 
   test('tapping hamburger opens mobile menu', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: /open navigation menu/i }).tap();
-    // Mobile menu should appear
+    // Wait for mobile menu to animate open
     await expect(
       page.getByRole('link', { name: /^home$/i }).last(),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 3000 });
   });
 
   test('mobile menu contains expected nav links', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: /open navigation menu/i }).tap();
+    // Wait for menu to open
     await expect(
       page.getByRole('link', { name: /^home$/i }).last(),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 3000 });
     await expect(
       page.getByRole('link', { name: /^about$/i }).last(),
     ).toBeVisible();
@@ -65,9 +59,13 @@ test.describe('Mobile layout', () => {
     await page.goto('/');
     await page.getByRole('button', { name: /open navigation menu/i }).tap();
     const aboutLink = page.getByRole('link', { name: /^about$/i }).last();
-    await expect(aboutLink).toBeVisible();
+    await expect(aboutLink).toBeVisible({ timeout: 3000 });
     await aboutLink.tap();
-    // After clicking a link the mobile menu should close
+    // Menu should close — hamburger button should still be visible
+    // and the mobile menu links should no longer be visible
+    await expect(
+      page.getByRole('link', { name: /^home$/i }).last(),
+    ).not.toBeVisible({ timeout: 3000 });
     await expect(
       page.getByRole('button', { name: /open navigation menu/i }),
     ).toBeVisible();
@@ -79,25 +77,32 @@ test.describe('Mobile layout', () => {
     await page.goto('/');
     const h1 = page.getByRole('heading', { level: 1 }).first();
     await expect(h1).toBeVisible();
-    // Confirm it's in the viewport
     const box = await h1.boundingBox();
+    // h1 should start within the viewport (no horizontal overflow)
     expect(box?.x).toBeGreaterThanOrEqual(0);
+    expect(box?.width).toBeGreaterThan(0);
   });
 
   test('/works page: filter bar is visible', async ({ page }) => {
     await page.goto('/works');
-    await expect(page.getByRole('textbox', { name: /search/i })).toBeVisible();
+    // Wait for API data to load
+    await expect(page.getByText(/showing \d+ of \d+ plays/i)).toBeVisible();
+    // Search uses placeholder not aria label
+    await expect(
+      page.getByPlaceholder(/search by title or synopsis/i),
+    ).toBeVisible();
   });
 
   test('/works/hamlet-a-horatio-story: action buttons are present', async ({
     page,
   }) => {
     await page.goto('/works/hamlet-a-horatio-story');
-    await expect(
-      page.getByRole('link', { name: /purchase rights/i }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole('link', { name: /royalties scale/i }),
-    ).toBeVisible();
+    // Scroll to buttons in case they are below the fold on mobile
+    const purchaseBtn = page.getByRole('link', { name: /purchase rights/i });
+    await purchaseBtn.scrollIntoViewIfNeeded();
+    await expect(purchaseBtn).toBeVisible();
+    const royaltiesBtn = page.getByRole('link', { name: /royalties scale/i });
+    await royaltiesBtn.scrollIntoViewIfNeeded();
+    await expect(royaltiesBtn).toBeVisible();
   });
 });
