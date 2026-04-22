@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Modal.module.css';
-import { Work } from '@/data/works';
+import { Work } from '@/types/play';
 
 type ModalProps = {
   isOpen: boolean;

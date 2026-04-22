@@ -1,0 +1,54 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+model Play {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         String
+  category      String
+  runtime       String
+  cast          String
+  synopsis      String
+  imageSrc      String
+  pdfSrc        String   @default("")
+  purchase      String   @default("")
+  published     Boolean  @default(false)
+  featured      Boolean  @default(false)
+  featuredOrder Int?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Production {
+  id             String            @id @default(cuid())
+  playTitle      String
+  venue          String
+  productionYear Int
+  displayOrder   Int               @default(0)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  photos         ProductionPhoto[]
+
+  @@unique([playTitle, venue, productionYear])
+}
+
+model ProductionPhoto {
+  id             String      @id @default(cuid())
+  productionId   String?
+  production     Production? @relation(fields: [productionId], references: [id], onDelete: SetNull)
+  playTitle      String
+  productionYear Int
+  venue          String
+  src            String
+  alt            String
+  caption        String?
+  displayOrder   Int         @default(0)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}

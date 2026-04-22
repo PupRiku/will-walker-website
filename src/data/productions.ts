@@ -1,4 +1,8 @@
-export type ProductionPhoto = {
+// ARCHIVED: This file is no longer imported by the app.
+// Data is now managed via Supabase. See src/types/ for type definitions.
+// Kept for reference and as a seed data source (prisma/seed.ts).
+
+type ProductionPhoto = {
   id: string;
   playTitle: string;
   productionYear: number;
@@ -8,7 +12,7 @@ export type ProductionPhoto = {
   caption?: string;
 };
 
-export type Production = {
+type Production = {
   playTitle: string;
   productionYear: number;
   venue: string;

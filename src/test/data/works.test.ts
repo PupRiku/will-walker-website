@@ -1,6 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { worksData, Work } from '@/data/works';
-import { generateStaticParams } from '@/app/works/[slug]/page';
+import { generateStaticParams } from '@/app/(public)/works/[slug]/page';
+
+vi.mock('@/lib/api', () => ({
+  fetchPlays: async () => worksData,
+  fetchPlay: async (slug: string) => worksData.find((w) => w.slug === slug) ?? null,
+}));
 
 describe('worksData integrity', () => {
   it('has at least one play', () => {
@@ -93,8 +98,8 @@ describe('worksData integrity', () => {
     });
   });
 
-  it('generateStaticParams returns one entry per work with correct slug', () => {
-    const params = generateStaticParams();
+  it('generateStaticParams returns one entry per work with correct slug', async () => {
+    const params = await generateStaticParams();
     expect(params.length).toBe(worksData.length);
     const paramSlugs = params.map((p) => p.slug).sort();
     const dataSlugs = worksData.map((w) => w.slug).sort();

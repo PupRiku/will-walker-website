@@ -11,8 +11,6 @@
   align-items: start;
 }
 
-/* ── Left column ─────────────────────────────────────── */
-
 .imageColumn {
   position: relative;
 }
@@ -38,8 +36,6 @@
   text-transform: uppercase;
   z-index: 1;
 }
-
-/* ── Right column ────────────────────────────────────── */
 
 .meta {
   display: flex;
@@ -93,8 +89,6 @@
   margin: 0 0 2rem 0;
 }
 
-/* ── Buttons ─────────────────────────────────────────── */
-
 .buttonGroup {
   display: flex;
   flex-wrap: wrap;
@@ -132,8 +126,6 @@
   color: var(--color-text);
 }
 
-/* ── Back link ───────────────────────────────────────── */
-
 .backLink {
   display: inline-block;
   font-family: var(--font-family-body);
@@ -147,8 +139,6 @@
 .backLink:hover {
   text-decoration: underline;
 }
-
-/* ── Responsive ──────────────────────────────────────── */
 
 @media (max-width: 768px) {
   .layout {

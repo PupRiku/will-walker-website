@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Modal from '@/components/Modal';
-import { Work } from '@/data/works';
+import { Work } from '@/types/play';
 
 vi.mock('next/image', () => ({
   default: ({ alt, src }: { alt: string; src: string }) => (

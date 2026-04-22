@@ -7,7 +7,7 @@ import {
   filterWorks,
   sortWorks,
 } from '@/utils/filterSort';
-import { Work } from '@/data/works';
+import { Work } from '@/types/play';
 
 const makeWork = (overrides: Partial<Work>): Work => ({
   slug: 'test-play',

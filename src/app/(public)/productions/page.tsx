@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { productionsData } from '@/data/productions';
+import { fetchProductions } from '@/lib/api';
 import styles from './page.module.css';
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: 'Productions | William L. Walker Montgomerie',
@@ -9,16 +11,18 @@ export const metadata: Metadata = {
     'Production photos from past performances of plays by William L. Walker Montgomerie.',
 };
 
-export default function ProductionsPage() {
+export default async function ProductionsPage() {
+  const productions = await fetchProductions();
+
   return (
     <main className={styles.pageWrapper}>
       <div className={styles.inner}>
         <h1 className={styles.heading}>Productions</h1>
 
-        {productionsData.length === 0 ? (
+        {productions.length === 0 ? (
           <p className={styles.emptyState}>Production photos coming soon.</p>
         ) : (
-          productionsData.map((production) => (
+          productions.map((production) => (
             <section
               key={`${production.playTitle}-${production.productionYear}`}
               className={styles.production}

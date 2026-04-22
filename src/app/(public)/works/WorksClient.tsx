@@ -3,14 +3,16 @@
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { worksData } from '@/data/works';
+import type { Play } from '@/types/play';
 import { filterWorks, sortWorks, type RuntimeBucket, type CastBucket, type SortOrder } from '@/utils/filterSort';
 import styles from './page.module.css';
 import { BsDownload } from 'react-icons/bs';
 
-const genres = Array.from(new Set(worksData.map((w) => w.category))).sort();
-
 export default function WorksClient() {
+  const [plays, setPlays] = useState<Play[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   const [isCastingModalOpen, setIsCastingModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
@@ -18,6 +20,24 @@ export default function WorksClient() {
   const [runtimeBucket, setRuntimeBucket] = useState<RuntimeBucket>('');
   const [castBucket, setCastBucket] = useState<CastBucket>('');
   const [sortOrder, setSortOrder] = useState<SortOrder>('');
+
+  useEffect(() => {
+    fetch('/api/plays')
+      .then((res) => {
+        if (!res.ok) throw new Error('fetch failed');
+        return res.json() as Promise<Play[]>;
+      })
+      .then((data) => {
+        setPlays(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError(true);
+        setLoading(false);
+      });
+  }, []);
+
+  const genres = Array.from(new Set(plays.map((w) => w.category))).sort();
 
   const clearFilters = () => {
     setSearchQuery('');
@@ -57,7 +77,7 @@ export default function WorksClient() {
     };
   }, [isCastingModalOpen, handleKeyDown]);
 
-  const filteredWorks = filterWorks(worksData, {
+  const filteredWorks = filterWorks(plays, {
     searchQuery,
     selectedGenre,
     publishedOnly,
@@ -188,61 +208,70 @@ export default function WorksClient() {
       </div>
       </div>
 
-      <div className={styles.filterMeta}>
-        <p className={styles.resultCount}>
-          Showing {filteredWorks.length} of {worksData.length} plays
-        </p>
-        {isFiltered && (
-          <button className={styles.clearFiltersButton} onClick={clearFilters}>
-            Clear all filters
-          </button>
-        )}
-      </div>
-
-      {sortedWorks.length === 0 ? (
-        <div className={styles.emptyState}>
-          <p className={styles.emptyStateText}>
-            No plays match your current filters.
-          </p>
-          <button className={styles.button} onClick={clearFilters}>
-            Clear all filters
-          </button>
-        </div>
+      {loading ? (
+        <p className={styles.emptyStateText}>Loading plays…</p>
+      ) : error ? (
+        <p className={styles.emptyStateText}>Failed to load plays. Please refresh the page.</p>
       ) : (
-      <div className={styles.grid}>
-        {sortedWorks.map((work) => (
-          <Link
-            href={`/works/${work.slug}`}
-            className={styles.card}
-            key={work.slug}
-          >
-            {work.published && <div className={styles.ribbon}>Published</div>}
-            <Image
-              src={work.imageSrc}
-              alt={`Cover for ${work.title}`}
-              width={500}
-              height={250}
-              className={styles.cardImage}
-            />
-            <div className={styles.cardContent}>
-              <div className={styles.metaInfo}>
-                <p className={styles.category}>{work.category}</p>
-                {work.runtime && (
-                  <p className={styles.runtime}>{work.runtime}</p>
-                )}
-              </div>
-              <h2 className={styles.title}>{work.title}</h2>
-              <p className={styles.synopsis}>{work.synopsis}</p>
-              {work.cast && (
-                <p className={styles.cast}>
-                  <b>Cast:</b> {work.cast}
-                </p>
-              )}
+        <>
+          <div className={styles.filterMeta}>
+            <p className={styles.resultCount}>
+              Showing {filteredWorks.length} of {plays.length} plays
+            </p>
+            {isFiltered && (
+              <button className={styles.clearFiltersButton} onClick={clearFilters}>
+                Clear all filters
+              </button>
+            )}
+          </div>
+
+          {sortedWorks.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p className={styles.emptyStateText}>
+                No plays match your current filters.
+              </p>
+              <button className={styles.button} onClick={clearFilters}>
+                Clear all filters
+              </button>
             </div>
-          </Link>
-        ))}
-      </div>
+          ) : (
+            <div className={styles.grid}>
+              {sortedWorks.map((work) => (
+                <Link
+                  href={`/works/${work.slug}`}
+                  className={styles.card}
+                  key={work.slug}
+                >
+                  {work.published && <div className={styles.ribbon}>Published</div>}
+                  <Image
+                    src={work.imageSrc}
+                    alt={`Cover for ${work.title}`}
+                    width={500}
+                    height={250}
+                    className={styles.cardImage}
+                  />
+                  <div className={styles.cardContent}>
+                    <div className={styles.metaInfo}>
+                      <p className={styles.category}>{work.category}</p>
+                      {work.runtime && (
+                        <p className={styles.runtime}>{work.runtime}</p>
+                      )}
+                    </div>
+                    <h2 className={styles.title}>{work.title}</h2>
+                    <p className={styles.synopsis}>{work.synopsis}</p>
+                    {work.cast && (
+                      <p className={styles.cast}>
+                        <b>Cast:</b> {work.cast}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </>
       )}
+
       <div
         className={`${styles.modalOverlay} ${
           isCastingModalOpen ? styles.isOpen : ''

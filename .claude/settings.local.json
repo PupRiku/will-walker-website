@@ -18,7 +18,23 @@
       "Bash(mv public/images/*.jpg public/images/covers/)",
       "Bash(mv public/images/*.jpeg public/images/covers/)",
       "Bash(npm run *)",
-      "Bash(Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue)"
+      "Bash(Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue)",
+      "Bash(npx prisma *)",
+      "Bash(Test-NetConnection -ComputerName db.xowukhozkaqnvixtrhnb.supabase.co -Port 5432)",
+      "Bash(node -e \"require\\('dns'\\).resolve\\('supabase.co', \\(e,r\\) => console.log\\(e?.message || r\\)\\)\")",
+      "Bash(node -e \"require\\('dns'\\).resolve\\('db.xowukhozkaqnvixtrhnb.supabase.co', \\(e,r\\) => console.log\\(e?.message || r\\)\\)\")",
+      "Bash(node -e \"require\\('dns'\\).resolve4\\('db.xowukhozkaqnvixtrhnb.supabase.co', \\(e,r\\) => console.log\\(e?.message || r\\)\\)\")",
+      "Bash(node -e \"require\\('dns'\\).resolve6\\('db.xowukhozkaqnvixtrhnb.supabase.co', \\(e,r\\) => console.log\\('IPv6:', e?.message || r\\)\\)\")",
+      "Bash(node -e \"require\\('dns'\\).resolveCname\\('db.xowukhozkaqnvixtrhnb.supabase.co', \\(e,r\\) => console.log\\('CNAME:', e?.message || r\\)\\)\")",
+      "Bash(node -e \"const p = require\\('@prisma/client'\\); console.log\\(Object.keys\\(p\\).slice\\(0,10\\)\\)\")",
+      "Bash(node -e \"const p = require\\('./src/generated/prisma/client'\\); console.log\\(Object.keys\\(p\\).slice\\(0,5\\)\\)\")",
+      "Bash(start npx *)",
+      "Bash(mkdir -p \"c:\\\\Users\\\\gmrpr\\\\Desktop\\\\Will-Site\\\\will-walker-website\\\\src\\\\app\\\\api\\\\plays\\\\[slug]\\\\feature-order\")",
+      "Bash(mkdir -p \"c:\\\\Users\\\\gmrpr\\\\Desktop\\\\Will-Site\\\\will-walker-website\\\\src\\\\app\\\\api\\\\productions\\\\[id]\")",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"c:\\\\Users\\\\gmrpr\\\\Desktop\\\\Will-Site\\\\will-walker-website\\\\src\\\\app\\\\api\\\\admin\\\\upload\")",
+      "Bash(npx playwright *)",
+      "Bash(curl -s http://localhost:3000/api/plays)",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const plays=JSON.parse\\(d\\); console.log\\('total:', plays.length\\); const pub=plays.filter\\(p=>p.published\\); console.log\\('published:', pub.map\\(p=>p.slug+' | '+p.title\\)\\)\")"
     ],
     "additionalDirectories": [
       "c:\\Users\\gmrpr\\Desktop\\Will-Site\\will-walker-website\\src\\app\\works"
