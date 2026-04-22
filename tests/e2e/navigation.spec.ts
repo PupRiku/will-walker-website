@@ -59,6 +59,8 @@ test.describe('Navigation and routing', () => {
     page,
     isMobile,
   }) => {
+    // Hard reset — navigate to a different page first to clear any lingering state
+    await page.goto('/works', { waitUntil: 'networkidle' });
     await page.goto('/', { waitUntil: 'networkidle' });
     await clickNavLink(page, isMobile, /^cv$/i);
     await expect(page).toHaveURL('/cv', { timeout: 10000 });

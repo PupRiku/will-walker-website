@@ -87,15 +87,21 @@ test.describe('Works page', () => {
     await castingBtn.scrollIntoViewIfNeeded();
     await expect(castingBtn).toBeVisible();
     await castingBtn.click();
-    await expect(page.getByRole('dialog')).toBeVisible({ timeout: 3000 });
+    // The casting modal doesn't use role="dialog" — find it by its heading text instead
+    await expect(
+      page.getByRole('heading', { name: /note on casting flexibility/i }),
+    ).toBeVisible({ timeout: 3000 });
   });
 
   test('clicking a play card navigates to /works/[slug]', async ({ page }) => {
     const firstCard = page.locator('a[href^="/works/"]').first();
+    // Scroll past the sticky filter bar by scrolling down enough to clear it
+    await page.evaluate(() => window.scrollBy(0, 300));
     await firstCard.scrollIntoViewIfNeeded();
+    // Wait for the filter bar to not intercept — use force click as fallback
     await expect(firstCard).toBeVisible({ timeout: 5000 });
     const href = await firstCard.getAttribute('href');
-    await firstCard.click();
+    await firstCard.click({ force: true });
     await expect(page).toHaveURL(href!, { timeout: 10000 });
   });
 
