@@ -1,3 +1,5 @@
+// Used by API write routes (POST, PUT, DELETE) only.
+// /admin UI routes are protected separately by src/middleware.ts.
 export function requireAuth(request: Request): boolean {
   const authHeader = request.headers.get('Authorization')
   if (!authHeader || !authHeader.startsWith('Basic ')) return false
