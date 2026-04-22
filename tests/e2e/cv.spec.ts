@@ -37,6 +37,7 @@ test.describe('CV page', () => {
     page,
   }) => {
     const hamletEntry = page.getByText(/Hamlet: A Horatio Story/);
+    await expect(hamletEntry).toBeAttached({ timeout: 10000 });
     await hamletEntry.scrollIntoViewIfNeeded();
     await expect(hamletEntry).toBeVisible();
   });
