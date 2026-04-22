@@ -6,7 +6,9 @@ test.describe('Works page', () => {
   });
 
   test('loads with correct title', async ({ page }) => {
-    await expect(page).toHaveTitle(/All Works.*William L\. Walker Montgomerie/i);
+    await expect(page).toHaveTitle(
+      /All Works.*William L\. Walker Montgomerie/i,
+    );
   });
 
   test('shows "Showing 60 of 60 plays" count on load', async ({ page }) => {
@@ -17,14 +19,22 @@ test.describe('Works page', () => {
     await expect(page.getByRole('textbox', { name: /search/i })).toBeVisible();
   });
 
-  test('Genre, Runtime, Cast Size filter controls are present', async ({ page }) => {
+  test('Genre, Runtime, Cast Size filter controls are present', async ({
+    page,
+  }) => {
     await expect(page.getByRole('combobox', { name: /genre/i })).toBeVisible();
-    await expect(page.getByRole('combobox', { name: /runtime/i })).toBeVisible();
-    await expect(page.getByRole('combobox', { name: /cast size/i })).toBeVisible();
+    await expect(
+      page.getByRole('combobox', { name: /runtime/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('combobox', { name: /cast size/i }),
+    ).toBeVisible();
   });
 
   test('Published works only checkbox is present', async ({ page }) => {
-    await expect(page.getByRole('checkbox', { name: /published/i })).toBeVisible();
+    await expect(
+      page.getByRole('checkbox', { name: /published/i }),
+    ).toBeVisible();
   });
 
   test('typing "hamlet" in search filters results', async ({ page }) => {
@@ -54,7 +64,9 @@ test.describe('Works page', () => {
     expect(Number(match?.[1])).toBeLessThan(60);
   });
 
-  test('checking "Published works only" shows exactly 2 plays', async ({ page }) => {
+  test('checking "Published works only" shows exactly 2 plays', async ({
+    page,
+  }) => {
     await page.getByRole('checkbox', { name: /published/i }).check();
     await expect(page.getByText(/showing 2 of 60 plays/i)).toBeVisible();
   });
@@ -78,17 +90,23 @@ test.describe('Works page', () => {
     expect(page.url()).toMatch(/\/works\/.+/);
   });
 
-  test('casting note icon opens the casting flexibility modal', async ({ page }) => {
+  test('casting note icon opens the casting flexibility modal', async ({
+    page,
+  }) => {
     const castingBtn = page.getByRole('button', { name: /casting/i });
     await castingBtn.click();
     await expect(page.getByRole('dialog')).toBeVisible();
   });
 
   test('Download Royalties Scale button is present', async ({ page }) => {
-    await expect(page.getByRole('link', { name: /royalties scale/i })).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: /royalties scale/i }),
+    ).toBeVisible();
   });
 
   test('Apply for Performance Rights button is present', async ({ page }) => {
-    await expect(page.getByRole('link', { name: /performance rights/i })).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: /performance rights/i }),
+    ).toBeVisible();
   });
 });
