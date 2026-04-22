@@ -18,12 +18,17 @@ vi.mock('@/lib/api', () => ({
 
 const realData: Production[] = [
   {
+    id: 'prod-1',
     playTitle: 'Echoes of Valor',
     productionYear: 2025,
     venue: 'Paris Community Theatre, Paris, TX',
+    displayOrder: 0,
+    createdAt: '2024-01-01T00:00:00.000Z',
+    updatedAt: '2024-01-01T00:00:00.000Z',
     photos: [
       {
         id: 'eov-table-read-01',
+        productionId: 'prod-1',
         playTitle: 'Echoes of Valor',
         productionYear: 2025,
         venue: 'Paris Community Theatre, Paris, TX',
@@ -36,6 +41,7 @@ const realData: Production[] = [
       },
       {
         id: 'eov-table-read-02',
+        productionId: 'prod-1',
         playTitle: 'Echoes of Valor',
         productionYear: 2025,
         venue: 'Paris Community Theatre, Paris, TX',
