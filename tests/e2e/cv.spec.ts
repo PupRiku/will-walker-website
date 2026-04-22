@@ -10,22 +10,32 @@ test.describe('CV page', () => {
   });
 
   test('"Artist Statement" section is visible', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /artist statement/i })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /artist statement/i }),
+    ).toBeVisible();
   });
 
   test('"Education" section is visible', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /education/i })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /education/i }),
+    ).toBeVisible();
   });
 
   test('"Playwriting" section is visible', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /playwriting/i })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /playwriting/i }),
+    ).toBeVisible();
   });
 
   test('"Directing Portfolio" section is visible', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /directing portfolio/i })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /directing portfolio/i }),
+    ).toBeVisible();
   });
 
-  test('"Hamlet: A Horatio Story" is listed under Playwriting', async ({ page }) => {
+  test('"Hamlet: A Horatio Story" is listed under Playwriting', async ({
+    page,
+  }) => {
     await expect(page.getByText(/Hamlet: A Horatio Story/)).toBeVisible();
   });
 });
