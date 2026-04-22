@@ -409,19 +409,16 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 
 **Mocking pattern:** `next/image` and `next/link` are mocked with simple HTML equivalents in each component/page test file. `SocialLinks` is mocked in `Header.test.tsx`. `next/navigation` is mocked in playPage.test.tsx (`notFound` throws to allow assertion).
 
-### E2E tests — Playwright
+### E2E Tests (Playwright)
 
-```bash
-npm run test:e2e          # run all e2e tests (headless)
-npm run test:e2e:ui       # Playwright UI mode (interactive watcher)
-npm run test:e2e:report   # open the last HTML report
-```
-
-**Config:** `playwright.config.ts` at project root. Runs against `http://localhost:3000` (dev server auto-starts if not already running).
-
-**Browsers:** Chromium, Firefox, WebKit (desktop) + iPhone 12 and Pixel 5 (mobile viewports).
-
-**Test locations:**
+- **Framework:** Playwright with `@playwright/test`
+- **Run:** `npm run test:e2e` (headless) · `npm run test:e2e:ui` (UI mode) · `npm run test:e2e:report` (open HTML report)
+- **Config:** `playwright.config.ts` at project root — runs against `http://localhost:3000` (dev server auto-starts if not already running)
+- **Browsers:** Chromium, Firefox, WebKit (desktop) + iPhone 12 and Pixel 5 (mobile viewports)
+- **Coverage:** 355 tests, 24 skipped (mobile-only tests on desktop projects), 1 known flaky (WebKit genre filter — passes on retry, timing issue)
+- **Manual only** — not wired to CI
+- Do not use `page.waitForTimeout()` — use proper Playwright `waitFor` assertions
+- Admin write operations (add/edit/delete) are intentionally excluded from E2E — covered by manual test plan
 
 | File | What it covers |
 |---|---|
@@ -436,7 +433,22 @@ npm run test:e2e:report   # open the last HTML report
 
 **Helpers:** `tests/e2e/helpers/auth.ts` — `getAuthHeader()` for API auth. `tests/e2e/fixtures/plays.ts` — known slugs/titles.
 
-**Note:** Admin write operations (add/edit/delete) are intentionally excluded — those remain manual. E2E tests are not wired to CI.
+---
+
+## Deployment
+
+**Platform:** Vercel (auto-deploys on push to `main`)
+
+**Build requirements:**
+- Prisma client is generated automatically via `postinstall` script (`prisma generate`) — no manual step needed on Vercel
+- `DATABASE_URL` must use the Supabase **Session Pooler** connection string (port **6543**) with these query parameters: `?pgbouncer=true&connection_limit=1&connect_timeout=30`
+- The direct connection (port 5432) causes `ENETUNREACH` errors on Vercel's build servers
+- All 9 environment variables must be set in Vercel before deploying (see Environment Variables section)
+
+**ISR (Incremental Static Regeneration):**
+- Play pages (`/works/[slug]`) and `/productions` revalidate every 60 seconds
+- Content changes made via the admin dashboard appear on the live site within 60 seconds without a manual redeploy
+- `generateStaticParams` pre-renders all play pages at build time via a direct Prisma query (not the API)
 
 ---
 

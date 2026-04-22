@@ -26,6 +26,7 @@ A performant, accessible portfolio site that serves as Will's primary profession
 - **Next.js Image optimization** — fast load times across all devices
 - **Source image optimization** — all 61 images batch-compressed via a Sharp script; 54.4 MB reduction (34.1%) across cover art, portraits, and UI assets
 - **Admin dashboard** — password-protected dashboard at `/admin` for managing plays and production photos; add, edit, delete, and reorder plays and photos without touching code; cover art and production photo uploads via Vercel Blob; featured carousel order managed via drag-up/down interface
+- **End-to-end test suite** — Playwright tests covering home, works, play pages, productions, CV, navigation, mobile layouts, and admin API across Chromium, Firefox, WebKit, iPhone 12, and Pixel 5
 
 ---
 
@@ -46,6 +47,7 @@ A performant, accessible portfolio site that serves as Will's primary profession
 | Database        | Supabase (Postgres)                                 |
 | File Storage    | Vercel Blob                                         |
 | Auth            | HTTP Basic Auth (Next.js middleware)                |
+| E2E Testing     | Playwright                                          |
 | Data            | Supabase (Postgres) via Prisma                      |
 | Deployment      | Vercel                                              |
 
