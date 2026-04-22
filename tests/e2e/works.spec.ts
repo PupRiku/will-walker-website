@@ -3,6 +3,8 @@ import { test, expect } from '@playwright/test';
 test.describe('Works page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/works');
+    // Wait for plays to load from API
+    await expect(page.getByText(/showing 60 of 60 plays/i)).toBeVisible();
   });
 
   test('loads with correct title', async ({ page }) => {
@@ -16,19 +18,18 @@ test.describe('Works page', () => {
   });
 
   test('search input is present', async ({ page }) => {
-    await expect(page.getByRole('textbox', { name: /search/i })).toBeVisible();
+    // Search input uses a placeholder rather than an aria label
+    await expect(
+      page.getByPlaceholder(/search by title or synopsis/i),
+    ).toBeVisible();
   });
 
   test('Genre, Runtime, Cast Size filter controls are present', async ({
     page,
   }) => {
-    await expect(page.getByRole('combobox', { name: /genre/i })).toBeVisible();
-    await expect(
-      page.getByRole('combobox', { name: /runtime/i }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole('combobox', { name: /cast size/i }),
-    ).toBeVisible();
+    await expect(page.getByRole('combobox').nth(0)).toBeVisible(); // Genre
+    await expect(page.getByRole('combobox').nth(1)).toBeVisible(); // Runtime
+    await expect(page.getByRole('combobox').nth(2)).toBeVisible(); // Cast Size
   });
 
   test('Published works only checkbox is present', async ({ page }) => {
@@ -38,28 +39,28 @@ test.describe('Works page', () => {
   });
 
   test('typing "hamlet" in search filters results', async ({ page }) => {
-    const search = page.getByRole('textbox', { name: /search/i });
+    const search = page.getByPlaceholder(/search by title or synopsis/i);
     await search.fill('hamlet');
-    const countText = page.getByText(/showing \d+ of 60 plays/i);
-    await expect(countText).toBeVisible();
-    // Count should be less than 60
-    const text = await countText.textContent();
+    // Wait for filter to apply
+    await expect(page.getByText(/showing \d+ of 60 plays/i)).toBeVisible();
+    const text = await page.getByText(/showing \d+ of 60 plays/i).textContent();
     const match = text?.match(/showing (\d+)/);
     expect(Number(match?.[1])).toBeLessThan(60);
   });
 
   test('clearing search restores all 60 plays', async ({ page }) => {
-    const search = page.getByRole('textbox', { name: /search/i });
+    const search = page.getByPlaceholder(/search by title or synopsis/i);
     await search.fill('hamlet');
+    await expect(page.getByText(/showing \d+ of 60 plays/i)).toBeVisible();
     await search.clear();
     await expect(page.getByText(/showing 60 of 60 plays/i)).toBeVisible();
   });
 
   test('selecting genre "Drama" filters results', async ({ page }) => {
-    await page.getByRole('combobox', { name: /genre/i }).selectOption('Drama');
-    const countText = page.getByText(/showing \d+ of 60 plays/i);
-    await expect(countText).toBeVisible();
-    const text = await countText.textContent();
+    // Genre is the first combobox
+    await page.getByRole('combobox').nth(0).selectOption('Drama');
+    await expect(page.getByText(/showing \d+ of 60 plays/i)).toBeVisible();
+    const text = await page.getByText(/showing \d+ of 60 plays/i).textContent();
     const match = text?.match(/showing (\d+)/);
     expect(Number(match?.[1])).toBeLessThan(60);
   });
@@ -72,18 +73,18 @@ test.describe('Works page', () => {
   });
 
   test('selecting Sort "Title: A → Z" changes order', async ({ page }) => {
-    const sortSelect = page.getByRole('combobox', { name: /sort/i });
-    // Get first option value for default order, then switch to A→Z
-    await sortSelect.selectOption('title-asc');
-    // First card should begin alphabetically early
+    // Sort is the last combobox (4th — after Genre, Runtime, Cast Size)
+    await page.getByRole('combobox').last().selectOption('title-asc');
     const firstCard = page.locator('a[href^="/works/"]').first();
+    await expect(firstCard).toBeVisible();
     const title = await firstCard.textContent();
-    // Title should start with a letter in the early alphabet (before M)
     expect(title!.trim()[0].toUpperCase() < 'M').toBeTruthy();
   });
 
   test('clicking a play card navigates to /works/[slug]', async ({ page }) => {
     const firstCard = page.locator('a[href^="/works/"]').first();
+    await firstCard.scrollIntoViewIfNeeded();
+    await expect(firstCard).toBeVisible();
     const href = await firstCard.getAttribute('href');
     await firstCard.click();
     await expect(page).toHaveURL(href!);
@@ -93,7 +94,12 @@ test.describe('Works page', () => {
   test('casting note icon opens the casting flexibility modal', async ({
     page,
   }) => {
-    const castingBtn = page.getByRole('button', { name: /casting/i });
+    // Casting note button has aria-label="Note on Casting Flexibility"
+    const castingBtn = page.getByRole('button', {
+      name: /note on casting flexibility/i,
+    });
+    await castingBtn.scrollIntoViewIfNeeded();
+    await expect(castingBtn).toBeVisible();
     await castingBtn.click();
     await expect(page.getByRole('dialog')).toBeVisible();
   });
