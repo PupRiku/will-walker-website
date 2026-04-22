@@ -52,7 +52,7 @@ const realData: Production[] = [
 
 async function renderPage() {
   vi.resetModules();
-  const { default: ProductionsPage } = await import('@/app/productions/page');
+  const { default: ProductionsPage } = await import('@/app/(public)/productions/page');
   const jsx = await ProductionsPage();
   return render(jsx as React.ReactElement);
 }

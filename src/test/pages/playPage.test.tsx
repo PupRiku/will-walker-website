@@ -76,7 +76,7 @@ vi.mock('@/lib/api', () => ({
 }));
 
 async function renderPlayPage(slug: string) {
-  const { default: PlayPage } = await import('@/app/works/[slug]/page');
+  const { default: PlayPage } = await import('@/app/(public)/works/[slug]/page');
   const params = Promise.resolve({ slug });
   const jsx = await PlayPage({ params });
   return render(jsx as React.ReactElement);

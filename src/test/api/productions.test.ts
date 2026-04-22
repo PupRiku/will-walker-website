@@ -121,6 +121,7 @@ describe('POST /api/productions', () => {
   })
 
   it('returns 400 when productionYear is missing', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { productionYear: _, ...bodyWithout } = validPhotoBody
     const res = await POST(makeRequest('POST', bodyWithout))
     expect(res.status).toBe(400)

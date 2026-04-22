@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { worksData, Work } from '@/data/works';
-import { generateStaticParams } from '@/app/works/[slug]/page';
+import { generateStaticParams } from '@/app/(public)/works/[slug]/page';
 
 vi.mock('@/lib/api', () => ({
   fetchPlays: async () => worksData,
