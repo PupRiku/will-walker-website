@@ -14,7 +14,8 @@ export default function Header() {
   };
 
   const closeMenu = () => {
-    setIsMenuOpen(false);
+    // Small delay to allow navigation to fire before menu closes
+    setTimeout(() => setIsMenuOpen(false), 50);
   };
 
   return (
