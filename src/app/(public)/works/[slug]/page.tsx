@@ -41,7 +41,6 @@ export default async function PlayPage({ params }: Props) {
   return (
     <main className={styles.pageWrapper}>
       <div className={styles.layout}>
-        {/* Left column — cover image */}
         <div className={styles.imageColumn}>
           {work.published && <div className={styles.ribbon}>Published</div>}
           <Image
@@ -54,7 +53,6 @@ export default async function PlayPage({ params }: Props) {
           />
         </div>
 
-        {/* Right column — details */}
         <div className={styles.detailsColumn}>
           <div className={styles.meta}>
             <p className={styles.genre}>{work.category}</p>
