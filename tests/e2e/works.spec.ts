@@ -3,8 +3,12 @@ import { test, expect } from '@playwright/test';
 test.describe('Works page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/works');
-    // Wait for plays to load from API
-    await expect(page.getByText(/showing 60 of 60 plays/i)).toBeVisible();
+    // Wait for API data to load AND grid to render
+    await expect(page.getByText(/showing 60 of 60 plays/i)).toBeVisible({
+      timeout: 10000,
+    });
+    // Extra wait for client-side hydration to complete
+    await page.waitForLoadState('networkidle');
   });
 
   test('loads with correct title', async ({ page }) => {
@@ -40,9 +44,11 @@ test.describe('Works page', () => {
 
   test('typing "hamlet" in search filters results', async ({ page }) => {
     const search = page.getByPlaceholder(/search by title or synopsis/i);
+    await expect(search).toBeVisible();
     await search.fill('hamlet');
-    // Wait for filter to apply
+    // Wait for count to update
     await expect(page.getByText(/showing \d+ of 60 plays/i)).toBeVisible();
+    await expect(page.getByText(/showing 60 of 60 plays/i)).not.toBeVisible();
     const text = await page.getByText(/showing \d+ of 60 plays/i).textContent();
     const match = text?.match(/showing (\d+)/);
     expect(Number(match?.[1])).toBeLessThan(60);
@@ -57,8 +63,11 @@ test.describe('Works page', () => {
   });
 
   test('selecting genre "Drama" filters results', async ({ page }) => {
-    // Genre is the first combobox
-    await page.getByRole('combobox').nth(0).selectOption('Drama');
+    const genreSelect = page.getByRole('combobox').nth(0);
+    await expect(genreSelect).toBeVisible();
+    await genreSelect.selectOption('Drama');
+    // Wait for count to update away from 60
+    await expect(page.getByText(/showing 60 of 60 plays/i)).not.toBeVisible();
     await expect(page.getByText(/showing \d+ of 60 plays/i)).toBeVisible();
     const text = await page.getByText(/showing \d+ of 60 plays/i).textContent();
     const match = text?.match(/showing (\d+)/);
@@ -84,24 +93,23 @@ test.describe('Works page', () => {
   test('clicking a play card navigates to /works/[slug]', async ({ page }) => {
     const firstCard = page.locator('a[href^="/works/"]').first();
     await firstCard.scrollIntoViewIfNeeded();
-    await expect(firstCard).toBeVisible();
+    await expect(firstCard).toBeVisible({ timeout: 5000 });
     const href = await firstCard.getAttribute('href');
     await firstCard.click();
-    await expect(page).toHaveURL(href!);
+    await expect(page).toHaveURL(href!, { timeout: 10000 });
     expect(page.url()).toMatch(/\/works\/.+/);
   });
 
   test('casting note icon opens the casting flexibility modal', async ({
     page,
   }) => {
-    // Casting note button has aria-label="Note on Casting Flexibility"
     const castingBtn = page.getByRole('button', {
       name: /note on casting flexibility/i,
     });
     await castingBtn.scrollIntoViewIfNeeded();
     await expect(castingBtn).toBeVisible();
     await castingBtn.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
+    await expect(page.getByRole('dialog')).toBeVisible({ timeout: 3000 });
   });
 
   test('Download Royalties Scale button is present', async ({ page }) => {
