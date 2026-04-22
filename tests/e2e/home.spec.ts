@@ -79,7 +79,12 @@ test.describe('Home page', () => {
     const link = page.getByRole('link', { name: /see all of will/i });
     await expect(link).toBeVisible();
     await link.click();
-    await expect(page).toHaveURL('/works');
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL('/works', { timeout: 10000 });
+    // Confirm works page actually loaded
+    await expect(page.getByText(/Showing \d+ of \d+ plays/i)).toBeVisible({
+      timeout: 10000,
+    });
   });
 
   test('contact form section is visible with Name, Email, Message fields', async ({

@@ -93,15 +93,21 @@ test.describe('Works page', () => {
     ).toBeVisible({ timeout: 3000 });
   });
 
-  test('clicking a play card navigates to /works/[slug]', async ({ page }) => {
+  test('clicking a play card navigates to /works/[slug]', async ({
+    page,
+    isMobile,
+  }) => {
     const firstCard = page.locator('a[href^="/works/"]').first();
-    // Scroll past the sticky filter bar by scrolling down enough to clear it
-    await page.evaluate(() => window.scrollBy(0, 300));
-    await firstCard.scrollIntoViewIfNeeded();
-    // Wait for the filter bar to not intercept — use force click as fallback
+    // Scroll well past the sticky filter bar
+    await page.evaluate(() => window.scrollBy(0, 500));
+    await page.waitForTimeout(500); // let sticky bar settle
     await expect(firstCard).toBeVisible({ timeout: 5000 });
     const href = await firstCard.getAttribute('href');
-    await firstCard.click({ force: true });
+    if (isMobile) {
+      await firstCard.tap();
+    } else {
+      await firstCard.click({ force: true });
+    }
     await expect(page).toHaveURL(href!, { timeout: 10000 });
   });
 

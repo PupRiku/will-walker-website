@@ -57,13 +57,15 @@ test.describe('Navigation and routing', () => {
 
   test('clicking "CV" nav link navigates to /cv', async ({
     page,
+    browser,
     isMobile,
   }) => {
-    // Hard reset — navigate to a different page first to clear any lingering state
-    await page.goto('/works', { waitUntil: 'networkidle' });
-    await page.goto('/', { waitUntil: 'networkidle' });
-    await clickNavLink(page, isMobile, /^cv$/i);
-    await expect(page).toHaveURL('/cv', { timeout: 10000 });
+    // Create a fresh page to avoid state pollution from previous tests
+    const freshPage = await browser.newPage();
+    await freshPage.goto('/', { waitUntil: 'networkidle' });
+    await clickNavLink(freshPage, isMobile, /^cv$/i);
+    await expect(freshPage).toHaveURL('/cv', { timeout: 10000 });
+    await freshPage.close();
   });
 
   test('clicking "Contact Me" button scrolls to #contact section', async ({
