@@ -27,7 +27,7 @@ test.describe('Home page', () => {
   });
 
   test('about section is visible', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /about/i })).toBeVisible();
+    await expect(page.locator('#about').getByRole('heading').first()).toBeVisible();
   });
 
   test('selected works carousel is visible', async ({ page }) => {
