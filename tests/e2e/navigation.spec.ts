@@ -2,18 +2,17 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Navigation and routing', () => {
   // Helper to click a nav link — opens mobile menu first if on mobile
-  async function clickNavLink(
-    page: any,
-    isMobile: boolean,
-    name: RegExp,
-    nth: 'first' | 'last' = 'first',
-  ) {
+  async function clickNavLink(page: any, isMobile: boolean, name: RegExp) {
     if (isMobile) {
       await page.getByRole('button', { name: /open navigation menu/i }).tap();
       await expect(
         page.getByRole('link', { name: /^home$/i }).last(),
       ).toBeVisible({ timeout: 3000 });
-      await page.getByRole('link', { name }).last().tap();
+      const link = page.getByRole('link', { name }).last();
+      await expect(link).toBeVisible({ timeout: 3000 });
+      await link.tap();
+      // Wait for menu close animation and navigation to fire
+      await page.waitForTimeout(200);
     } else {
       await page.getByRole('link', { name }).first().click();
     }
