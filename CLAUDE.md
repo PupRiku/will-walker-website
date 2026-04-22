@@ -279,6 +279,20 @@ Anchor sections on the home page: `#home`, `#about`, `#plays`, `#contact`
 
 ---
 
+## Database
+
+- **ORM:** Prisma 7
+- **Provider:** Supabase (Postgres) — use the **Session Pooler** connection string (IPv4, port 5432); the direct connection is IPv6-only and won't work from most dev machines
+- **Schema:** `prisma/schema.prisma`
+- **Config:** `prisma.config.ts` — reads `DATABASE_URL` from `.env`; datasource URL is set here, not in `schema.prisma` (Prisma v7 requirement)
+- **Client:** generated to `src/generated/prisma/` — import from `src/generated/prisma/client`
+- **Singleton:** `src/lib/prisma.ts` — use this everywhere in the app; uses `@prisma/adapter-pg` (required in Prisma v7)
+- **Seed script:** `prisma/seed.ts` — run with `npx prisma db seed`; uses `tsx` (not `ts-node`) due to ESM/CJS conflicts with the generated client
+- **Migrations:** `npx prisma migrate dev --name [description]`
+- **Studio:** `npx prisma studio` — opens a visual browser UI at a local port
+
+---
+
 ## SEO and Structured Data
 
 Defined in `src/app/layout.tsx`:
