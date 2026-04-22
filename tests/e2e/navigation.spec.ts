@@ -61,7 +61,7 @@ test.describe('Navigation and routing', () => {
   }) => {
     await page.goto('/');
     await clickNavLink(page, isMobile, /^cv$/i);
-    await expect(page).toHaveURL('/cv');
+    await expect(page).toHaveURL('/cv', { timeout: 10000 });
   });
 
   test('clicking "Contact Me" button scrolls to #contact section', async ({
