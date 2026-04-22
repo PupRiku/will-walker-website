@@ -33,13 +33,13 @@ export async function PUT(request: Request, { params }: { params: Params }) {
   }
 
   // Find the adjacent featured play to swap with
+  const orderFilter =
+    direction === 'up'
+      ? { lt: play.featuredOrder, not: null as null }
+      : { gt: play.featuredOrder, not: null as null };
+
   const adjacent = await prisma.play.findFirst({
-    where: {
-      featuredOrder: { not: null },
-      ...(direction === 'up'
-        ? { featuredOrder: { lt: play.featuredOrder } }
-        : { featuredOrder: { gt: play.featuredOrder } }),
-    },
+    where: { featuredOrder: orderFilter },
     orderBy: {
       featuredOrder: direction === 'up' ? 'desc' : 'asc',
     },
