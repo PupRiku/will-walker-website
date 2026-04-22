@@ -3,12 +3,20 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 vi.mock('@/lib/prisma', () => ({
   prisma: {
     productionPhoto: {
-      findMany: vi.fn(),
       findUnique: vi.fn(),
+      findFirst: vi.fn(),
       create: vi.fn(),
       update: vi.fn(),
       delete: vi.fn(),
     },
+    production: {
+      findMany: vi.fn(),
+      findFirst: vi.fn(),
+      findUnique: vi.fn(),
+      update: vi.fn(),
+      upsert: vi.fn(),
+    },
+    $transaction: vi.fn(),
   },
 }))
 
@@ -20,9 +28,12 @@ import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
 import { GET as getAll, POST } from '@/app/api/productions/route'
 import { GET as getOne, PUT, DELETE } from '@/app/api/productions/[id]/route'
+import { PUT as putPhotoOrder } from '@/app/api/productions/[id]/display-order/route'
+import { PUT as putGroupOrder } from '@/app/api/productions/groups/[id]/display-order/route'
 
 const mockPhoto = {
   id: 'photo-1',
+  productionId: 'prod-1',
   playTitle: 'Echoes of Valor',
   productionYear: 2025,
   venue: 'Paris Community Theatre, Paris, TX',
@@ -32,6 +43,17 @@ const mockPhoto = {
   displayOrder: 0,
   createdAt: new Date(),
   updatedAt: new Date(),
+}
+
+const mockProduction = {
+  id: 'prod-1',
+  playTitle: 'Echoes of Valor',
+  productionYear: 2025,
+  venue: 'Paris Community Theatre, Paris, TX',
+  displayOrder: 0,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  photos: [mockPhoto],
 }
 
 const validPhotoBody = {
@@ -67,44 +89,75 @@ function makeIdRequest(method: string, body?: unknown, auth = true): [Request, {
   return [request, { params: Promise.resolve({ id: 'photo-1' }) }]
 }
 
+function makePhotoOrderRequest(id: string, direction: string, auth = true): [Request, { params: Promise<{ id: string }> }] {
+  const request = new Request(`http://localhost/api/productions/${id}/display-order`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(auth ? { Authorization: AUTH_HEADER } : {}),
+    },
+    body: JSON.stringify({ direction }),
+  })
+  return [request, { params: Promise.resolve({ id }) }]
+}
+
+function makeGroupOrderRequest(id: string, direction: string, auth = true): [Request, { params: Promise<{ id: string }> }] {
+  const request = new Request(`http://localhost/api/productions/groups/${id}/display-order`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(auth ? { Authorization: AUTH_HEADER } : {}),
+    },
+    body: JSON.stringify({ direction }),
+  })
+  return [request, { params: Promise.resolve({ id }) }]
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mockTransaction(results: unknown[]) { ;(prisma.$transaction as any).mockResolvedValue(results) }
+
 beforeEach(() => {
   vi.clearAllMocks()
   vi.mocked(requireAuth).mockReturnValue(true)
 })
 
 describe('GET /api/productions', () => {
-  it('returns photos grouped by playTitle + productionYear + venue', async () => {
-    const photo2 = { ...mockPhoto, id: 'photo-2', displayOrder: 1 }
-    vi.mocked(prisma.productionPhoto.findMany).mockResolvedValue([mockPhoto, photo2])
+  it('returns productions with nested photos', async () => {
+    const mockProd2 = { ...mockProduction, id: 'prod-2', playTitle: 'Hamlet', photos: [] }
+    vi.mocked(prisma.production.findMany).mockResolvedValue([mockProduction, mockProd2])
     const res = await getAll()
     expect(res.status).toBe(200)
     const data = await res.json()
-    expect(data).toHaveLength(1)
-    expect(data[0].photos).toHaveLength(2)
+    expect(data).toHaveLength(2)
+    expect(data[0].photos).toHaveLength(1)
     expect(data[0].playTitle).toBe('Echoes of Valor')
   })
 
-  it('groups distinct productions separately', async () => {
-    const otherPhoto = {
-      ...mockPhoto,
-      id: 'photo-3',
-      playTitle: 'Hamlet',
-      productionYear: 2024,
-      venue: 'Other Theatre',
-    }
-    vi.mocked(prisma.productionPhoto.findMany).mockResolvedValue([mockPhoto, otherPhoto])
+  it('returns 500 on database error', async () => {
+    vi.mocked(prisma.production.findMany).mockRejectedValue(new Error('DB error'))
     const res = await getAll()
-    const data = await res.json()
-    expect(data).toHaveLength(2)
+    expect(res.status).toBe(500)
   })
 })
 
 describe('POST /api/productions', () => {
-  it('creates a production photo with valid data', async () => {
+  it('creates a production photo with valid data (finds or creates production group)', async () => {
+    vi.mocked(prisma.production.findFirst).mockResolvedValue(null)
+    vi.mocked(prisma.production.upsert).mockResolvedValue(mockProduction)
+    vi.mocked(prisma.productionPhoto.findFirst).mockResolvedValue(null)
     vi.mocked(prisma.productionPhoto.create).mockResolvedValue(mockPhoto)
     const res = await POST(makeRequest('POST', validPhotoBody))
     expect(res.status).toBe(201)
     expect((await res.json()).id).toBe('photo-1')
+  })
+
+  it('creates a photo linked to an existing productionId (skips upsert)', async () => {
+    vi.mocked(prisma.productionPhoto.findFirst).mockResolvedValue(null)
+    vi.mocked(prisma.productionPhoto.create).mockResolvedValue(mockPhoto)
+    const body = { ...validPhotoBody, productionId: 'prod-1' }
+    const res = await POST(makeRequest('POST', body))
+    expect(res.status).toBe(201)
+    expect(prisma.production.upsert).not.toHaveBeenCalled()
   })
 
   it('returns 401 when not authenticated', async () => {
@@ -208,6 +261,118 @@ describe('DELETE /api/productions/[id]', () => {
     vi.mocked(requireAuth).mockReturnValue(false)
     const [req, ctx] = makeIdRequest('DELETE', undefined, false)
     const res = await DELETE(req, ctx)
+    expect(res.status).toBe(401)
+  })
+})
+
+describe('PUT /api/productions/[id]/display-order', () => {
+  const photoUp = { ...mockPhoto, productionId: 'prod-1', displayOrder: 1 }
+  const adjacentAbove = { ...mockPhoto, id: 'photo-2', displayOrder: 0 }
+  const photoDown = { ...mockPhoto, productionId: 'prod-1', displayOrder: 0 }
+  const adjacentBelow = { ...mockPhoto, id: 'photo-2', displayOrder: 1 }
+
+  it('moves photo up', async () => {
+    vi.mocked(prisma.productionPhoto.findUnique).mockResolvedValue(photoUp)
+    vi.mocked(prisma.productionPhoto.findFirst).mockResolvedValue(adjacentAbove)
+    mockTransaction([{ ...photoUp, displayOrder: 0 }])
+    const [req, ctx] = makePhotoOrderRequest('photo-1', 'up')
+    const res = await putPhotoOrder(req, ctx)
+    expect(res.status).toBe(200)
+  })
+
+  it('moves photo down', async () => {
+    vi.mocked(prisma.productionPhoto.findUnique).mockResolvedValue(photoDown)
+    vi.mocked(prisma.productionPhoto.findFirst).mockResolvedValue(adjacentBelow)
+    mockTransaction([{ ...photoDown, displayOrder: 1 }])
+    const [req, ctx] = makePhotoOrderRequest('photo-1', 'down')
+    const res = await putPhotoOrder(req, ctx)
+    expect(res.status).toBe(200)
+  })
+
+  it('returns 400 when photo is already at the top', async () => {
+    vi.mocked(prisma.productionPhoto.findUnique).mockResolvedValue(photoUp)
+    vi.mocked(prisma.productionPhoto.findFirst).mockResolvedValue(null)
+    const [req, ctx] = makePhotoOrderRequest('photo-1', 'up')
+    const res = await putPhotoOrder(req, ctx)
+    expect(res.status).toBe(400)
+    expect((await res.json()).error).toMatch(/top/)
+  })
+
+  it('returns 400 when photo is already at the bottom', async () => {
+    vi.mocked(prisma.productionPhoto.findUnique).mockResolvedValue(photoDown)
+    vi.mocked(prisma.productionPhoto.findFirst).mockResolvedValue(null)
+    const [req, ctx] = makePhotoOrderRequest('photo-1', 'down')
+    const res = await putPhotoOrder(req, ctx)
+    expect(res.status).toBe(400)
+    expect((await res.json()).error).toMatch(/bottom/)
+  })
+
+  it('returns 404 when photo not found', async () => {
+    vi.mocked(prisma.productionPhoto.findUnique).mockResolvedValue(null)
+    const [req, ctx] = makePhotoOrderRequest('photo-1', 'up')
+    const res = await putPhotoOrder(req, ctx)
+    expect(res.status).toBe(404)
+  })
+
+  it('returns 401 when not authenticated', async () => {
+    vi.mocked(requireAuth).mockReturnValue(false)
+    const [req, ctx] = makePhotoOrderRequest('photo-1', 'up', false)
+    const res = await putPhotoOrder(req, ctx)
+    expect(res.status).toBe(401)
+  })
+})
+
+describe('PUT /api/productions/groups/[id]/display-order', () => {
+  const prod1 = { ...mockProduction, id: 'prod-1', displayOrder: 0, photos: [] }
+  const prod2 = { ...mockProduction, id: 'prod-2', playTitle: 'Hamlet', displayOrder: 1, photos: [] }
+
+  it('moves production group up', async () => {
+    vi.mocked(prisma.production.findUnique).mockResolvedValue(prod2)
+    vi.mocked(prisma.production.findFirst).mockResolvedValue(prod1)
+    mockTransaction([{ ...prod2, displayOrder: 0 }])
+    const [req, ctx] = makeGroupOrderRequest('prod-2', 'up')
+    const res = await putGroupOrder(req, ctx)
+    expect(res.status).toBe(200)
+  })
+
+  it('moves production group down', async () => {
+    vi.mocked(prisma.production.findUnique).mockResolvedValue(prod1)
+    vi.mocked(prisma.production.findFirst).mockResolvedValue(prod2)
+    mockTransaction([{ ...prod1, displayOrder: 1 }])
+    const [req, ctx] = makeGroupOrderRequest('prod-1', 'down')
+    const res = await putGroupOrder(req, ctx)
+    expect(res.status).toBe(200)
+  })
+
+  it('returns 400 when group is already at the top', async () => {
+    vi.mocked(prisma.production.findUnique).mockResolvedValue(prod1)
+    vi.mocked(prisma.production.findFirst).mockResolvedValue(null)
+    const [req, ctx] = makeGroupOrderRequest('prod-1', 'up')
+    const res = await putGroupOrder(req, ctx)
+    expect(res.status).toBe(400)
+    expect((await res.json()).error).toMatch(/top/)
+  })
+
+  it('returns 400 when group is already at the bottom', async () => {
+    vi.mocked(prisma.production.findUnique).mockResolvedValue(prod2)
+    vi.mocked(prisma.production.findFirst).mockResolvedValue(null)
+    const [req, ctx] = makeGroupOrderRequest('prod-2', 'down')
+    const res = await putGroupOrder(req, ctx)
+    expect(res.status).toBe(400)
+    expect((await res.json()).error).toMatch(/bottom/)
+  })
+
+  it('returns 404 when production not found', async () => {
+    vi.mocked(prisma.production.findUnique).mockResolvedValue(null)
+    const [req, ctx] = makeGroupOrderRequest('prod-99', 'up')
+    const res = await putGroupOrder(req, ctx)
+    expect(res.status).toBe(404)
+  })
+
+  it('returns 401 when not authenticated', async () => {
+    vi.mocked(requireAuth).mockReturnValue(false)
+    const [req, ctx] = makeGroupOrderRequest('prod-1', 'up', false)
+    const res = await putGroupOrder(req, ctx)
     expect(res.status).toBe(401)
   })
 })
