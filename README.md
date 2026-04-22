@@ -25,6 +25,7 @@ A performant, accessible portfolio site that serves as Will's primary profession
 - **Fully responsive** — optimized for desktop and mobile
 - **Next.js Image optimization** — fast load times across all devices
 - **Source image optimization** — all 61 images batch-compressed via a Sharp script; 54.4 MB reduction (34.1%) across cover art, portraits, and UI assets
+- **Admin dashboard** — password-protected dashboard at `/admin` for managing plays and production photos; add, edit, delete, and reorder plays and photos without touching code; cover art and production photo uploads via Vercel Blob; featured carousel order managed via drag-up/down interface
 
 ---
 
@@ -41,21 +42,26 @@ A performant, accessible portfolio site that serves as Will's primary profession
 | Form Service    | FormSubmit.co                                       |
 | Form Protection | reCAPTCHA v2                                        |
 | Analytics       | Vercel Analytics                                    |
-| Data            | TypeScript (static content file)                    |
+| ORM             | Prisma                                              |
+| Database        | Supabase (Postgres)                                 |
+| File Storage    | Vercel Blob                                         |
+| Auth            | HTTP Basic Auth (Next.js middleware)                |
+| Data            | Supabase (Postgres) via Prisma                      |
 | Deployment      | Vercel                                              |
 
 ---
 
 ## Architecture Notes
 
-Play catalog data is currently managed via a static TypeScript file (`src/data/works.ts`), which keeps the site simple and fast with no database dependency. This was an intentional MVP decision — the data changes infrequently and the TypeScript approach allows the data to be reviewed directly while benefiting from type safety.
+Play catalog data is managed via **Supabase (Postgres)** using **Prisma ORM**. `src/data/works.ts` and `src/data/productions.ts` are archived reference files kept for historical context and as seed data sources. All pages use ISR (`revalidate = 60`) so content updates made in the admin dashboard appear within 60 seconds without a redeploy.
 
 ---
 
 ## Roadmap
 
-- [ ] **Pending data updates** — Fill in TBD runtimes and cast info, add the R.U.R. adaptation, add new plays from client, and update the featured works list.
-- [ ] **Admin backend** — Authenticated dashboard for Will to add and manage plays without touching code. Will require a database or headless CMS integration (likely Postgres or Sanity).
+- [ ] **Pending data updates** — Fill in remaining TBD entries, add Empty Spaces once details are received from client.
+- [ ] **URL persistence for /works filters** — Store active filters and sort state in URL params so pages are shareable and survive refresh.
+- [ ] **Individual production pages** — Dedicated pages per production with full photo gallery (currently the productions page shows all at once).
 
 ---
 

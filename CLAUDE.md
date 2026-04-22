@@ -125,7 +125,7 @@ Font variables (`--font-lora`, `--font-lato`, `--font-special-elite`) are inject
 
 ## The `Work` Type and Data File
 
-**All play content lives in `src/data/works.ts`.** This is the single source of truth — both the home page carousel and the `/works` full catalog read from `worksData`.
+**Play content is stored in Supabase and managed via the admin dashboard at `/admin/plays`.** `src/data/works.ts` is an archived reference file — do not import from it. The canonical type is in `src/types/play.ts` and API helpers are in `src/lib/api.ts`.
 
 ```typescript
 // src/data/works.ts
@@ -155,44 +155,48 @@ export const worksData: Work[] = [ ... ];
 
 ### Adding a new play
 
-1. Add a new image to `/public/images/covers/` following the existing naming convention (e.g., `My_New_Play_Cover_Art.png`)
-2. Add a new entry to the `worksData` array in `src/data/works.ts`
-3. Give it a unique `slug`: lowercase, hyphens, no punctuation (e.g., `'my-new-play'`). `&` → `and`, drop apostrophes.
-4. Set `featured: true` to include it in the home page carousel
-5. Leave `pdfSrc: ''` if no sample PDF is available
+1. Go to `/admin/plays` in the browser
+2. Click "Add New Play", fill in the form, upload cover art via the upload zone
+3. Toggle "Featured" on to include it in the home page carousel
+4. Save — the page will live within 60 seconds (ISR revalidation)
 
 ---
 
 ## Production Photos
 
-Production photo data lives in `src/data/productions.ts`. Photo image files go in `/public/images/photos/`.
+Production photos are stored in Supabase and managed via the admin dashboard at `/admin/productions`. `src/data/productions.ts` is an archived reference file — do not import from it. Type definitions live in `src/types/production.ts`.
 
 ```typescript
-// src/data/productions.ts
+// src/types/production.ts
 
 export type ProductionPhoto = {
-  id: string;            // Unique per-photo identifier (e.g., 'eov-table-read-01')
-  src: string;           // Path relative to /public (e.g., '/images/photos/my-show-01.jpg')
-  alt: string;           // Descriptive alt text
-  caption?: string;      // Optional caption shown below the photo
+  id: string;
+  productionId: string | null;
+  playTitle: string;
+  productionYear: number;
+  venue: string;
+  src: string;           // Vercel Blob URL or /public path
+  alt: string;
+  caption?: string | null;
+  displayOrder: number;
 };
 
 export type Production = {
-  playTitle: string;     // Must match the play's title in works.ts (used as display heading)
+  id: string;
+  playTitle: string;
   productionYear: number;
-  venue: string;         // e.g., 'Paris Community Theatre, Paris, TX'
+  venue: string;
+  displayOrder: number;
   photos: ProductionPhoto[];
 };
-
-export const productionsData: Production[] = [ ... ];
 ```
 
 ### Adding production photos
 
-1. Place image files in `/public/images/photos/` (naming convention: `play-slug-venue-01.jpg`)
-2. Run `npm run optimize-images` — the script processes `photos/` at max 1200px wide
-3. Add or update a `Production` entry in `productionsData`
-4. Productions render in the order they appear in the array; photos render in array order within each production
+1. Go to `/admin/productions` in the browser
+2. Click "+ Add New Production Photo", fill in the form, upload the photo
+3. The photo is grouped by playTitle + venue + productionYear automatically
+4. Use the ▲/▼ buttons to reorder photos within a group, or reorder groups in the Production Order section
 
 ---
 
@@ -244,30 +248,73 @@ export const productionsData: Production[] = [ ... ];
 
 ## Environment Variables
 
+Copy `.env.example` to `.env.local` and fill in the values. `.env.local` is gitignored and must never be committed.
+
 ```bash
+# Contact form
 NEXT_PUBLIC_RECIPIENT_EMAIL=       # Email address FormSubmit delivers contact form submissions to
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=    # reCAPTCHA v2 site key
-```
 
-Both are `NEXT_PUBLIC_` and are exposed to the browser. Do not store secrets here. A `.env.local` file is required for local development and is not committed to the repo.
+# Database
+DATABASE_URL=                      # Supabase Session Pooler connection string (port 5432)
+
+# Admin Auth
+ADMIN_USER=                        # Username for admin dashboard Basic Auth
+ADMIN_PASSWORD=                    # Password for admin dashboard Basic Auth
+NEXT_PUBLIC_ADMIN_USER=            # Same as ADMIN_USER — exposed to client for fetch() API calls
+NEXT_PUBLIC_ADMIN_PASSWORD=        # Same as ADMIN_PASSWORD — exposed to client for fetch() API calls
+
+# Vercel Blob
+BLOB_READ_WRITE_TOKEN=             # Vercel Blob store token for image uploads
+
+# App
+NEXT_PUBLIC_BASE_URL=              # Full URL of the site (http://localhost:3000 locally)
+```
 
 ---
 
 ## Routing
 
+### Public routes
+
 | Route | File | Notes |
 |---|---|---|
-| `/` | `src/app/page.tsx` | Hero + About + Plays carousel + Contact |
-| `/works` | `src/app/works/page.tsx` | Full play grid; cards link to individual play pages |
-| `/works/[slug]` | `src/app/works/[slug]/page.tsx` | Individual play page; pre-rendered via `generateStaticParams` |
-| `/cv` | `src/app/cv/page.tsx` | Full CV (hardcoded) |
-| `/productions` | `src/app/productions/page.tsx` | Photo gallery of production history; grouped by play |
-| `/thank-you` | `src/app/thank-you/page.tsx` | Post-contact-form confirmation |
+| `/` | `src/app/(public)/page.tsx` | Hero + About + Plays carousel + Contact |
+| `/works` | `src/app/(public)/works/page.tsx` | Full play grid; cards link to individual play pages |
+| `/works/[slug]` | `src/app/(public)/works/[slug]/page.tsx` | Individual play page; pre-rendered via `generateStaticParams` |
+| `/cv` | `src/app/(public)/cv/page.tsx` | Full CV (hardcoded) |
+| `/productions` | `src/app/(public)/productions/page.tsx` | Photo gallery of production history; grouped by play |
+| `/thank-you` | `src/app/(public)/thank-you/page.tsx` | Post-contact-form confirmation |
 | `/api/form` POST | `src/app/api/form/route.ts` | Redirects to `/thank-you` (FormSubmit handles the actual email) |
+
+### Admin routes (Basic Auth protected)
+
+| Route | File | Notes |
+|---|---|---|
+| `/admin` | `src/app/admin/page.tsx` | Redirects to `/admin/plays` |
+| `/admin/plays` | `src/app/admin/plays/page.tsx` | Plays management dashboard |
+| `/admin/productions` | `src/app/admin/productions/page.tsx` | Productions management dashboard |
+| `/admin/settings` | `src/app/admin/settings/page.tsx` | Placeholder settings page |
+| `/api/admin/logout` | `src/app/api/admin/logout/route.ts` | Clears Basic Auth credentials |
+| `/api/admin/upload` | `src/app/api/admin/upload/route.ts` | Uploads image to Vercel Blob |
+
+### Data API routes (write operations require Basic Auth)
+
+| Route | File | Notes |
+|---|---|---|
+| `/api/plays` | `src/app/api/plays/route.ts` | GET all plays, POST new play |
+| `/api/plays/[slug]` | `src/app/api/plays/[slug]/route.ts` | GET, PUT, DELETE single play |
+| `/api/plays/[slug]/feature-order` | `src/app/api/plays/[slug]/feature-order/route.ts` | PUT — reorder featured carousel |
+| `/api/productions` | `src/app/api/productions/route.ts` | GET all productions (with nested photos), POST new photo |
+| `/api/productions/[id]` | `src/app/api/productions/[id]/route.ts` | GET, PUT, DELETE single photo |
+| `/api/productions/[id]/display-order` | `src/app/api/productions/[id]/display-order/route.ts` | PUT — reorder photo within its production group |
+| `/api/productions/groups/[id]/display-order` | `src/app/api/productions/groups/[id]/display-order/route.ts` | PUT — reorder production group |
 
 Anchor sections on the home page: `#home`, `#about`, `#plays`, `#contact`
 
 `/works/[slug]` uses `generateStaticParams()` to pre-render all play pages at build time. Unknown slugs call `notFound()`. The `params` object is typed as `Promise<{ slug: string }>` per Next.js 15 App Router convention.
+
+Public routes live inside the `(public)` route group (`src/app/(public)/`) which applies the public layout (Header, Footer, KoFiWidget). Admin routes live under `src/app/admin/` with their own layout (fixed sidebar). The route group is transparent — URLs are unchanged.
 
 ---
 
@@ -317,12 +364,13 @@ This site has solid accessibility practices — maintain them on any changes:
 
 ---
 
-## Roadmap (from README)
+## Roadmap
 
 Planned future features — do not implement unless explicitly asked:
 
-- [ ] **Pending data updates** — runtime/cast fields still marked TBD need values from Will; add R.U.R. adaptation and new plays from client; update featured works list
-- [ ] **Admin backend** — authenticated dashboard for Will to manage plays without touching code (likely Postgres or headless CMS)
+- [ ] **Pending data updates** — Fill in remaining TBD entries, add Empty Spaces once details are received from client
+- [ ] **URL persistence for /works filters** — Store active filters and sort state in URL params so pages are shareable and survive refresh
+- [ ] **Individual production pages** — Dedicated pages per production with full photo gallery (currently the productions page shows all at once)
 
 ---
 
@@ -366,18 +414,13 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 ## Common Tasks
 
 **Add a new play**
-1. Add cover image to `/public/images/covers/`
-2. Run `npm run optimize-images` to compress the new file before committing
-3. Add entry to `worksData` in `src/data/works.ts`
-4. Set `featured: true` to include in home carousel
+Use the admin dashboard at `/admin/plays` — click "Add New Play", fill in the form, upload cover art
 
 **Add production photos**
-1. Place image files in `/public/images/photos/`
-2. Run `npm run optimize-images`
-3. Add or update a `Production` entry in `src/data/productions.ts`
+Use the admin dashboard at `/admin/productions` — click "+ Add New Production Photo", fill in the form, upload the photo
 
 **Mark a play as published**
-Set `published: true` and add `purchase: 'https://...'` in `works.ts`
+In `/admin/plays`, open the play, toggle "Published" on and paste the purchase URL in the Purchase URL field
 
 **Update bio / about text**
 Edit `src/components/About.tsx` directly (hardcoded prose)
@@ -393,9 +436,41 @@ Edit `src/components/KoFiWidget.tsx`
 
 ---
 
+## Admin Authentication
+
+- **Method:** HTTP Basic Auth via Next.js middleware (`src/middleware.ts`)
+- **Protects:** all `/admin/*` routes
+- **API write routes** also check auth individually via `src/lib/auth.ts` (`requireAuth` helper reads the `Authorization` header)
+- **Credentials:** `ADMIN_USER` / `ADMIN_PASSWORD` env vars (server-only); `NEXT_PUBLIC_ADMIN_USER` / `NEXT_PUBLIC_ADMIN_PASSWORD` are the same values prefixed for client-side `fetch()` calls
+- **Logout:** POST to `/api/admin/logout` returns 401 + `WWW-Authenticate` header, which causes the browser to drop the cached Basic Auth credentials; page then redirects to `/admin` to re-prompt
+
+---
+
+## Image Uploads
+
+- **Service:** Vercel Blob (store: `will-walker-images`)
+- **Upload endpoint:** POST `/api/admin/upload` (auth protected)
+- **Used for:** play cover art and production photos via the admin dashboard
+- **Token:** `BLOB_READ_WRITE_TOKEN` env var
+- **Served from:** `*.public.blob.vercel-storage.com` — this domain is allowlisted in `next.config.ts` for `next/image`
+- **Constraints:** max 4 MB per file; accepted types: JPG, PNG, WEBP
+
+---
+
+## Data Architecture
+
+- Play catalog and production photos are stored in **Supabase (Postgres)** via **Prisma ORM**
+- `src/data/works.ts` and `src/data/productions.ts` are **archived reference files** — they are no longer imported by the app; kept for historical context and as the source for `prisma/seed.ts`
+- **Type definitions** live in `src/types/play.ts` and `src/types/production.ts`
+- **API fetch helpers** live in `src/lib/api.ts` — all public pages call these to fetch data server-side
+- **ISR:** all play/production pages use `revalidate = 60` — pages rebuild automatically within 60 seconds of a data change; no manual redeploy needed
+- The `Production` model in `prisma/schema.prisma` stores group-level metadata (playTitle, venue, productionYear, displayOrder); `ProductionPhoto` rows link to their parent via `productionId`
+
+---
+
 ## What This Site Does NOT Have
 
 - No Tailwind (CSS Modules only)
-- No database or CMS — all content is in `works.ts` or hardcoded in TSX files
-- No authentication
+- Play and production data is managed via Supabase (Postgres) + Prisma — `src/data/works.ts` and `src/data/productions.ts` are archived
+- Admin authentication via HTTP Basic Auth (middleware + per-route checks)
 - No i18n / multilingual support
