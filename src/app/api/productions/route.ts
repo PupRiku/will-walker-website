@@ -3,52 +3,37 @@ import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
 
 function validatePhoto(body: Record<string, unknown>) {
-  const { playTitle, productionYear, venue, src, alt } = body
+  const { src, alt, productionId, playTitle, productionYear, venue } = body
 
-  if (!playTitle || typeof playTitle !== 'string' || !playTitle.trim())
-    return 'playTitle is required'
-  if (productionYear === undefined || productionYear === null)
-    return 'productionYear is required'
-  if (!Number.isInteger(productionYear) || (productionYear as number) < 1900 || (productionYear as number) > 2100)
-    return 'productionYear must be an integer between 1900 and 2100'
-  if (!venue || typeof venue !== 'string' || !venue.trim())
-    return 'venue is required'
   if (!src || typeof src !== 'string' || !src.trim())
     return 'src is required'
   if (!alt || typeof alt !== 'string' || !alt.trim())
     return 'alt is required'
+
+  // Either productionId or the three identifying fields are required
+  if (!productionId) {
+    if (!playTitle || typeof playTitle !== 'string' || !playTitle.trim())
+      return 'playTitle is required'
+    if (productionYear === undefined || productionYear === null)
+      return 'productionYear is required'
+    if (!Number.isInteger(productionYear) || (productionYear as number) < 1900 || (productionYear as number) > 2100)
+      return 'productionYear must be an integer between 1900 and 2100'
+    if (!venue || typeof venue !== 'string' || !venue.trim())
+      return 'venue is required'
+  }
 
   return null
 }
 
 export async function GET() {
   try {
-    const photos = await prisma.productionPhoto.findMany({
-      orderBy: [{ productionYear: 'desc' }, { displayOrder: 'asc' }],
+    const productions = await prisma.production.findMany({
+      include: {
+        photos: { orderBy: { displayOrder: 'asc' } },
+      },
+      orderBy: { displayOrder: 'asc' },
     })
-
-    // Group by playTitle + productionYear + venue
-    const groups: Record<string, {
-      playTitle: string
-      productionYear: number
-      venue: string
-      photos: typeof photos
-    }> = {}
-
-    for (const photo of photos) {
-      const key = `${photo.playTitle}::${photo.productionYear}::${photo.venue}`
-      if (!groups[key]) {
-        groups[key] = {
-          playTitle: photo.playTitle,
-          productionYear: photo.productionYear,
-          venue: photo.venue,
-          photos: [],
-        }
-      }
-      groups[key].photos.push(photo)
-    }
-
-    return NextResponse.json(Object.values(groups))
+    return NextResponse.json(productions)
   } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
@@ -75,15 +60,48 @@ export async function POST(request: Request) {
   }
 
   try {
+    let productionId = typeof body.productionId === 'string' ? body.productionId : null
+
+    if (!productionId) {
+      // Find or create the Production group
+      const playTitle = (body.playTitle as string).trim()
+      const venue = (body.venue as string).trim()
+      const productionYear = body.productionYear as number
+
+      const highestOrder = await prisma.production.findFirst({
+        orderBy: { displayOrder: 'desc' },
+        select: { displayOrder: true },
+      })
+      const nextOrder = (highestOrder?.displayOrder ?? -1) + 1
+
+      const production = await prisma.production.upsert({
+        where: { playTitle_venue_productionYear: { playTitle, venue, productionYear } },
+        update: {},
+        create: { playTitle, venue, productionYear, displayOrder: nextOrder },
+      })
+      productionId = production.id
+    }
+
+    // Find the next displayOrder within this production
+    const lastPhoto = await prisma.productionPhoto.findFirst({
+      where: { productionId },
+      orderBy: { displayOrder: 'desc' },
+      select: { displayOrder: true },
+    })
+    const displayOrder = typeof body.displayOrder === 'number'
+      ? body.displayOrder
+      : (lastPhoto?.displayOrder ?? -1) + 1
+
     const photo = await prisma.productionPhoto.create({
       data: {
-        playTitle: (body.playTitle as string).trim(),
-        productionYear: body.productionYear as number,
-        venue: (body.venue as string).trim(),
+        productionId,
+        playTitle: (body.playTitle as string | undefined)?.trim() ?? '',
+        productionYear: (body.productionYear as number | undefined) ?? 0,
+        venue: (body.venue as string | undefined)?.trim() ?? '',
         src: (body.src as string).trim(),
         alt: (body.alt as string).trim(),
-        caption: typeof body.caption === 'string' ? body.caption : null,
-        displayOrder: typeof body.displayOrder === 'number' ? body.displayOrder : 0,
+        caption: typeof body.caption === 'string' && body.caption.trim() ? body.caption.trim() : null,
+        displayOrder,
       },
     })
     return NextResponse.json(photo, { status: 201 })
