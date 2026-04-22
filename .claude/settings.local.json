@@ -30,7 +30,8 @@
       "Bash(node -e \"const p = require\\('./src/generated/prisma/client'\\); console.log\\(Object.keys\\(p\\).slice\\(0,5\\)\\)\")",
       "Bash(start npx *)",
       "Bash(mkdir -p \"c:\\\\Users\\\\gmrpr\\\\Desktop\\\\Will-Site\\\\will-walker-website\\\\src\\\\app\\\\api\\\\plays\\\\[slug]\\\\feature-order\")",
-      "Bash(mkdir -p \"c:\\\\Users\\\\gmrpr\\\\Desktop\\\\Will-Site\\\\will-walker-website\\\\src\\\\app\\\\api\\\\productions\\\\[id]\")"
+      "Bash(mkdir -p \"c:\\\\Users\\\\gmrpr\\\\Desktop\\\\Will-Site\\\\will-walker-website\\\\src\\\\app\\\\api\\\\productions\\\\[id]\")",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"c:\\\\Users\\\\gmrpr\\\\Desktop\\\\Will-Site\\\\will-walker-website\\\\src\\\\app\\\\api\\\\admin\\\\upload\")"
     ],
     "additionalDirectories": [
       "c:\\Users\\gmrpr\\Desktop\\Will-Site\\will-walker-website\\src\\app\\works"
