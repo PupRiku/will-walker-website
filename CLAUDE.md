@@ -409,6 +409,35 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 
 **Mocking pattern:** `next/image` and `next/link` are mocked with simple HTML equivalents in each component/page test file. `SocialLinks` is mocked in `Header.test.tsx`. `next/navigation` is mocked in playPage.test.tsx (`notFound` throws to allow assertion).
 
+### E2E tests — Playwright
+
+```bash
+npm run test:e2e          # run all e2e tests (headless)
+npm run test:e2e:ui       # Playwright UI mode (interactive watcher)
+npm run test:e2e:report   # open the last HTML report
+```
+
+**Config:** `playwright.config.ts` at project root. Runs against `http://localhost:3000` (dev server auto-starts if not already running).
+
+**Browsers:** Chromium, Firefox, WebKit (desktop) + iPhone 12 and Pixel 5 (mobile viewports).
+
+**Test locations:**
+
+| File | What it covers |
+|---|---|
+| `tests/e2e/home.spec.ts` | Title, hero, about, carousel, modal open/close, contact form, footer |
+| `tests/e2e/works.spec.ts` | Title, play count, search, filters, sort, card navigation, casting modal |
+| `tests/e2e/play-page.spec.ts` | Hamlet (published), Echoes of Valor (unpublished), 404 for unknown slug |
+| `tests/e2e/productions.spec.ts` | Title, production groups, photo counts, captions |
+| `tests/e2e/cv.spec.ts` | Title, Artist Statement, Education, Playwriting, Directing Portfolio sections |
+| `tests/e2e/navigation.spec.ts` | All nav links, footer CV link, logo click |
+| `tests/e2e/mobile.spec.ts` | iPhone 12 + Pixel 5 only: hamburger, mobile menu, nav links, responsive layout |
+| `tests/e2e/admin.spec.ts` | API read checks (plays, productions), auth rejection (no creds, wrong creds, /admin) |
+
+**Helpers:** `tests/e2e/helpers/auth.ts` — `getAuthHeader()` for API auth. `tests/e2e/fixtures/plays.ts` — known slugs/titles.
+
+**Note:** Admin write operations (add/edit/delete) are intentionally excluded — those remain manual. E2E tests are not wired to CI.
+
 ---
 
 ## Common Tasks
