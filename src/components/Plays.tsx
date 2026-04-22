@@ -6,7 +6,7 @@ import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
 import styles from './Plays.module.css';
 import Modal from './Modal';
-import { worksData, type Work } from '@/data/works';
+import type { Play } from '@/types/play';
 
 const PrevButton = (props: { onClick: () => void; enabled: boolean }) => (
   <button
@@ -49,9 +49,19 @@ export default function Plays() {
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPlay, setSelectedPlay] = useState<Work | null>(null);
+  const [selectedPlay, setSelectedPlay] = useState<Play | null>(null);
+  const [plays, setPlays] = useState<Play[]>([]);
 
-  const handleOpenModal = (play: Work) => {
+  useEffect(() => {
+    fetch('/api/plays')
+      .then((res) => (res.ok ? res.json() : Promise.reject()))
+      .then((data: Play[]) => setPlays(data))
+      .catch(() => {});
+  }, []);
+
+  const featuredWorks = plays.filter((work) => work.featured);
+
+  const handleOpenModal = (play: Play) => {
     setSelectedPlay(play);
     setIsModalOpen(true);
   };
@@ -92,8 +102,6 @@ export default function Plays() {
       emblaApi.off('select', onSelect);
     };
   }, [emblaApi]);
-
-  const featuredWorks = worksData.filter((work) => work.featured === true);
 
   return (
     <section id="plays" className={styles.playsSection}>

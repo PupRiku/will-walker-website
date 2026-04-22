@@ -1,16 +1,9 @@
-export type Work = {
-  slug: string;
-  title: string;
-  category: string;
-  imageSrc: string;
-  pdfSrc: string;
-  cast: string;
-  synopsis: string;
-  featured?: boolean;
-  published?: boolean;
-  purchase?: string;
-  runtime?: string;
-};
+// ARCHIVED: This file is no longer imported by the app.
+// Data is now managed via Supabase. See src/types/ for type definitions.
+// Kept for reference and as a seed data source (prisma/seed.ts).
+
+export type { Work } from '@/types/play';
+import type { Work } from '@/types/play';
 
 export const worksData: Work[] = [
   {

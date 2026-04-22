@@ -2,21 +2,24 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { worksData } from '@/data/works';
+import { fetchPlay, fetchPlays } from '@/lib/api';
 import styles from './page.module.css';
 import { BsDownload } from 'react-icons/bs';
+
+export const revalidate = 60;
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return worksData.map((work) => ({ slug: work.slug }));
+export async function generateStaticParams() {
+  const plays = await fetchPlays();
+  return plays.map((play) => ({ slug: play.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const work = worksData.find((w) => w.slug === slug);
+  const work = await fetchPlay(slug);
   if (!work) return {};
 
   const firstSentence = work.synopsis.split(/(?<=\.)\s/)[0];
@@ -29,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PlayPage({ params }: Props) {
   const { slug } = await params;
-  const work = worksData.find((w) => w.slug === slug);
+  const work = await fetchPlay(slug);
 
   if (!work) {
     notFound();

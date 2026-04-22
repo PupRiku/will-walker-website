@@ -1,4 +1,4 @@
-import { Work } from '@/data/works';
+import { Work } from '@/types/play';
 
 export type RuntimeBucket = '' | 'short' | 'medium' | 'long' | 'full';
 export type CastBucket = '' | 'small' | 'medium' | 'large';

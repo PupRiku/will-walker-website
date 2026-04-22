@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import type { Production } from '@/data/productions';
+import type { Production } from '@/types/production';
 
 vi.mock('next/image', () => ({
   default: ({ alt, src }: { alt: string; src: string }) => (
@@ -10,30 +10,59 @@ vi.mock('next/image', () => ({
   ),
 }));
 
-// vi.hoisted ensures this variable is initialized before the vi.mock factory runs
 const mockState = vi.hoisted((): { data: Production[] } => ({ data: [] }));
 
-vi.mock('@/data/productions', () => ({
-  get productionsData() {
-    return mockState.data;
-  },
+vi.mock('@/lib/api', () => ({
+  fetchProductions: async () => mockState.data,
 }));
 
+const realData: Production[] = [
+  {
+    playTitle: 'Echoes of Valor',
+    productionYear: 2025,
+    venue: 'Paris Community Theatre, Paris, TX',
+    photos: [
+      {
+        id: 'eov-table-read-01',
+        playTitle: 'Echoes of Valor',
+        productionYear: 2025,
+        venue: 'Paris Community Theatre, Paris, TX',
+        src: '/images/photos/echoes-of-valor-table-read-01.jpg',
+        alt: 'Cast members seated around a long table reading scripts',
+        caption: 'First table read at Paris Community Theatre',
+        displayOrder: 0,
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
+      },
+      {
+        id: 'eov-table-read-02',
+        playTitle: 'Echoes of Valor',
+        productionYear: 2025,
+        venue: 'Paris Community Theatre, Paris, TX',
+        src: '/images/photos/echoes-of-valor-table-read-02.jpg',
+        alt: 'Wide shot of the full cast seated along a table',
+        caption: null,
+        displayOrder: 1,
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
+      },
+    ],
+  },
+];
+
 async function renderPage() {
+  vi.resetModules();
   const { default: ProductionsPage } = await import('@/app/productions/page');
-  return render(<ProductionsPage />);
+  const jsx = await ProductionsPage();
+  return render(jsx as React.ReactElement);
 }
 
 describe('ProductionsPage (/productions)', () => {
-  beforeEach(async () => {
-    // Reset to real data before each test
-    const { productionsData } = await vi.importActual<typeof import('@/data/productions')>(
-      '@/data/productions'
-    );
-    mockState.data = productionsData;
+  beforeEach(() => {
+    mockState.data = realData;
   });
 
-  it('renders the empty state message when productionsData is empty', async () => {
+  it('renders the empty state message when fetchProductions returns empty', async () => {
     mockState.data = [];
     await renderPage();
     expect(screen.getByText('Production photos coming soon.')).toBeInTheDocument();
