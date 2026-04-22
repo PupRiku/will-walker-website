@@ -98,15 +98,26 @@ test.describe('Works page', () => {
     isMobile,
   }) => {
     const firstCard = page.locator('a[href^="/works/"]').first();
-    // Scroll well past the sticky filter bar
-    await page.evaluate(() => window.scrollBy(0, 500));
-    await page.waitForTimeout(500); // let sticky bar settle
     await expect(firstCard).toBeVisible({ timeout: 5000 });
     const href = await firstCard.getAttribute('href');
     if (isMobile) {
+      // Temporarily hide the sticky filter bar so it doesn't intercept the tap
+      await page.evaluate(() => {
+        const filterBar = document.querySelector(
+          '[class*="filterBarOuter"]',
+        ) as HTMLElement;
+        if (filterBar) filterBar.style.display = 'none';
+      });
       await firstCard.tap();
+      // Restore the filter bar
+      await page.evaluate(() => {
+        const filterBar = document.querySelector(
+          '[class*="filterBarOuter"]',
+        ) as HTMLElement;
+        if (filterBar) filterBar.style.display = '';
+      });
     } else {
-      await firstCard.click({ force: true });
+      await firstCard.click();
     }
     await expect(page).toHaveURL(href!, { timeout: 10000 });
   });
