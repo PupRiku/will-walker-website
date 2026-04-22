@@ -36,6 +36,8 @@ test.describe('CV page', () => {
   test('"Hamlet: A Horatio Story" is listed under Playwriting', async ({
     page,
   }) => {
-    await expect(page.getByText(/Hamlet: A Horatio Story/)).toBeVisible();
+    const hamletEntry = page.getByText(/Hamlet: A Horatio Story/);
+    await hamletEntry.scrollIntoViewIfNeeded();
+    await expect(hamletEntry).toBeVisible();
   });
 });
