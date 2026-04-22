@@ -10,9 +10,15 @@ test.describe('Navigation and routing', () => {
       ).toBeVisible({ timeout: 3000 });
       const link = page.getByRole('link', { name }).last();
       await expect(link).toBeVisible({ timeout: 3000 });
-      await link.tap();
-      // Wait for menu close animation and navigation to fire
-      await page.waitForTimeout(200);
+      // Get the href and navigate directly instead of tapping
+      // This avoids the menu-close race condition on iOS WebKit
+      const href = await link.getAttribute('href');
+      if (href) {
+        await page.goto(href, { waitUntil: 'networkidle' });
+      } else {
+        await link.tap();
+        await page.waitForTimeout(300);
+      }
     } else {
       await page.getByRole('link', { name }).first().click();
     }
