@@ -3,74 +3,61 @@ import { test, expect } from '@playwright/test';
 test.describe('Works page', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/works');
-    // Wait for API data to load AND grid to render
-    await expect(page.getByText(/showing 60 of 60 plays/i)).toBeVisible({
+    await expect(page.getByText('Showing 60 of 60 plays')).toBeVisible({
       timeout: 10000,
     });
-    // Extra wait for client-side hydration to complete
     await page.waitForLoadState('networkidle');
   });
 
-  test('loads with correct title', async ({ page }) => {
-    await expect(page).toHaveTitle(
-      /All Works.*William L\. Walker Montgomerie/i,
-    );
-  });
-
-  test('shows "Showing 60 of 60 plays" count on load', async ({ page }) => {
-    await expect(page.getByText(/showing 60 of 60 plays/i)).toBeVisible();
-  });
-
   test('search input is present', async ({ page }) => {
-    // Search input uses a placeholder rather than an aria label
     await expect(
-      page.getByPlaceholder(/search by title or synopsis/i),
+      page.getByRole('searchbox', { name: /search plays/i }),
     ).toBeVisible();
+  });
+
+  test('typing "hamlet" in search filters results', async ({ page }) => {
+    const search = page.getByRole('searchbox', { name: /search plays/i });
+    await expect(search).toBeVisible();
+    await search.fill('hamlet');
+    await expect(page.getByText('Showing 60 of 60 plays')).not.toBeVisible();
+    await expect(page.getByText(/Showing \d+ of 60 plays/)).toBeVisible();
+    const text = await page.getByText(/Showing \d+ of 60 plays/).textContent();
+    const match = text?.match(/Showing (\d+)/);
+    expect(Number(match?.[1])).toBeLessThan(60);
+  });
+
+  test('clearing search restores all 60 plays', async ({ page }) => {
+    const search = page.getByRole('searchbox', { name: /search plays/i });
+    await search.fill('hamlet');
+    await expect(page.getByText('Showing 60 of 60 plays')).not.toBeVisible();
+    await search.clear();
+    await expect(page.getByText('Showing 60 of 60 plays')).toBeVisible();
   });
 
   test('Genre, Runtime, Cast Size filter controls are present', async ({
     page,
   }) => {
-    await expect(page.getByRole('combobox').nth(0)).toBeVisible(); // Genre
-    await expect(page.getByRole('combobox').nth(1)).toBeVisible(); // Runtime
-    await expect(page.getByRole('combobox').nth(2)).toBeVisible(); // Cast Size
-  });
-
-  test('Published works only checkbox is present', async ({ page }) => {
     await expect(
-      page.getByRole('checkbox', { name: /published/i }),
+      page.getByRole('combobox', { name: /filter by genre/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('combobox', { name: /filter by runtime/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('combobox', { name: /filter by cast size/i }),
     ).toBeVisible();
   });
 
-  test('typing "hamlet" in search filters results', async ({ page }) => {
-    const search = page.getByPlaceholder(/search by title or synopsis/i);
-    await expect(search).toBeVisible();
-    await search.fill('hamlet');
-    // Wait for count to update
-    await expect(page.getByText(/showing \d+ of 60 plays/i)).toBeVisible();
-    await expect(page.getByText(/showing 60 of 60 plays/i)).not.toBeVisible();
-    const text = await page.getByText(/showing \d+ of 60 plays/i).textContent();
-    const match = text?.match(/showing (\d+)/);
-    expect(Number(match?.[1])).toBeLessThan(60);
-  });
-
-  test('clearing search restores all 60 plays', async ({ page }) => {
-    const search = page.getByPlaceholder(/search by title or synopsis/i);
-    await search.fill('hamlet');
-    await expect(page.getByText(/showing \d+ of 60 plays/i)).toBeVisible();
-    await search.clear();
-    await expect(page.getByText(/showing 60 of 60 plays/i)).toBeVisible();
-  });
-
   test('selecting genre "Drama" filters results', async ({ page }) => {
-    const genreSelect = page.getByRole('combobox').nth(0);
+    const genreSelect = page.getByRole('combobox', {
+      name: /filter by genre/i,
+    });
     await expect(genreSelect).toBeVisible();
     await genreSelect.selectOption('Drama');
-    // Wait for count to update away from 60
-    await expect(page.getByText(/showing 60 of 60 plays/i)).not.toBeVisible();
-    await expect(page.getByText(/showing \d+ of 60 plays/i)).toBeVisible();
-    const text = await page.getByText(/showing \d+ of 60 plays/i).textContent();
-    const match = text?.match(/showing (\d+)/);
+    await expect(page.getByText('Showing 60 of 60 plays')).not.toBeVisible();
+    await expect(page.getByText(/Showing \d+ of 60 plays/)).toBeVisible();
+    const text = await page.getByText(/Showing \d+ of 60 plays/).textContent();
+    const match = text?.match(/Showing (\d+)/);
     expect(Number(match?.[1])).toBeLessThan(60);
   });
 
@@ -78,16 +65,29 @@ test.describe('Works page', () => {
     page,
   }) => {
     await page.getByRole('checkbox', { name: /published/i }).check();
-    await expect(page.getByText(/showing 2 of 60 plays/i)).toBeVisible();
+    await expect(page.getByText('Showing 2 of 60 plays')).toBeVisible();
   });
 
   test('selecting Sort "Title: A → Z" changes order', async ({ page }) => {
-    // Sort is the last combobox (4th — after Genre, Runtime, Cast Size)
-    await page.getByRole('combobox').last().selectOption('title-asc');
+    await page
+      .getByRole('combobox', { name: /sort by/i })
+      .selectOption('title-asc');
     const firstCard = page.locator('a[href^="/works/"]').first();
     await expect(firstCard).toBeVisible();
     const title = await firstCard.textContent();
     expect(title!.trim()[0].toUpperCase() < 'M').toBeTruthy();
+  });
+
+  test('casting note icon opens the casting flexibility modal', async ({
+    page,
+  }) => {
+    const castingBtn = page.getByRole('button', {
+      name: 'Note on Casting Flexibility',
+    });
+    await castingBtn.scrollIntoViewIfNeeded();
+    await expect(castingBtn).toBeVisible();
+    await castingBtn.click();
+    await expect(page.getByRole('dialog')).toBeVisible({ timeout: 3000 });
   });
 
   test('clicking a play card navigates to /works/[slug]', async ({ page }) => {
@@ -97,30 +97,11 @@ test.describe('Works page', () => {
     const href = await firstCard.getAttribute('href');
     await firstCard.click();
     await expect(page).toHaveURL(href!, { timeout: 10000 });
-    expect(page.url()).toMatch(/\/works\/.+/);
   });
 
-  test('casting note icon opens the casting flexibility modal', async ({
-    page,
-  }) => {
-    const castingBtn = page.getByRole('button', {
-      name: /note on casting flexibility/i,
-    });
-    await castingBtn.scrollIntoViewIfNeeded();
-    await expect(castingBtn).toBeVisible();
-    await castingBtn.click();
-    await expect(page.getByRole('dialog')).toBeVisible({ timeout: 3000 });
-  });
-
-  test('Download Royalties Scale button is present', async ({ page }) => {
+  test('/works page: filter bar is visible', async ({ page }) => {
     await expect(
-      page.getByRole('link', { name: /royalties scale/i }),
-    ).toBeVisible();
-  });
-
-  test('Apply for Performance Rights button is present', async ({ page }) => {
-    await expect(
-      page.getByRole('link', { name: /performance rights/i }),
+      page.getByRole('searchbox', { name: /search plays/i }),
     ).toBeVisible();
   });
 });

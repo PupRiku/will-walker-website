@@ -23,7 +23,7 @@ test.describe('Navigation and routing', () => {
     page,
     isMobile,
   }) => {
-    await page.goto('/cv');
+    await page.goto('/cv', { waitUntil: 'networkidle' });
     await clickNavLink(page, isMobile, /^home$/i);
     await expect(page).toHaveURL(/\/#home|\/$|\/$/);
   });
@@ -32,7 +32,7 @@ test.describe('Navigation and routing', () => {
     page,
     isMobile,
   }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
     await clickNavLink(page, isMobile, /^about$/i);
     await expect(page).toHaveURL('/#about');
   });
@@ -41,7 +41,7 @@ test.describe('Navigation and routing', () => {
     page,
     isMobile,
   }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
     await clickNavLink(page, isMobile, /selected works/i);
     await expect(page).toHaveURL('/#plays');
   });
@@ -50,7 +50,7 @@ test.describe('Navigation and routing', () => {
     page,
     isMobile,
   }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
     await clickNavLink(page, isMobile, /^productions$/i);
     await expect(page).toHaveURL('/productions');
   });
@@ -59,7 +59,7 @@ test.describe('Navigation and routing', () => {
     page,
     isMobile,
   }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
     await clickNavLink(page, isMobile, /^cv$/i);
     await expect(page).toHaveURL('/cv', { timeout: 10000 });
   });
@@ -68,7 +68,7 @@ test.describe('Navigation and routing', () => {
     page,
     isMobile,
   }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
     if (isMobile) {
       await page.getByRole('button', { name: /open navigation menu/i }).tap();
       await expect(
@@ -79,7 +79,6 @@ test.describe('Navigation and routing', () => {
         .last()
         .tap();
     } else {
-      // Desktop Contact Me is a styled link/button in the header actions
       await page
         .getByRole('link', { name: /contact me/i })
         .first()
@@ -89,7 +88,7 @@ test.describe('Navigation and routing', () => {
   });
 
   test('footer CV link navigates to /cv', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'networkidle' });
     const footer = page.getByRole('contentinfo');
     await footer.scrollIntoViewIfNeeded();
     await footer.getByRole('link', { name: /^cv$/i }).click();
@@ -97,7 +96,7 @@ test.describe('Navigation and routing', () => {
   });
 
   test('logo click navigates to /#home', async ({ page }) => {
-    await page.goto('/cv');
+    await page.goto('/cv', { waitUntil: 'networkidle' });
     await page
       .getByRole('link', { name: /william l\. walker montgomerie/i })
       .first()

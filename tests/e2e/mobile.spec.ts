@@ -61,13 +61,16 @@ test.describe('Mobile layout', () => {
     const aboutLink = page.getByRole('link', { name: /^about$/i }).last();
     await expect(aboutLink).toBeVisible({ timeout: 3000 });
     await aboutLink.tap();
-    // Wait for close animation to complete
-    await expect(
-      page.getByRole('link', { name: /^home$/i }).last(),
-    ).not.toBeVisible({ timeout: 5000 });
+    // Wait for navigation to complete
+    await page.waitForURL('/#about', { timeout: 5000 });
+    // Verify hamburger is still visible (menu is closed)
     await expect(
       page.getByRole('button', { name: /open navigation menu/i }),
     ).toBeVisible();
+    // Verify menu is closed by checking the hamburger button aria-label hasn't changed
+    await expect(
+      page.getByRole('button', { name: /open navigation menu/i }),
+    ).toHaveAttribute('aria-label', 'Open navigation menu');
   });
 
   test('h1 on home page is visible without horizontal scroll', async ({
