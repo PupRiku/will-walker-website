@@ -1,6 +1,15 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Home page', () => {
+  async function openCarouselModal(page: any) {
+    // Wait for Embla to initialize — first slide button must be enabled
+    const firstSlide = page.locator('#plays button').first();
+    await expect(firstSlide).toBeVisible({ timeout: 10000 });
+    await expect(firstSlide).toBeEnabled({ timeout: 10000 });
+    await firstSlide.click();
+    await expect(page.getByRole('dialog')).toBeVisible({ timeout: 5000 });
+  }
+
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });
@@ -34,51 +43,34 @@ test.describe('Home page', () => {
   });
 
   test('clicking a carousel card opens the modal', async ({ page }) => {
-    // Wait for carousel to initialise then click first slide button
-    const firstSlide = page.locator('#plays button').first();
-    await expect(firstSlide).toBeVisible();
-    await firstSlide.click();
+    await openCarouselModal(page);
     await expect(page.getByRole('dialog')).toBeVisible();
   });
 
   test('modal shows title and synopsis', async ({ page }) => {
-    const firstSlide = page.locator('#plays button').first();
-    await expect(firstSlide).toBeVisible();
-    await firstSlide.click();
+    await openCarouselModal(page);
     const dialog = page.getByRole('dialog');
-    await expect(dialog).toBeVisible();
     await expect(dialog.locator('h2').first()).toBeVisible();
     await expect(dialog.locator('p').first()).toBeVisible();
   });
 
   test('modal has "View Full Page →" link', async ({ page }) => {
-    const firstSlide = page.locator('#plays button').first();
-    await expect(firstSlide).toBeVisible();
-    await firstSlide.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
+    await openCarouselModal(page);
     await expect(
       page.getByRole('link', { name: /view full page/i }),
     ).toBeVisible();
   });
 
   test('closing modal with × button works', async ({ page }) => {
-    const firstSlide = page.locator('#plays button').first();
-    await expect(firstSlide).toBeVisible();
-    await firstSlide.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    // Close button has aria-label="Close dialog"
+    await openCarouselModal(page);
     await page.getByRole('button', { name: /close dialog/i }).click();
-    await expect(page.getByRole('dialog')).not.toBeVisible();
+    await expect(page.getByRole('dialog')).not.toBeVisible({ timeout: 3000 });
   });
 
   test('closing modal by clicking backdrop works', async ({ page }) => {
-    const firstSlide = page.locator('#plays button').first();
-    await expect(firstSlide).toBeVisible();
-    await firstSlide.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    // Click top-left corner of the dialog overlay (which is the backdrop)
+    await openCarouselModal(page);
     await page.getByRole('dialog').click({ position: { x: 5, y: 5 } });
-    await expect(page.getByRole('dialog')).not.toBeVisible();
+    await expect(page.getByRole('dialog')).not.toBeVisible({ timeout: 3000 });
   });
 
   test('"See all of Will\'s work →" link navigates to /works', async ({
