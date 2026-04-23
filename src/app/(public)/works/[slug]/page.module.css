@@ -1,0 +1,167 @@
+.pageWrapper {
+  padding: 6rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.imageColumn {
+  position: relative;
+}
+
+.coverImage {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  display: block;
+}
+
+.ribbon {
+  position: absolute;
+  top: 1rem;
+  right: -5px;
+  background-color: #eab308;
+  color: #422006;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.genre {
+  font-family: var(--font-family-accent);
+  color: var(--color-accent-primary);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.runtime {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--color-accent-subtle);
+  margin: 0;
+}
+
+.title {
+  font-family: var(--font-family-heading);
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin: 0 0 1.5rem 0;
+  color: var(--color-text);
+}
+
+.synopsis {
+  font-family: var(--font-family-body);
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-text);
+  margin: 0 0 1.5rem 0;
+}
+
+.cast {
+  font-family: var(--font-family-body);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--color-text);
+  border-left: 3px solid var(--color-accent-subtle);
+  padding-left: 1rem;
+  margin: 0 0 2rem 0;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-accent-primary);
+  color: var(--color-background);
+  border-radius: 0.375rem;
+  font-family: var(--font-family-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.button:hover {
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+.applyButton {
+  background-color: var(--color-text);
+  color: #fff;
+}
+
+.downloadButton {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-text);
+}
+
+.backLink {
+  display: inline-block;
+  font-family: var(--font-family-body);
+  font-size: 0.9rem;
+  color: var(--color-accent-primary);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .imageColumn {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .button {
+    width: 100%;
+    justify-content: center;
+  }
+}

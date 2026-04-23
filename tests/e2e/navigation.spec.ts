@@ -1,0 +1,115 @@
+import { test, expect } from '@playwright/test';
+
+test.describe('Navigation and routing', () => {
+  // Helper to click a nav link — opens mobile menu first if on mobile
+  async function clickNavLink(page: any, isMobile: boolean, name: RegExp) {
+    if (isMobile) {
+      await page.getByRole('button', { name: /open navigation menu/i }).tap();
+      await expect(
+        page.getByRole('link', { name: /^home$/i }).last(),
+      ).toBeVisible({ timeout: 3000 });
+      const link = page.getByRole('link', { name }).last();
+      await expect(link).toBeVisible({ timeout: 3000 });
+      // Get the href and navigate directly instead of tapping
+      // This avoids the menu-close race condition on iOS WebKit
+      const href = await link.getAttribute('href');
+      if (href) {
+        await page.goto(href, { waitUntil: 'networkidle' });
+      } else {
+        await link.tap();
+        await page.waitForTimeout(300);
+      }
+    } else {
+      await page.getByRole('link', { name }).first().click();
+    }
+  }
+
+  test('clicking "Home" nav link navigates to /', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto('/cv', { waitUntil: 'networkidle' });
+    await clickNavLink(page, isMobile, /^home$/i);
+    await expect(page).toHaveURL(/\/#home|\/$|\/$/);
+  });
+
+  test('clicking "About" nav link scrolls to #about section', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto('/', { waitUntil: 'networkidle' });
+    await clickNavLink(page, isMobile, /^about$/i);
+    await expect(page).toHaveURL('/#about');
+  });
+
+  test('clicking "Selected Works" nav link scrolls to #plays section', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto('/', { waitUntil: 'networkidle' });
+    await clickNavLink(page, isMobile, /selected works/i);
+    await expect(page).toHaveURL('/#plays');
+  });
+
+  test('clicking "Productions" nav link navigates to /productions', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto('/', { waitUntil: 'networkidle' });
+    await clickNavLink(page, isMobile, /^productions$/i);
+    await expect(page).toHaveURL('/productions');
+  });
+
+  test('clicking "CV" nav link navigates to /cv', async ({
+    page,
+    browser,
+    isMobile,
+  }) => {
+    // Create a fresh page to avoid state pollution from previous tests
+    const freshPage = await browser.newPage();
+    await freshPage.goto('/', { waitUntil: 'networkidle' });
+    await clickNavLink(freshPage, isMobile, /^cv$/i);
+    await expect(freshPage).toHaveURL('/cv', { timeout: 10000 });
+    await freshPage.close();
+  });
+
+  test('clicking "Contact Me" button scrolls to #contact section', async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto('/', { waitUntil: 'networkidle' });
+    if (isMobile) {
+      await page.getByRole('button', { name: /open navigation menu/i }).tap();
+      await expect(
+        page.getByRole('link', { name: /contact me/i }).last(),
+      ).toBeVisible({ timeout: 3000 });
+      await page
+        .getByRole('link', { name: /contact me/i })
+        .last()
+        .tap();
+    } else {
+      await page
+        .getByRole('link', { name: /contact me/i })
+        .first()
+        .click();
+    }
+    await expect(page).toHaveURL('/#contact');
+  });
+
+  test('footer CV link navigates to /cv', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'networkidle' });
+    const footer = page.getByRole('contentinfo');
+    await footer.scrollIntoViewIfNeeded();
+    await footer.getByRole('link', { name: /^cv$/i }).click();
+    await expect(page).toHaveURL('/cv');
+  });
+
+  test('logo click navigates to /#home', async ({ page }) => {
+    await page.goto('/cv', { waitUntil: 'networkidle' });
+    await page
+      .getByRole('link', { name: /william l\. walker montgomerie/i })
+      .first()
+      .click();
+    await expect(page).toHaveURL(/\/#home/);
+  });
+});

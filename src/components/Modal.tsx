@@ -1,23 +1,12 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './Modal.module.css';
-
-type Play = {
-  title: string;
-  category: string;
-  imageSrc: string;
-  pdfSrc: string;
-  cast: string;
-  synopsis: string;
-  featured?: boolean;
-  published?: boolean;
-  purchase?: string;
-  runtime?: string;
-};
+import { Work } from '@/types/play';
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  play: Play | null;
+  play: Work | null;
 };
 
 export default function Modal({ isOpen, onClose, play }: ModalProps) {
@@ -110,6 +99,9 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
                 </a>
               )}
             </div>
+            <Link href={`/works/${play.slug}`} className={styles.viewPageLink}>
+              View Full Page →
+            </Link>
           </div>
         </div>
       </div>

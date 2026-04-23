@@ -1,0 +1,310 @@
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import type { Play } from '@/types/play';
+import { filterWorks, sortWorks, type RuntimeBucket, type CastBucket, type SortOrder } from '@/utils/filterSort';
+import styles from './page.module.css';
+import { BsDownload } from 'react-icons/bs';
+
+export default function WorksClient() {
+  const [plays, setPlays] = useState<Play[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const [isCastingModalOpen, setIsCastingModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('');
+  const [publishedOnly, setPublishedOnly] = useState(false);
+  const [runtimeBucket, setRuntimeBucket] = useState<RuntimeBucket>('');
+  const [castBucket, setCastBucket] = useState<CastBucket>('');
+  const [sortOrder, setSortOrder] = useState<SortOrder>('');
+
+  useEffect(() => {
+    fetch('/api/plays')
+      .then((res) => {
+        if (!res.ok) throw new Error('fetch failed');
+        return res.json() as Promise<Play[]>;
+      })
+      .then((data) => {
+        setPlays(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError(true);
+        setLoading(false);
+      });
+  }, []);
+
+  const genres = Array.from(new Set(plays.map((w) => w.category))).sort();
+
+  const clearFilters = () => {
+    setSearchQuery('');
+    setSelectedGenre('');
+    setPublishedOnly(false);
+    setRuntimeBucket('');
+    setCastBucket('');
+  };
+
+  const isFiltered =
+    searchQuery !== '' ||
+    selectedGenre !== '' ||
+    publishedOnly ||
+    runtimeBucket !== '' ||
+    castBucket !== '';
+
+  const openCastingModal = () => setIsCastingModalOpen(true);
+  const closeCastingModal = () => setIsCastingModalOpen(false);
+
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      closeCastingModal();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isCastingModalOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [isCastingModalOpen, handleKeyDown]);
+
+  const filteredWorks = filterWorks(plays, {
+    searchQuery,
+    selectedGenre,
+    publishedOnly,
+    runtimeBucket,
+    castBucket,
+  });
+
+  const sortedWorks = sortWorks(filteredWorks, sortOrder);
+
+  return (
+    <div className={styles.pageWrapper}>
+      <h1 className={styles.heading}>All Works</h1>
+
+      <button
+        className={styles.castingNoteButton}
+        onClick={openCastingModal}
+        aria-label="Note on Casting Flexibility"
+      >
+        <Image
+          src="/images/assets/casting_note_icon.png"
+          alt=""
+          width={120}
+          height={120}
+          className={styles.castingNoteIcon}
+        />
+      </button>
+
+      <div className={styles.linksContainer}>
+        <a
+          href="/pdfs/royalties_scale.pdf"
+          className={styles.royaltiesLink}
+          download
+        >
+          <BsDownload />
+          Download Royalties Scale
+        </a>
+
+        <Link
+          href="https://forms.gle/NJfNUHBLG73Wbjdz7"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.globalApplyButton}
+        >
+          Apply for Performance Rights
+        </Link>
+      </div>
+
+      <div className={styles.filterBarOuter}>
+      <div className={styles.filterBar}>
+        <input
+          type="search"
+          className={styles.searchInput}
+          placeholder="Search by title or synopsis…"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          aria-label="Search plays by title or synopsis"
+        />
+        <div className={styles.filterControls}>
+          <select
+            className={styles.filterSelect}
+            value={selectedGenre}
+            onChange={(e) => setSelectedGenre(e.target.value)}
+            aria-label="Filter by genre"
+          >
+            <option value="">All Genres</option>
+            {genres.map((genre) => (
+              <option key={genre} value={genre}>
+                {genre}
+              </option>
+            ))}
+          </select>
+          <select
+            className={styles.filterSelect}
+            value={runtimeBucket}
+            onChange={(e) =>
+              setRuntimeBucket(e.target.value as RuntimeBucket)
+            }
+            aria-label="Filter by runtime"
+          >
+            <option value="">All Runtimes</option>
+            <option value="short">Short (under 30 min)</option>
+            <option value="medium">Medium (30–60 min)</option>
+            <option value="long">Long (60+ min)</option>
+            <option value="full">Full Length</option>
+          </select>
+          <select
+            className={styles.filterSelect}
+            value={castBucket}
+            onChange={(e) =>
+              setCastBucket(e.target.value as CastBucket)
+            }
+            aria-label="Filter by cast size"
+          >
+            <option value="">All Cast Sizes</option>
+            <option value="small">Small (1–5)</option>
+            <option value="medium">Medium (6–12)</option>
+            <option value="large">Large (13+)</option>
+          </select>
+          <label className={styles.sortLabel}>
+            <span>Sort by</span>
+            <select
+              className={styles.filterSelect}
+              value={sortOrder}
+              onChange={(e) =>
+                setSortOrder(e.target.value as SortOrder)
+              }
+              aria-label="Sort by"
+            >
+              <option value="">Default Order</option>
+              <option value="title-asc">Title: A → Z</option>
+              <option value="title-desc">Title: Z → A</option>
+              <option value="runtime-asc">Runtime: Shortest First</option>
+              <option value="runtime-desc">Runtime: Longest First</option>
+              <option value="cast-asc">Cast Size: Smallest First</option>
+              <option value="cast-desc">Cast Size: Largest First</option>
+            </select>
+          </label>
+          <label className={styles.publishedLabel}>
+            <input
+              type="checkbox"
+              className={styles.publishedCheckbox}
+              checked={publishedOnly}
+              onChange={(e) => setPublishedOnly(e.target.checked)}
+            />
+            Published works only
+          </label>
+        </div>
+      </div>
+      </div>
+
+      {loading ? (
+        <p className={styles.emptyStateText}>Loading plays…</p>
+      ) : error ? (
+        <p className={styles.emptyStateText}>Failed to load plays. Please refresh the page.</p>
+      ) : (
+        <>
+          <div className={styles.filterMeta}>
+            <p className={styles.resultCount}>
+              Showing {filteredWorks.length} of {plays.length} plays
+            </p>
+            {isFiltered && (
+              <button className={styles.clearFiltersButton} onClick={clearFilters}>
+                Clear all filters
+              </button>
+            )}
+          </div>
+
+          {sortedWorks.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p className={styles.emptyStateText}>
+                No plays match your current filters.
+              </p>
+              <button className={styles.button} onClick={clearFilters}>
+                Clear all filters
+              </button>
+            </div>
+          ) : (
+            <div className={styles.grid}>
+              {sortedWorks.map((work) => (
+                <Link
+                  href={`/works/${work.slug}`}
+                  className={styles.card}
+                  key={work.slug}
+                >
+                  {work.published && <div className={styles.ribbon}>Published</div>}
+                  <Image
+                    src={work.imageSrc}
+                    alt={`Cover for ${work.title}`}
+                    width={500}
+                    height={250}
+                    className={styles.cardImage}
+                  />
+                  <div className={styles.cardContent}>
+                    <div className={styles.metaInfo}>
+                      <p className={styles.category}>{work.category}</p>
+                      {work.runtime && (
+                        <p className={styles.runtime}>{work.runtime}</p>
+                      )}
+                    </div>
+                    <h2 className={styles.title}>{work.title}</h2>
+                    <p className={styles.synopsis}>{work.synopsis}</p>
+                    {work.cast && (
+                      <p className={styles.cast}>
+                        <b>Cast:</b> {work.cast}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+
+      <div
+        className={`${styles.modalOverlay} ${
+          isCastingModalOpen ? styles.isOpen : ''
+        }`}
+        onClick={closeCastingModal}
+      >
+        <div
+          className={styles.modalContent}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            onClick={closeCastingModal}
+            className={styles.modalCloseButton}
+            aria-label="Close modal"
+          >
+            &times;
+          </button>
+          <h2 className={styles.modalTitle}>Note on Casting Flexibility</h2>
+          <div className={styles.modalText}>
+            <p>
+              While the roles in these plays were originally written with
+              specific genders in mind, they are not gender-restricted.
+              Directors and producers are encouraged to cast the best performers
+              for each role, regardless of gender identity or expression. The
+              tone, humor, and relationships of the play can be fully maintained
+              with any combination of casting choices. This flexibility allows
+              programs of all sizes and compositions—whether predominantly
+              female, male, or mixed—to stage any of the productions
+              successfully.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

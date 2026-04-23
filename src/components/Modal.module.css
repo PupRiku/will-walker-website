@@ -125,6 +125,20 @@
   color: white;
 }
 
+.viewPageLink {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: var(--font-family-body);
+  font-size: 0.9rem;
+  color: var(--color-accent-primary);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.viewPageLink:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .modalImage {
     display: none;

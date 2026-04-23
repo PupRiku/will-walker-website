@@ -43,11 +43,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1.25rem;
   list-style-type: none;
   padding: 0;
   margin: 0;
   font-size: 1.125rem;
+  white-space: nowrap;
 }
 
 .links a {
@@ -123,6 +124,10 @@
     font-size: 2rem;
     color: var(--color-text);
     text-decoration: none;
+  }
+
+  .mobileKofiLink {
+    color: var(--color-accent-primary) !important;
   }
 
   .nav {

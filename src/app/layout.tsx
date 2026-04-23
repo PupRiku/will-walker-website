@@ -2,11 +2,7 @@ import type { Metadata } from 'next';
 import { Lora, Lato, Special_Elite } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import KoFiWidget from '@/components/KoFiWidget';
 
-// Configure the fonts
 const lora = Lora({
   subsets: ['latin'],
   display: 'swap',
@@ -65,10 +61,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Header />
-        <main className="main-content">{children}</main>
-        <Footer />
-        <KoFiWidget />
+        {children}
         <Analytics />
       </body>
     </html>

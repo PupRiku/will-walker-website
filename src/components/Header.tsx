@@ -24,7 +24,7 @@ export default function Header() {
           <Link href="/#home">
             <Image
               className={styles.logoImage}
-              src="/images/logo.png"
+              src="/images/assets/logo.png"
               alt="William L. Walker Montgomerie's circular logo"
               width={500}
               height={500}
@@ -40,6 +40,9 @@ export default function Header() {
           </li>
           <li>
             <Link href="/#plays">Selected Works</Link>
+          </li>
+          <li>
+            <Link href="/productions">Productions</Link>
           </li>
           <li>
             <Link href="/cv">CV</Link>
@@ -103,12 +106,23 @@ export default function Header() {
         <Link href="/#plays" onClick={closeMenu}>
           Selected Works
         </Link>
+        <Link href="/productions" onClick={closeMenu}>
+          Productions
+        </Link>
         <Link href="/cv" onClick={closeMenu}>
           CV
         </Link>
         <Link href="/#contact" onClick={closeMenu}>
           Contact Me
         </Link>
+        <a
+          href="https://www.ko-fi.com/williamlwalkermontgomerie"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.mobileKofiLink}
+        >
+          Support Me on Ko-fi
+        </a>
         <div className={styles.mobileSocials}>
           <SocialLinks />
         </div>
