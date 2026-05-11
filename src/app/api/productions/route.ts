@@ -33,8 +33,13 @@ export async function GET() {
       },
       orderBy: { displayOrder: 'asc' },
     })
-    return NextResponse.json(productions)
-  } catch {
+    return NextResponse.json(productions, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=3600',
+      },
+    })
+  } catch (error) {
+    console.error('GET /api/productions error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

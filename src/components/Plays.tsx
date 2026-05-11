@@ -1,12 +1,16 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
 import styles from './Plays.module.css';
 import Modal from './Modal';
 import type { Play } from '@/types/play';
+
+type PlaysProps = {
+  plays: Play[];
+};
 
 const PrevButton = (props: { onClick: () => void; enabled: boolean }) => (
   <button
@@ -40,7 +44,7 @@ const NextButton = (props: { onClick: () => void; enabled: boolean }) => (
   </button>
 );
 
-export default function Plays() {
+export default function Plays({ plays }: PlaysProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: 'center',
@@ -50,16 +54,11 @@ export default function Plays() {
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlay, setSelectedPlay] = useState<Play | null>(null);
-  const [plays, setPlays] = useState<Play[]>([]);
 
-  useEffect(() => {
-    fetch('/api/plays')
-      .then((res) => (res.ok ? res.json() : Promise.reject()))
-      .then((data: Play[]) => setPlays(data))
-      .catch(() => {});
-  }, []);
-
-  const featuredWorks = plays.filter((work) => work.featured);
+  const featuredWorks = useMemo(
+    () => plays.filter((work) => work.featured),
+    [plays],
+  );
 
   const handleOpenModal = (play: Play) => {
     setSelectedPlay(play);
@@ -109,8 +108,8 @@ export default function Plays() {
       <div className={styles.embla}>
         <div className={styles.embla__viewport} ref={emblaRef}>
           <div className={styles.embla__container}>
-            {featuredWorks.map((work, index) => (
-              <div className={styles.embla__slide} key={index}>
+            {featuredWorks.map((work) => (
+              <div className={styles.embla__slide} key={work.slug}>
                 <button
                   onClick={() => handleOpenModal(work)}
                   className={styles.slide__link}
@@ -124,6 +123,7 @@ export default function Plays() {
                       alt={`Cover for ${work.title}`}
                       width={400}
                       height={600}
+                      sizes="(max-width: 640px) 80vw, (max-width: 1024px) 40vw, 25vw"
                       className={styles.slide__image}
                     />
                   </div>

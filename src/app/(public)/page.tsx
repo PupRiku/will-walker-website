@@ -3,8 +3,13 @@ import styles from './page.module.css';
 import About from '@/components/About';
 import Plays from '@/components/Plays';
 import Contact from '@/components/Contact';
+import { fetchPlays } from '@/lib/api';
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const plays = await fetchPlays();
+
   return (
     <>
       <section id="home" className={styles.container}>
@@ -24,7 +29,7 @@ export default function Home() {
         </div>
       </section>
       <About />
-      <Plays />
+      <Plays plays={plays} />
       <Contact />
     </>
   );
