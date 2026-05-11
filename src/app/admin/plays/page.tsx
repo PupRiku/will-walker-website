@@ -44,12 +44,6 @@ function timeAgo(dateStr: string): string {
   return `${Math.floor(hours / 24)}d ago`;
 }
 
-function getAuthHeader(): string {
-  const user = process.env.NEXT_PUBLIC_ADMIN_USER ?? '';
-  const pass = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? '';
-  return 'Basic ' + btoa(`${user}:${pass}`);
-}
-
 // ── Form state type ────────────────────────────────────────────────────────────
 
 type FormState = {
@@ -115,7 +109,6 @@ function UploadZone({
     fd.append('file', file);
     const res = await fetch('/api/admin/upload', {
       method: 'POST',
-      headers: { Authorization: getAuthHeader() },
       body: fd,
     });
     if (!res.ok) {
@@ -251,7 +244,6 @@ function PlayModal({
         method,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: getAuthHeader(),
         },
         body: JSON.stringify(form),
       });
@@ -478,7 +470,6 @@ function DeleteModal({
     try {
       const res = await fetch(`/api/plays/${play.slug}`, {
         method: 'DELETE',
-        headers: { Authorization: getAuthHeader() },
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -568,7 +559,6 @@ export default function PlaysPage() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: getAuthHeader(),
         },
         body: JSON.stringify({ direction }),
       });

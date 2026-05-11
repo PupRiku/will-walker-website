@@ -5,14 +5,6 @@ import type { Production, ProductionPhoto } from '@/types/production';
 import type { Play } from '@/types/play';
 import styles from './page.module.css';
 
-// ── Auth helper ───────────────────────────────────────────────────────────────
-
-function getAuthHeader(): string {
-  const user = process.env.NEXT_PUBLIC_ADMIN_USER ?? '';
-  const pass = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? '';
-  return 'Basic ' + btoa(`${user}:${pass}`);
-}
-
 // ── Upload zone ───────────────────────────────────────────────────────────────
 
 function UploadZone({
@@ -32,7 +24,6 @@ function UploadZone({
     fd.append('file', file);
     const res = await fetch('/api/admin/upload', {
       method: 'POST',
-      headers: { Authorization: getAuthHeader() },
       body: fd,
     });
     if (!res.ok) {
@@ -264,7 +255,6 @@ function PhotoCard({
     try {
       const res = await fetch(`/api/productions/${photo.id}`, {
         method: 'DELETE',
-        headers: { Authorization: getAuthHeader() },
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -385,7 +375,7 @@ function PhotoModal({
       const method = isNew ? 'POST' : 'PUT';
       const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json', Authorization: getAuthHeader() },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
       if (!res.ok) {
@@ -568,7 +558,7 @@ export default function ProductionsPage() {
     try {
       await fetch(`/api/productions/groups/${production.id}/display-order`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', Authorization: getAuthHeader() },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ direction }),
       });
     } catch {
@@ -610,7 +600,7 @@ export default function ProductionsPage() {
     try {
       await fetch(`/api/productions/${photo.id}/display-order`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', Authorization: getAuthHeader() },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ direction }),
       });
     } catch {

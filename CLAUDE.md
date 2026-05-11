@@ -261,8 +261,6 @@ DATABASE_URL=                      # Supabase Session Pooler connection string (
 # Admin Auth
 ADMIN_USER=                        # Username for admin dashboard Basic Auth
 ADMIN_PASSWORD=                    # Password for admin dashboard Basic Auth
-NEXT_PUBLIC_ADMIN_USER=            # Same as ADMIN_USER — exposed to client for fetch() API calls
-NEXT_PUBLIC_ADMIN_PASSWORD=        # Same as ADMIN_PASSWORD — exposed to client for fetch() API calls
 
 # Vercel Blob
 BLOB_READ_WRITE_TOKEN=             # Vercel Blob store token for image uploads
@@ -482,7 +480,7 @@ Edit `src/components/KoFiWidget.tsx`
 - **Method:** HTTP Basic Auth via Next.js middleware (`src/middleware.ts`)
 - **Protects:** all `/admin/*` routes
 - **API write routes** also check auth individually via `src/lib/auth.ts` (`requireAuth` helper reads the `Authorization` header)
-- **Credentials:** `ADMIN_USER` / `ADMIN_PASSWORD` env vars (server-only); `NEXT_PUBLIC_ADMIN_USER` / `NEXT_PUBLIC_ADMIN_PASSWORD` are the same values prefixed for client-side `fetch()` calls
+- **Credentials:** `ADMIN_USER` / `ADMIN_PASSWORD` env vars — server-only, never exposed to the client. Admin client `fetch()` calls do **not** attach an explicit `Authorization` header; once the user authenticates to the middleware on `/admin`, the browser caches the Basic Auth credentials for the `WLW Admin` realm and preemptively re-sends them on subsequent same-origin requests to `/api/*` write endpoints (which share the same realm via their 401 `WWW-Authenticate` header).
 - **Logout:** POST to `/api/admin/logout` returns 401 + `WWW-Authenticate` header, which causes the browser to drop the cached Basic Auth credentials; page then redirects to `/admin` to re-prompt
 
 ---

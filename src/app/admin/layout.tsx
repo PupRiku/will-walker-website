@@ -18,8 +18,6 @@ function SidebarContent({
   pathname: string;
   onClose?: () => void;
 }) {
-  const adminUser = process.env.NEXT_PUBLIC_ADMIN_USER ?? 'admin';
-
   async function handleLogout() {
     try {
       await fetch('/api/admin/logout', { method: 'POST' });
@@ -60,7 +58,7 @@ function SidebarContent({
       <div className={styles.spacer} />
 
       <div className={styles.bottomSection}>
-        <p className={styles.signedIn}>Signed in as {adminUser}</p>
+        <p className={styles.signedIn}>Signed in</p>
         <button className={styles.logoutButton} onClick={handleLogout}>
           Log Out
         </button>
