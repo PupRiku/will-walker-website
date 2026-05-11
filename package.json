@@ -52,5 +52,11 @@
     "tsx": "^4.21.0",
     "typescript": "^5",
     "vitest": "^4.1.4"
+  },
+  "overrides": {
+    "fast-uri": "^3.1.2",
+    "hono": "^4.12.18",
+    "@hono/node-server": "^1.19.13",
+    "postcss": "^8.5.10"
   }
 }
