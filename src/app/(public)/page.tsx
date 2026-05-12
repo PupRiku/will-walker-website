@@ -3,12 +3,23 @@ import styles from './page.module.css';
 import About from '@/components/About';
 import Plays from '@/components/Plays';
 import Contact from '@/components/Contact';
-import { fetchPlays } from '@/lib/api';
+import { prisma } from '@/lib/prisma';
+import type { Play } from '@/types/play';
 
 export const revalidate = 60;
 
 export default async function Home() {
-  const plays = await fetchPlays();
+  const rows = await prisma.play.findMany({
+    orderBy: [
+      { featuredOrder: { sort: 'asc', nulls: 'last' } },
+      { title: 'asc' },
+    ],
+  });
+  const plays: Play[] = rows.map((p) => ({
+    ...p,
+    createdAt: p.createdAt.toISOString(),
+    updatedAt: p.updatedAt.toISOString(),
+  }));
 
   return (
     <>
