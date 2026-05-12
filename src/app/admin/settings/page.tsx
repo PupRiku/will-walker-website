@@ -1,5 +1,10 @@
+import type { Metadata } from 'next';
 import { FiSettings } from 'react-icons/fi';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+  title: 'Settings · WLW Admin',
+};
 
 export default function SettingsPage() {
   return (

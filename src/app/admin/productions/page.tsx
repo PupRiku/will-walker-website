@@ -548,6 +548,10 @@ export default function ProductionsPage() {
       .catch(() => {});
   }, [fetchProductions]);
 
+  useEffect(() => {
+    document.title = 'Productions · WLW Admin';
+  }, []);
+
   // ── Group ordering ──────────────────────────────────────────────────────────
 
   async function handleGroupOrder(production: Production, direction: 'up' | 'down') {

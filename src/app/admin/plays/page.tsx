@@ -552,6 +552,10 @@ export default function PlaysPage() {
     fetchPlays();
   }, [fetchPlays]);
 
+  useEffect(() => {
+    document.title = 'Plays · WLW Admin';
+  }, []);
+
   const featuredPlays = plays
     .filter((p) => p.featured && p.featuredOrder !== null)
     .sort((a, b) => (a.featuredOrder ?? 0) - (b.featuredOrder ?? 0));
