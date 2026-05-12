@@ -256,7 +256,7 @@ NEXT_PUBLIC_RECIPIENT_EMAIL=       # Email address FormSubmit delivers contact f
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=    # reCAPTCHA v2 site key
 
 # Database
-DATABASE_URL=                      # Supabase Session Pooler connection string (port 5432)
+DATABASE_URL=                      # Supabase Transaction Pooler connection string (port 6543)
 
 # Admin Auth
 ADMIN_USER=                        # Username for admin dashboard Basic Auth
@@ -327,7 +327,7 @@ Public routes live inside the `(public)` route group (`src/app/(public)/`) which
 ## Database
 
 - **ORM:** Prisma 7
-- **Provider:** Supabase (Postgres) — use the **Session Pooler** connection string (IPv4, port 5432); the direct connection is IPv6-only and won't work from most dev machines
+- **Provider:** Supabase (Postgres) — use the **Transaction Pooler** connection string (`aws-X-region.pooler.supabase.com`, port **6543**, IPv4). The direct connection (`db.<ref>.supabase.co:5432`) is IPv6-only and won't work from most dev machines. Supabase also exposes a "Session Pooler" at the same pooler hostname on port **5432**, but it pins one client per pooled connection — that's what caused the `MaxClientsInSessionMode` error during a Vercel build on 2026-05-13 when several Server Components hit Prisma in parallel during static generation. Use port 6543 everywhere (local dev + Vercel) unless you have a specific reason to use session mode.
 - **Schema:** `prisma/schema.prisma`
 - **Config:** `prisma.config.ts` — reads `DATABASE_URL` from `.env`; datasource URL is set here, not in `schema.prisma` (Prisma v7 requirement)
 - **Client:** generated to `src/generated/prisma/` — import from `src/generated/prisma/client`
@@ -439,8 +439,8 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 
 **Build requirements:**
 - Prisma client is generated automatically via `postinstall` script (`prisma generate`) — no manual step needed on Vercel
-- `DATABASE_URL` must use the Supabase **Session Pooler** connection string (port **6543**) with these query parameters: `?pgbouncer=true&connection_limit=1&connect_timeout=30`
-- The direct connection (port 5432) causes `ENETUNREACH` errors on Vercel's build servers
+- `DATABASE_URL` must use the Supabase **Transaction Pooler** connection string (`aws-X-region.pooler.supabase.com`, port **6543**) with these query parameters: `?pgbouncer=true&connection_limit=1&connect_timeout=30`. Transaction-mode pooling is required because `generateStaticParams` plus the home / works / productions Server Components all hit Prisma in parallel during build; the Session Pooler (port 5432, same hostname) caps clients at the pool size and fails with `MaxClientsInSessionMode`.
+- The actual direct connection (`db.<ref>.supabase.co:5432`) causes `ENETUNREACH` errors on Vercel's build servers because it's IPv6-only.
 - All 9 environment variables must be set in Vercel before deploying (see Environment Variables section)
 
 **ISR (Incremental Static Regeneration):**
