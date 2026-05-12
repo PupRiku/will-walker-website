@@ -29,8 +29,26 @@ function validatePhoto(body: Record<string, unknown>) {
 export async function GET() {
   try {
     const productions = await prisma.production.findMany({
-      include: {
-        photos: { orderBy: { displayOrder: 'asc' } },
+      select: {
+        id: true,
+        playTitle: true,
+        venue: true,
+        productionYear: true,
+        displayOrder: true,
+        photos: {
+          select: {
+            id: true,
+            productionId: true,
+            playTitle: true,
+            productionYear: true,
+            venue: true,
+            src: true,
+            alt: true,
+            caption: true,
+            displayOrder: true,
+          },
+          orderBy: { displayOrder: 'asc' },
+        },
       },
       orderBy: { displayOrder: 'asc' },
     })

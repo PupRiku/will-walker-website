@@ -574,15 +574,16 @@ export default function ProductionsPage() {
     );
 
     try {
-      await fetch(`/api/productions/groups/${production.id}/display-order`, {
+      const res = await fetch(`/api/productions/groups/${production.id}/display-order`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ direction }),
       });
-    } catch {
-      // ignore — refetch will correct divergence
+      if (!res.ok) throw new Error(`reorder failed: ${res.status}`);
+    } catch (err) {
+      console.error('Group reorder failed, refetching:', err);
+      await fetchProductions();
     }
-    await fetchProductions();
   }
 
   // ── Photo ordering ──────────────────────────────────────────────────────────
@@ -616,15 +617,16 @@ export default function ProductionsPage() {
     );
 
     try {
-      await fetch(`/api/productions/${photo.id}/display-order`, {
+      const res = await fetch(`/api/productions/${photo.id}/display-order`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ direction }),
       });
-    } catch {
-      // ignore — refetch will correct divergence
+      if (!res.ok) throw new Error(`reorder failed: ${res.status}`);
+    } catch (err) {
+      console.error('Photo reorder failed, refetching:', err);
+      await fetchProductions();
     }
-    await fetchProductions();
   }
 
   function openNewPhoto(context: Partial<PhotoFormState>, groupPhotoCount: number) {

@@ -578,17 +578,18 @@ export default function PlaysPage() {
     );
 
     try {
-      await fetch(`/api/plays/${play.slug}/feature-order`, {
+      const res = await fetch(`/api/plays/${play.slug}/feature-order`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ direction }),
       });
-    } catch {
-      // ignore — refetch will correct any divergence
+      if (!res.ok) throw new Error(`reorder failed: ${res.status}`);
+    } catch (err) {
+      console.error('Feature reorder failed, refetching:', err);
+      await fetchPlays();
     }
-    await fetchPlays();
   }
 
   function handleModalSaved() {
