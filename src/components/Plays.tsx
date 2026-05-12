@@ -54,6 +54,7 @@ export default function Plays({ plays }: PlaysProps) {
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlay, setSelectedPlay] = useState<Play | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const featuredWorks = useMemo(
     () => plays.filter((work) => work.featured),
@@ -94,6 +95,7 @@ export default function Plays({ plays }: PlaysProps) {
     const onSelect = () => {
       setPrevBtnEnabled(emblaApi.canScrollPrev());
       setNextBtnEnabled(emblaApi.canScrollNext());
+      setCurrentSlide(emblaApi.selectedScrollSnap());
     };
     onSelect();
     emblaApi.on('select', onSelect);
@@ -105,7 +107,16 @@ export default function Plays({ plays }: PlaysProps) {
   return (
     <section id="plays" className={styles.playsSection}>
       <h2 className={styles.heading}>Selected Works</h2>
-      <div className={styles.embla}>
+      <div
+        className={styles.embla}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Featured plays"
+      >
+        <div className={styles.visuallyHidden} aria-live="polite" aria-atomic="true">
+          {featuredWorks.length > 0 &&
+            `Slide ${currentSlide + 1} of ${featuredWorks.length}: ${featuredWorks[currentSlide]?.title ?? ''}`}
+        </div>
         <div className={styles.embla__viewport} ref={emblaRef}>
           <div className={styles.embla__container}>
             {featuredWorks.map((work) => (

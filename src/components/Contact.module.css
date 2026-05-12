@@ -74,3 +74,11 @@
 .captchaGroup {
   margin-bottom: 1.5rem;
 }
+
+.helperText {
+  font-family: var(--font-family-body);
+  font-size: 0.875rem;
+  color: var(--color-text);
+  margin: 0.75rem 0 0 0;
+  font-style: italic;
+}

@@ -36,7 +36,11 @@ export default async function ProductionsPage() {
 
               <div className={styles.photoGrid}>
                 {production.photos.map((photo) => (
-                  <figure key={photo.id} className={styles.photoFigure}>
+                  <figure
+                    key={photo.id}
+                    className={styles.photoFigure}
+                    aria-label={photo.caption ? undefined : photo.alt}
+                  >
                     <div className={styles.imageWrapper}>
                       <Image
                         src={photo.src}

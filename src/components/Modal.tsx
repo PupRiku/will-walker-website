@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Modal.module.css';
@@ -9,7 +12,51 @@ type ModalProps = {
   play: Work | null;
 };
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"]), input:not([disabled]), textarea:not([disabled]), select:not([disabled])';
+
 export default function Modal({ isOpen, onClose, play }: ModalProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab' || !contentRef.current) return;
+
+      const focusables = Array.from(
+        contentRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      );
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      previouslyFocused?.focus?.();
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen || !play) {
     return null;
   }
@@ -26,11 +73,16 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
       aria-modal="true"
       aria-labelledby="modal-title"
     >
-      <div className={styles.modalContent} onClick={handleContentClick}>
+      <div
+        className={styles.modalContent}
+        onClick={handleContentClick}
+        ref={contentRef}
+      >
         <button
           className={styles.closeButton}
           onClick={onClose}
           aria-label="Close dialog"
+          ref={closeButtonRef}
         >
           &times;
         </button>

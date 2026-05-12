@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import SocialLinks from './SocialLinks';
@@ -8,14 +8,33 @@ import styles from './Header.module.css';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen((prev) => !prev);
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const firstLink = mobileMenuRef.current?.querySelector<HTMLElement>('a');
+    firstLink?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMenuOpen]);
 
   return (
     <header className={styles.header}>
@@ -58,6 +77,8 @@ export default function Header() {
           className={styles.mobileMenuButton}
           onClick={toggleMenu}
           aria-label="Open navigation menu"
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
         >
           {isMenuOpen ? (
             <svg
@@ -95,7 +116,10 @@ export default function Header() {
         </button>
       </nav>
       <div
+        id="mobile-menu"
+        ref={mobileMenuRef}
         className={`${styles.mobileMenu} ${isMenuOpen ? styles.isOpen : ''}`}
+        inert={!isMenuOpen}
       >
         <Link href="/#home" onClick={closeMenu}>
           Home

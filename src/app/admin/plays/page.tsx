@@ -140,7 +140,12 @@ function UploadZone({
       onClick={() => !uploading && inputRef.current?.click()}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && !uploading && inputRef.current?.click()}
+      onKeyDown={(e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && !uploading) {
+          e.preventDefault();
+          inputRef.current?.click();
+        }
+      }}
       aria-label="Upload cover image"
     >
       <input
@@ -264,7 +269,12 @@ function PlayModal({
 
   return (
     <div className={styles.modalOverlay} onClick={handleOverlayClick}>
-      <div className={styles.modalPanel} role="dialog" aria-modal="true">
+      <div
+        className={styles.modalPanel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="play-modal-title"
+      >
         <button className={styles.modalClose} onClick={onClose} aria-label="Close modal">
           &times;
         </button>
@@ -273,7 +283,7 @@ function PlayModal({
           <p className={styles.modalEyebrow}>
             {isNew ? 'NEW PLAY' : 'EDITING'}
           </p>
-          <h2 className={styles.modalTitle}>
+          <h2 id="play-modal-title" className={styles.modalTitle}>
             {isNew ? 'New Play' : editingPlay!.title}
           </h2>
         </div>
@@ -488,9 +498,16 @@ function DeleteModal({
 
   return (
     <div className={styles.modalOverlay} onClick={handleOverlayClick}>
-      <div className={styles.deletePanel} role="dialog" aria-modal="true">
+      <div
+        className={styles.deletePanel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-modal-title"
+      >
         <p className={styles.deleteEyebrow}>CONFIRM DELETION</p>
-        <h2 className={styles.deleteTitle}>Delete &ldquo;{play.title}&rdquo;?</h2>
+        <h2 id="delete-modal-title" className={styles.deleteTitle}>
+          Delete &ldquo;{play.title}&rdquo;?
+        </h2>
         <p className={styles.deleteBody}>
           This will remove the play from your catalog along with its cover,
           synopsis, and any featured-carousel placement. This cannot be undone.

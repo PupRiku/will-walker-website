@@ -33,7 +33,7 @@ export default function Contact() {
           />
           <input type="hidden" name="_captcha" value="false" />
 
-          <div className={styles.formGroup}>
+          <div className={styles.formGroup} suppressHydrationWarning>
             <label htmlFor="name" className={styles.label}>
               Name
             </label>
@@ -46,7 +46,7 @@ export default function Contact() {
             />
           </div>
 
-          <div className={styles.formGroup}>
+          <div className={styles.formGroup} suppressHydrationWarning>
             <label htmlFor="email" className={styles.label}>
               Email
             </label>
@@ -59,7 +59,7 @@ export default function Contact() {
             />
           </div>
 
-          <div className={styles.formGroup}>
+          <div className={styles.formGroup} suppressHydrationWarning>
             <label htmlFor="message" className={styles.label}>
               Message
             </label>
@@ -82,9 +82,19 @@ export default function Contact() {
             type="submit"
             className={styles.button}
             disabled={!captchaVerified}
+            aria-describedby="submit-help"
           >
             Send Message
           </button>
+          <p
+            id="submit-help"
+            className={styles.helperText}
+            aria-live="polite"
+          >
+            {captchaVerified
+              ? 'Ready to send.'
+              : 'Complete the verification above to enable sending.'}
+          </p>
         </form>
       </div>
     </section>

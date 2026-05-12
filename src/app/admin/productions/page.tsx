@@ -48,7 +48,12 @@ function UploadZone({
       onClick={() => !uploading && inputRef.current?.click()}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && !uploading && inputRef.current?.click()}
+      onKeyDown={(e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && !uploading) {
+          e.preventDefault();
+          inputRef.current?.click();
+        }
+      }}
       aria-label="Upload production photo"
     >
       <input
@@ -395,12 +400,17 @@ function PhotoModal({
 
   return (
     <div className={styles.modalOverlay} onClick={handleOverlayClick}>
-      <div className={styles.modalPanel} role="dialog" aria-modal="true">
+      <div
+        className={styles.modalPanel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="photo-modal-title"
+      >
         <button className={styles.modalClose} onClick={onClose} aria-label="Close modal">&times;</button>
 
         <div className={styles.modalHeader}>
           <p className={styles.modalEyebrow}>{isNew ? 'NEW PHOTO' : 'EDITING PHOTO'}</p>
-          <h2 className={styles.modalTitle}>
+          <h2 id="photo-modal-title" className={styles.modalTitle}>
             {isNew ? 'Add Production Photo' : editingPhoto!.playTitle}
           </h2>
         </div>
