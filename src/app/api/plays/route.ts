@@ -1,22 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
-
-const VALID_CATEGORIES = [
-  'Drama',
-  'Comedy',
-  'Historical Drama',
-  "Children's Play",
-  'Political Satire',
-  'Thriller',
-  'SciFi/Fantasy',
-  'Radio Play',
-  'One Act Play',
-  'Screenplay',
-  'Comedy/Drama',
-  'Theater for Youth',
-  'Collection',
-];
+import { VALID_CATEGORIES } from '@/lib/constants';
 
 function validatePlay(body: Record<string, unknown>) {
   const { title, slug, category, runtime, cast, synopsis, imageSrc } = body;

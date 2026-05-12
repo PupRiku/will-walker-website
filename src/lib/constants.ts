@@ -1,0 +1,15 @@
+export const VALID_CATEGORIES: readonly string[] = [
+  'Drama',
+  'Comedy',
+  'Historical Drama',
+  "Children's Play",
+  'Political Satire',
+  'Thriller',
+  'SciFi/Fantasy',
+  'Radio Play',
+  'One Act Play',
+  'Screenplay',
+  'Comedy/Drama',
+  'Theater for Youth',
+  'Collection',
+];
