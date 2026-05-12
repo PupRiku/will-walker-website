@@ -1,11 +1,10 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { worksData, Work } from '@/data/works';
-import { generateStaticParams } from '@/app/(public)/works/[slug]/page';
 
-vi.mock('@/lib/api', () => ({
-  fetchPlays: async () => worksData,
-  fetchPlay: async (slug: string) => worksData.find((w) => w.slug === slug) ?? null,
-}));
+// These tests validate the integrity of the archived seed data in
+// src/data/works.ts, which is still consumed by prisma/seed.ts. Live
+// play data lives in the database; its invariants are enforced by the
+// API route's validatePlay() and the Prisma schema.
 
 describe('worksData integrity', () => {
   it('has at least one play', () => {
@@ -96,13 +95,5 @@ describe('worksData integrity', () => {
         `"${work.title}" slug "${work.slug}" contains invalid characters`
       ).toBe(true);
     });
-  });
-
-  it('generateStaticParams returns one entry per work with correct slug', async () => {
-    const params = await generateStaticParams();
-    expect(params.length).toBe(worksData.length);
-    const paramSlugs = params.map((p) => p.slug).sort();
-    const dataSlugs = worksData.map((w) => w.slug).sort();
-    expect(paramSlugs).toEqual(dataSlugs);
   });
 });
