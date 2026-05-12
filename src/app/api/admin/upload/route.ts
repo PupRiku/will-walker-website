@@ -34,8 +34,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: UPLOAD_ERRORS.TOO_LARGE }, { status: 400 });
   }
 
-  const timestamp = Date.now();
-  const pathname = `covers/${timestamp}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const pathname = `covers/${crypto.randomUUID()}-${safeName}`;
 
   const blob = await put(pathname, file, { access: 'public' });
   return NextResponse.json({ url: blob.url });
