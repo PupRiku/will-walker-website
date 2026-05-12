@@ -36,7 +36,9 @@ function UploadZone({
 
   function handleFiles(files: FileList | null) {
     if (!files || files.length === 0) return;
-    uploadFile(files[0]).catch(() => {});
+    uploadFile(files[0]).catch((err) => {
+      console.error('Photo upload failed:', err);
+    });
   }
 
   return (
@@ -545,7 +547,9 @@ export default function ProductionsPage() {
     fetch('/api/plays')
       .then((r) => r.ok ? r.json() : [])
       .then((data: Play[]) => setPlays(data))
-      .catch(() => {});
+      .catch((err) => {
+        console.error('Failed to load plays for dropdown:', err);
+      });
   }, [fetchProductions]);
 
   useEffect(() => {

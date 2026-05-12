@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { prisma, isPrismaErrorCode } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
+import { ERROR_MESSAGES } from '@/lib/constants'
 
 type Params = Promise<{ id: string }>
 
@@ -8,17 +9,18 @@ export async function GET(_request: Request, { params }: { params: Params }) {
   const { id } = await params
   try {
     const photo = await prisma.productionPhoto.findUnique({ where: { id } })
-    if (!photo) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    if (!photo) return NextResponse.json({ error: ERROR_MESSAGES.NOT_FOUND }, { status: 404 })
     return NextResponse.json(photo)
-  } catch {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  } catch (error) {
+    console.error('GET /api/productions/[id] error:', error)
+    return NextResponse.json({ error: ERROR_MESSAGES.INTERNAL }, { status: 500 })
   }
 }
 
 export async function PUT(request: Request, { params }: { params: Params }) {
   if (!requireAuth(request)) {
     return NextResponse.json(
-      { error: 'Unauthorized' },
+      { error: ERROR_MESSAGES.UNAUTHORIZED },
       { status: 401, headers: { 'WWW-Authenticate': 'Basic realm="WLW Admin"' } }
     )
   }
@@ -29,7 +31,7 @@ export async function PUT(request: Request, { params }: { params: Params }) {
   try {
     body = await request.json()
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    return NextResponse.json({ error: ERROR_MESSAGES.INVALID_JSON }, { status: 400 })
   }
 
   const { src, alt } = body
@@ -53,17 +55,18 @@ export async function PUT(request: Request, { params }: { params: Params }) {
     })
     return NextResponse.json(photo)
   } catch (e: unknown) {
-    if ((e as { code?: string }).code === 'P2025') {
-      return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    if (isPrismaErrorCode(e, 'P2025')) {
+      return NextResponse.json({ error: ERROR_MESSAGES.NOT_FOUND }, { status: 404 })
     }
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    console.error('/api/productions/[id] error:', e)
+    return NextResponse.json({ error: ERROR_MESSAGES.INTERNAL }, { status: 500 })
   }
 }
 
 export async function DELETE(request: Request, { params }: { params: Params }) {
   if (!requireAuth(request)) {
     return NextResponse.json(
-      { error: 'Unauthorized' },
+      { error: ERROR_MESSAGES.UNAUTHORIZED },
       { status: 401, headers: { 'WWW-Authenticate': 'Basic realm="WLW Admin"' } }
     )
   }
@@ -74,9 +77,10 @@ export async function DELETE(request: Request, { params }: { params: Params }) {
     await prisma.productionPhoto.delete({ where: { id } })
     return new NextResponse(null, { status: 204 })
   } catch (e: unknown) {
-    if ((e as { code?: string }).code === 'P2025') {
-      return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    if (isPrismaErrorCode(e, 'P2025')) {
+      return NextResponse.json({ error: ERROR_MESSAGES.NOT_FOUND }, { status: 404 })
     }
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    console.error('/api/productions/[id] error:', e)
+    return NextResponse.json({ error: ERROR_MESSAGES.INTERNAL }, { status: 500 })
   }
 }

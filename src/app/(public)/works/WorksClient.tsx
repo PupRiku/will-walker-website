@@ -32,7 +32,8 @@ export default function WorksClient() {
         setPlays(data);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('Failed to load plays:', err);
         setError(true);
         setLoading(false);
       });

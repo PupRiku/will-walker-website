@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
+import { ERROR_MESSAGES } from '@/lib/constants'
 
 function validatePhoto(body: Record<string, unknown>) {
   const { src, alt, productionId, playTitle, productionYear, venue } = body
@@ -40,14 +41,14 @@ export async function GET() {
     })
   } catch (error) {
     console.error('GET /api/productions error:', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    return NextResponse.json({ error: ERROR_MESSAGES.INTERNAL }, { status: 500 })
   }
 }
 
 export async function POST(request: Request) {
   if (!requireAuth(request)) {
     return NextResponse.json(
-      { error: 'Unauthorized' },
+      { error: ERROR_MESSAGES.UNAUTHORIZED },
       { status: 401, headers: { 'WWW-Authenticate': 'Basic realm="WLW Admin"' } }
     )
   }
@@ -56,7 +57,7 @@ export async function POST(request: Request) {
   try {
     body = await request.json()
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    return NextResponse.json({ error: ERROR_MESSAGES.INVALID_JSON }, { status: 400 })
   }
 
   const validationError = validatePhoto(body)
@@ -110,7 +111,8 @@ export async function POST(request: Request) {
       },
     })
     return NextResponse.json(photo, { status: 201 })
-  } catch {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  } catch (error) {
+    console.error('POST /api/productions error:', error)
+    return NextResponse.json({ error: ERROR_MESSAGES.INTERNAL }, { status: 500 })
   }
 }

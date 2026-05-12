@@ -13,6 +13,11 @@ vi.mock('@/lib/prisma', () => ({
     },
     $transaction: vi.fn(),
   },
+  isPrismaErrorCode: (err: unknown, code: string) =>
+    typeof err === 'object' &&
+    err !== null &&
+    'code' in err &&
+    (err as { code: unknown }).code === code,
 }))
 
 vi.mock('@/lib/auth', () => ({

@@ -121,7 +121,9 @@ function UploadZone({
 
   function handleFiles(files: FileList | null) {
     if (!files || files.length === 0) return;
-    uploadFile(files[0]).catch(() => {});
+    uploadFile(files[0]).catch((err) => {
+      console.error('Cover upload failed:', err);
+    });
   }
 
   return (

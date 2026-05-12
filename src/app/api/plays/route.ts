@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { prisma, isPrismaErrorCode } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
-import { VALID_CATEGORIES } from '@/lib/constants';
+import { VALID_CATEGORIES, ERROR_MESSAGES } from '@/lib/constants';
 
 function validatePlay(body: Record<string, unknown>) {
   const { title, slug, category, runtime, cast, synopsis, imageSrc } = body;
@@ -42,7 +42,7 @@ export async function GET() {
   } catch (error) {
     console.error('GET /api/plays error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: ERROR_MESSAGES.INTERNAL },
       { status: 500 },
     );
   }
@@ -51,7 +51,7 @@ export async function GET() {
 export async function POST(request: Request) {
   if (!requireAuth(request)) {
     return NextResponse.json(
-      { error: 'Unauthorized' },
+      { error: ERROR_MESSAGES.UNAUTHORIZED },
       {
         status: 401,
         headers: { 'WWW-Authenticate': 'Basic realm="WLW Admin"' },
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
+    return NextResponse.json({ error: ERROR_MESSAGES.INVALID_JSON }, { status: 400 });
   }
 
   const validationError = validatePlay(body);
@@ -91,14 +91,15 @@ export async function POST(request: Request) {
     });
     return NextResponse.json(play, { status: 201 });
   } catch (e: unknown) {
-    if ((e as { code?: string }).code === 'P2002') {
+    if (isPrismaErrorCode(e, 'P2002')) {
       return NextResponse.json(
         { error: 'A play with this slug already exists' },
         { status: 400 },
       );
     }
+    console.error('POST /api/plays error:', e);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: ERROR_MESSAGES.INTERNAL },
       { status: 500 },
     );
   }

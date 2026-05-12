@@ -1,11 +1,12 @@
 import { put } from '@vercel/blob';
 import { NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth';
+import { ERROR_MESSAGES } from '@/lib/constants';
 
 export async function POST(request: Request) {
   if (!requireAuth(request)) {
     return NextResponse.json(
-      { error: 'Unauthorized' },
+      { error: ERROR_MESSAGES.UNAUTHORIZED },
       { status: 401, headers: { 'WWW-Authenticate': 'Basic realm="WLW Admin"' } }
     );
   }

@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
+import { ERROR_MESSAGES } from '@/lib/constants'
 
 type Params = Promise<{ slug: string }>
 
 export async function PUT(request: Request, { params }: { params: Params }) {
   if (!requireAuth(request)) {
     return NextResponse.json(
-      { error: 'Unauthorized' },
+      { error: ERROR_MESSAGES.UNAUTHORIZED },
       { status: 401, headers: { 'WWW-Authenticate': 'Basic realm="WLW Admin"' } }
     )
   }
@@ -18,7 +19,7 @@ export async function PUT(request: Request, { params }: { params: Params }) {
   try {
     body = await request.json()
   } catch {
-    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+    return NextResponse.json({ error: ERROR_MESSAGES.INVALID_JSON }, { status: 400 })
   }
 
   const { direction } = body
@@ -27,7 +28,7 @@ export async function PUT(request: Request, { params }: { params: Params }) {
   }
 
   const play = await prisma.play.findUnique({ where: { slug } })
-  if (!play) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  if (!play) return NextResponse.json({ error: ERROR_MESSAGES.NOT_FOUND }, { status: 404 })
   if (play.featuredOrder === null) {
     return NextResponse.json({ error: 'Play is not featured' }, { status: 400 })
   }
