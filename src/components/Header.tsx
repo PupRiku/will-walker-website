@@ -47,6 +47,7 @@ export default function Header() {
               alt="William L. Walker Montgomerie's circular logo"
               width={500}
               height={500}
+              priority
             />
           </Link>
         </div>
