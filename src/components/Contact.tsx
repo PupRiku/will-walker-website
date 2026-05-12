@@ -1,13 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import dynamic from 'next/dynamic';
 import styles from './Contact.module.css';
+
+const ReCAPTCHA = dynamic(() => import('react-google-recaptcha'), {
+  ssr: false,
+  loading: () => (
+    <div className={styles.captchaPlaceholder} aria-hidden="true">
+      Loading verification…
+    </div>
+  ),
+});
 
 export default function Contact() {
   const recipientEmail = process.env.NEXT_PUBLIC_RECIPIENT_EMAIL;
 
   const [captchaVerified, setCaptchaVerified] = useState(false);
+  const [formTouched, setFormTouched] = useState(false);
 
   const onCaptchaChange = (token: string | null) => {
     if (token) {
@@ -25,6 +35,7 @@ export default function Contact() {
           action={`https://formsubmit.co/${recipientEmail}`}
           method="POST"
           className={styles.form}
+          onFocus={() => setFormTouched(true)}
         >
           <input
             type="hidden"
@@ -72,10 +83,12 @@ export default function Contact() {
           </div>
 
           <div className={`${styles.formGroup} ${styles.captchaGroup}`}>
-            <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-              onChange={onCaptchaChange}
-            />
+            {formTouched && (
+              <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                onChange={onCaptchaChange}
+              />
+            )}
           </div>
 
           <button
@@ -91,9 +104,11 @@ export default function Contact() {
             className={styles.helperText}
             aria-live="polite"
           >
-            {captchaVerified
-              ? 'Ready to send.'
-              : 'Complete the verification above to enable sending.'}
+            {!formTouched
+              ? 'Fill out the form to enable sending.'
+              : captchaVerified
+                ? 'Ready to send.'
+                : 'Complete the verification above to enable sending.'}
           </p>
         </form>
       </div>

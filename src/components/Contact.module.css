@@ -75,6 +75,20 @@
   margin-bottom: 1.5rem;
 }
 
+.captchaPlaceholder {
+  width: 304px;
+  height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  font-style: italic;
+}
+
 .helperText {
   font-family: var(--font-family-body);
   font-size: 0.875rem;
