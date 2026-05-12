@@ -16,6 +16,7 @@ const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"]), input:not([disabled]), textarea:not([disabled]), select:not([disabled])';
 
 export default function Modal({ isOpen, onClose, play }: ModalProps) {
+  const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -24,6 +25,23 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
 
     const previouslyFocused = document.activeElement as HTMLElement | null;
     closeButtonRef.current?.focus();
+
+    // Mark every sibling subtree from the overlay up to <body> as inert so
+    // screen reader virtual cursors and Tab can't reach background content.
+    // Skip elements that are already inert so we don't clobber state owned
+    // elsewhere (e.g. the header's mobile menu).
+    const inertedElements: Element[] = [];
+    let node: Element | null = overlayRef.current;
+    while (node && node.parentElement && node !== document.body) {
+      const parent = node.parentElement;
+      for (const sibling of Array.from(parent.children)) {
+        if (sibling !== node && !sibling.hasAttribute('inert')) {
+          sibling.setAttribute('inert', '');
+          inertedElements.push(sibling);
+        }
+      }
+      node = parent;
+    }
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -53,6 +71,9 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      // Clear inert before restoring focus so the trigger element is
+      // focusable when we hand focus back to it.
+      for (const el of inertedElements) el.removeAttribute('inert');
       previouslyFocused?.focus?.();
     };
   }, [isOpen, onClose]);
@@ -72,6 +93,7 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
+      ref={overlayRef}
     >
       <div
         className={styles.modalContent}
