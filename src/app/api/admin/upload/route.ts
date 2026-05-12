@@ -1,7 +1,12 @@
 import { put } from '@vercel/blob';
 import { NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth';
-import { ERROR_MESSAGES } from '@/lib/constants';
+import {
+  ERROR_MESSAGES,
+  ALLOWED_UPLOAD_TYPES,
+  MAX_UPLOAD_BYTES,
+  UPLOAD_ERRORS,
+} from '@/lib/constants';
 
 export async function POST(request: Request) {
   if (!requireAuth(request)) {
@@ -18,17 +23,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 });
   }
 
-  const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-  if (!ALLOWED_TYPES.includes(file.type)) {
+  if (!ALLOWED_UPLOAD_TYPES.includes(file.type)) {
     return NextResponse.json(
-      { error: 'Only JPG, PNG, and WEBP files are allowed' },
+      { error: UPLOAD_ERRORS.WRONG_TYPE },
       { status: 400 }
     );
   }
 
-  const MAX_BYTES = 4 * 1024 * 1024;
-  if (file.size > MAX_BYTES) {
-    return NextResponse.json({ error: 'File must be under 4MB' }, { status: 400 });
+  if (file.size > MAX_UPLOAD_BYTES) {
+    return NextResponse.json({ error: UPLOAD_ERRORS.TOO_LARGE }, { status: 400 });
   }
 
   const timestamp = Date.now();

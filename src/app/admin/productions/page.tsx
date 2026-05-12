@@ -3,6 +3,11 @@
 import { useState, useEffect, useCallback, useRef, useId, KeyboardEvent } from 'react';
 import type { Production, ProductionPhoto } from '@/types/production';
 import type { Play } from '@/types/play';
+import {
+  ALLOWED_UPLOAD_TYPES,
+  MAX_UPLOAD_BYTES,
+  UPLOAD_ERRORS,
+} from '@/lib/constants';
 import styles from './page.module.css';
 
 // ── Upload zone ───────────────────────────────────────────────────────────────
@@ -11,15 +16,23 @@ function UploadZone({
   onUpload,
   uploading,
   error,
+  onError,
 }: {
   onUpload: (url: string) => void;
   uploading: boolean;
   error: string | null;
+  onError: (message: string) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
 
   async function uploadFile(file: File) {
+    if (!ALLOWED_UPLOAD_TYPES.includes(file.type)) {
+      throw new Error(UPLOAD_ERRORS.WRONG_TYPE);
+    }
+    if (file.size > MAX_UPLOAD_BYTES) {
+      throw new Error(UPLOAD_ERRORS.TOO_LARGE);
+    }
     const fd = new FormData();
     fd.append('file', file);
     const res = await fetch('/api/admin/upload', {
@@ -36,8 +49,10 @@ function UploadZone({
 
   function handleFiles(files: FileList | null) {
     if (!files || files.length === 0) return;
-    uploadFile(files[0]).catch((err) => {
+    uploadFile(files[0]).catch((err: unknown) => {
+      const message = err instanceof Error ? err.message : 'Upload failed';
       console.error('Photo upload failed:', err);
+      onError(message);
     });
   }
 
@@ -490,6 +505,7 @@ function PhotoModal({
                   setUploadError(null);
                   setField('src', url);
                 }}
+                onError={setUploadError}
                 uploading={uploading}
                 error={uploadError}
               />

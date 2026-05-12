@@ -7,6 +7,21 @@ export const ERROR_MESSAGES = {
   INVALID_JSON: 'Invalid JSON',
 } as const;
 
+export const ALLOWED_UPLOAD_TYPES: readonly string[] = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+];
+
+export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
+
+const MAX_UPLOAD_MB = MAX_UPLOAD_BYTES / (1024 * 1024);
+
+export const UPLOAD_ERRORS = {
+  WRONG_TYPE: 'Only JPG, PNG, and WEBP files are allowed',
+  TOO_LARGE: `File must be under ${MAX_UPLOAD_MB}MB`,
+} as const;
+
 export const VALID_CATEGORIES: readonly string[] = [
   'Drama',
   'Comedy',
