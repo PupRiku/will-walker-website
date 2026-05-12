@@ -129,8 +129,8 @@
   position: absolute;
   top: 1rem;
   right: -5px;
-  background-color: #eab308;
-  color: #422006;
+  background-color: var(--color-ribbon-bg);
+  color: var(--color-ribbon-text);
   padding: 0.25rem 0.75rem;
   border-radius: 0.25rem;
   font-size: 0.75rem;

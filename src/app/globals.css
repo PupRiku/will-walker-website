@@ -13,6 +13,8 @@ html {
   --color-text: #33373d;
   --color-accent-primary: #795548;
   --color-accent-subtle: #eae5e0;
+  --color-ribbon-bg: #eab308;
+  --color-ribbon-text: #422006;
 
   --font-family-heading: var(--font-lora);
   --font-family-body: var(--font-lato);
