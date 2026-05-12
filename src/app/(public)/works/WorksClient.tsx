@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Play } from '@/types/play';
@@ -37,7 +37,10 @@ export default function WorksClient() {
       });
   }, []);
 
-  const genres = Array.from(new Set(plays.map((w) => w.category))).sort();
+  const genres = useMemo(
+    () => Array.from(new Set(plays.map((w) => w.category))).sort(),
+    [plays],
+  );
 
   const clearFilters = () => {
     setSearchQuery('');
@@ -77,15 +80,22 @@ export default function WorksClient() {
     };
   }, [isCastingModalOpen, handleKeyDown]);
 
-  const filteredWorks = filterWorks(plays, {
-    searchQuery,
-    selectedGenre,
-    publishedOnly,
-    runtimeBucket,
-    castBucket,
-  });
+  const filteredWorks = useMemo(
+    () =>
+      filterWorks(plays, {
+        searchQuery,
+        selectedGenre,
+        publishedOnly,
+        runtimeBucket,
+        castBucket,
+      }),
+    [plays, searchQuery, selectedGenre, publishedOnly, runtimeBucket, castBucket],
+  );
 
-  const sortedWorks = sortWorks(filteredWorks, sortOrder);
+  const sortedWorks = useMemo(
+    () => sortWorks(filteredWorks, sortOrder),
+    [filteredWorks, sortOrder],
+  );
 
   return (
     <div className={styles.pageWrapper}>
