@@ -8,6 +8,7 @@ import {
   MAX_UPLOAD_BYTES,
   UPLOAD_ERRORS,
 } from '@/lib/constants';
+import AdminModal from '@/components/admin/AdminModal';
 import styles from './page.module.css';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -280,31 +281,13 @@ function PlayModal({
     }
   }
 
-  function handleOverlayClick(e: React.MouseEvent<HTMLDivElement>) {
-    if (e.target === e.currentTarget) onClose();
-  }
-
   return (
-    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
-      <div
-        className={styles.modalPanel}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="play-modal-title"
-      >
-        <button className={styles.modalClose} onClick={onClose} aria-label="Close modal">
-          &times;
-        </button>
-
-        <div className={styles.modalHeader}>
-          <p className={styles.modalEyebrow}>
-            {isNew ? 'NEW PLAY' : 'EDITING'}
-          </p>
-          <h2 id="play-modal-title" className={styles.modalTitle}>
-            {isNew ? 'New Play' : editingPlay!.title}
-          </h2>
-        </div>
-
+    <AdminModal
+      onClose={onClose}
+      titleId="play-modal-title"
+      eyebrow={isNew ? 'NEW PLAY' : 'EDITING'}
+      title={isNew ? 'New Play' : editingPlay!.title}
+    >
         <div className={styles.formGrid}>
           {/* Title — full width */}
           <div className={styles.fieldFull}>
@@ -473,8 +456,7 @@ function PlayModal({
             </button>
           </div>
         </div>
-      </div>
-    </div>
+    </AdminModal>
   );
 }
 

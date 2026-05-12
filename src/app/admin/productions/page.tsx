@@ -8,6 +8,7 @@ import {
   MAX_UPLOAD_BYTES,
   UPLOAD_ERRORS,
 } from '@/lib/constants';
+import AdminModal from '@/components/admin/AdminModal';
 import styles from './page.module.css';
 
 // ── Upload zone ───────────────────────────────────────────────────────────────
@@ -411,27 +412,14 @@ function PhotoModal({
     }
   }
 
-  function handleOverlayClick(e: React.MouseEvent<HTMLDivElement>) {
-    if (e.target === e.currentTarget) onClose();
-  }
-
   return (
-    <div className={styles.modalOverlay} onClick={handleOverlayClick}>
-      <div
-        className={styles.modalPanel}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="photo-modal-title"
-      >
-        <button className={styles.modalClose} onClick={onClose} aria-label="Close modal">&times;</button>
-
-        <div className={styles.modalHeader}>
-          <p className={styles.modalEyebrow}>{isNew ? 'NEW PHOTO' : 'EDITING PHOTO'}</p>
-          <h2 id="photo-modal-title" className={styles.modalTitle}>
-            {isNew ? 'Add Production Photo' : editingPhoto!.playTitle}
-          </h2>
-        </div>
-
+    <AdminModal
+      onClose={onClose}
+      titleId="photo-modal-title"
+      eyebrow={isNew ? 'NEW PHOTO' : 'EDITING PHOTO'}
+      title={isNew ? 'Add Production Photo' : editingPhoto!.playTitle}
+      width="compact"
+    >
         <div className={styles.formGrid}>
           <div className={styles.field}>
             <label className={styles.label}>Play Title</label>
@@ -523,8 +511,7 @@ function PhotoModal({
             </button>
           </div>
         </div>
-      </div>
-    </div>
+    </AdminModal>
   );
 }
 

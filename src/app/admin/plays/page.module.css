@@ -384,54 +384,9 @@
   overflow-y: auto;
 }
 
-.modalPanel {
-  background-color: var(--color-background);
-  border-radius: 0.625rem;
-  width: 100%;
-  max-width: 780px;
-  padding: 2rem;
-  position: relative;
-  margin: auto;
-}
-
-.modalClose {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: var(--color-text);
-  cursor: pointer;
-  line-height: 1;
-  padding: 0.25rem 0.5rem;
-  opacity: 0.6;
-  transition: opacity 0.15s ease;
-}
-
-.modalClose:hover {
-  opacity: 1;
-}
-
-.modalHeader {
-  margin-bottom: 1.75rem;
-  padding-right: 2.5rem;
-}
-
-.modalEyebrow {
-  font-family: var(--font-family-accent);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  color: var(--color-accent-primary);
-  margin: 0 0 0.25rem 0;
-}
-
-.modalTitle {
-  font-family: var(--font-family-heading);
-  font-size: 1.5rem;
-  color: var(--color-text);
-  margin: 0;
-}
+/* PlayModal's panel, close button, and header come from the shared
+   AdminModal component. .modalOverlay above is still used by
+   DeleteModal, which has a different shape. */
 
 /* ── Form grid ────────────────────────────────────────── */
 
@@ -777,7 +732,6 @@
     flex-direction: column;
   }
 
-  .modalPanel,
   .deletePanel {
     padding: 1.25rem;
   }
