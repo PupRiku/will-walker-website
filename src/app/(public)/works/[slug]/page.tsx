@@ -6,6 +6,7 @@ import { fetchPlay } from '@/lib/api';
 import styles from './page.module.css';
 import { BsDownload } from 'react-icons/bs';
 import { prisma } from '@/lib/prisma';
+import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
 
 export const revalidate = 60;
 
@@ -94,7 +95,7 @@ export default async function PlayPage({ params }: Props) {
               </a>
             ) : (
               <a
-                href="https://forms.gle/NJfNUHBLG73Wbjdz7"
+                href={APPLY_FOR_RIGHTS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`${styles.button} ${styles.applyButton}`}

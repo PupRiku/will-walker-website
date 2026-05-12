@@ -7,6 +7,7 @@ import type { Play } from '@/types/play';
 import { filterWorks, sortWorks, type RuntimeBucket, type CastBucket, type SortOrder } from '@/utils/filterSort';
 import styles from './page.module.css';
 import { BsDownload } from 'react-icons/bs';
+import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
 
 export default function WorksClient() {
   const [plays, setPlays] = useState<Play[]>([]);
@@ -126,7 +127,7 @@ export default function WorksClient() {
         </a>
 
         <Link
-          href="https://forms.gle/NJfNUHBLG73Wbjdz7"
+          href={APPLY_FOR_RIGHTS_URL}
           target="_blank"
           rel="noopener noreferrer"
           className={styles.globalApplyButton}

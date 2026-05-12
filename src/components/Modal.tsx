@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Modal.module.css';
 import { Work } from '@/types/play';
+import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
 
 type ModalProps = {
   isOpen: boolean;
@@ -164,7 +165,7 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
                 </a>
               ) : (
                 <a
-                  href="https://forms.gle/NJfNUHBLG73Wbjdz7"
+                  href={APPLY_FOR_RIGHTS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`${styles.modalButton} ${styles.applyButton}`}
