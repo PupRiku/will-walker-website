@@ -259,7 +259,7 @@ export default function WorksClient() {
                     src={work.imageSrc}
                     alt={`Cover for ${work.title}`}
                     width={500}
-                    height={250}
+                    height={350}
                     className={styles.cardImage}
                   />
                   <div className={styles.cardContent}>
@@ -270,7 +270,6 @@ export default function WorksClient() {
                       )}
                     </div>
                     <h2 className={styles.title}>{work.title}</h2>
-                    <p className={styles.synopsis}>{work.synopsis}</p>
                     {work.cast && (
                       <p className={styles.cast}>
                         <b>Cast:</b> {work.cast}
