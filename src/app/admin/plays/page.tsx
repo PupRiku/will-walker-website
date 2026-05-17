@@ -28,6 +28,7 @@ const GENRES = [
   'Comedy/Drama',
   'Theater for Youth',
   'Collection',
+  'Monologue',
 ];
 
 // ── Form state type ────────────────────────────────────────────────────────────

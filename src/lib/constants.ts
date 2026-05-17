@@ -36,4 +36,5 @@ export const VALID_CATEGORIES: readonly string[] = [
   'Comedy/Drama',
   'Theater for Youth',
   'Collection',
+  'Monologue',
 ];
