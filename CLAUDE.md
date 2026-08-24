@@ -26,7 +26,7 @@ This file gives Claude Code context about the Will Walker Montgomerie portfolio 
 | Icons | `react-icons` (fa, si prefixes) |
 | Form service | FormSubmit.co (no backend email logic needed) |
 | Form protection | `react-google-recaptcha` (reCAPTCHA v2) |
-| Analytics | `@vercel/analytics` (injected in layout, no config needed) |
+| Analytics | Umami (self-hosted on Railway) |
 | Ko-fi widget | Floating chat widget via `KoFiWidget.tsx` (loaded via `next/script`) |
 | Deployment | Vercel |
 | Node | npm (`npm install`, `npm run dev`, `npm run build`) |
@@ -49,7 +49,7 @@ will-walker-website/
 │       └── Placeholder-PDF.pdf       # Dev placeholder only
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx               # Root layout: fonts, metadata, Header, Footer, KoFiWidget, Analytics
+│   │   ├── layout.tsx               # Root layout: fonts, metadata, Header, Footer, KoFiWidget, Umami script
 │   │   ├── globals.css              # Global CSS variables + base styles (see Design Tokens below)
 │   │   ├── page.tsx                 # Home page: Hero, About, Plays (carousel), Contact
 │   │   ├── page.module.css
@@ -267,6 +267,10 @@ BLOB_READ_WRITE_TOKEN=             # Vercel Blob store token for image uploads
 
 # App
 NEXT_PUBLIC_BASE_URL=              # Full URL of the site (http://localhost:3000 locally)
+
+# Analytics
+NEXT_PUBLIC_UMAMI_WEBSITE_ID=      # Umami website ID (from the Umami dashboard)
+NEXT_PUBLIC_UMAMI_URL=             # Base URL of the self-hosted Umami instance (no trailing slash)
 ```
 
 ---
@@ -441,7 +445,9 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 - Prisma client is generated automatically via `postinstall` script (`prisma generate`) — no manual step needed on Vercel
 - `DATABASE_URL` must use the Supabase **Transaction Pooler** connection string (`aws-X-region.pooler.supabase.com`, port **6543**) with these query parameters: `?pgbouncer=true&connection_limit=1&connect_timeout=30`. Transaction-mode pooling is required because `generateStaticParams` plus the home / works / productions Server Components all hit Prisma in parallel during build; the Session Pooler (port 5432, same hostname) caps clients at the pool size and fails with `MaxClientsInSessionMode`.
 - The actual direct connection (`db.<ref>.supabase.co:5432`) causes `ENETUNREACH` errors on Vercel's build servers because it's IPv6-only.
-- All 9 environment variables must be set in Vercel before deploying (see Environment Variables section)
+- All environment variables must be set in Vercel before deploying (see Environment Variables section)
+
+**Analytics:** Umami is self-hosted on Railway at umami-production-6409.up.railway.app. The tracking script is injected via `next/script` in `layout.tsx` using `NEXT_PUBLIC_UMAMI_WEBSITE_ID` and `NEXT_PUBLIC_UMAMI_URL` env vars. Both must be set in Vercel environment variables.
 
 **ISR (Incremental Static Regeneration):**
 - Play pages (`/works/[slug]`) and `/productions` revalidate every 60 seconds

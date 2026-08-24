@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { FiBarChart2 } from 'react-icons/fi';
 import styles from './layout.module.css';
 
 const NAV_LINKS = [
@@ -10,6 +11,9 @@ const NAV_LINKS = [
   { href: '/admin/productions', label: 'Productions' },
   { href: '/admin/settings', label: 'Settings' },
 ];
+
+const ANALYTICS_URL =
+  'https://umami-production-6409.up.railway.app/share/ixoQJi7fL2oM6HxE';
 
 function SidebarContent({
   pathname,
@@ -53,6 +57,23 @@ function SidebarContent({
             </Link>
           );
         })}
+
+        {/* External link — no active highlight */}
+        <a
+          href={ANALYTICS_URL}
+          className={styles.navLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onClose}
+        >
+          {/* Single flex child so .navLink's space-between keeps icon + label together */}
+          <span
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
+          >
+            <FiBarChart2 aria-hidden="true" />
+            Analytics
+          </span>
+        </a>
       </nav>
 
       <div className={styles.spacer} />

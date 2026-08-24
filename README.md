@@ -42,7 +42,7 @@ A performant, accessible portfolio site that serves as Will's primary profession
 | Icons           | React Icons                                         |
 | Form Service    | FormSubmit.co                                       |
 | Form Protection | reCAPTCHA v2                                        |
-| Analytics       | Vercel Analytics                                    |
+| Analytics       | Umami (self-hosted, privacy-friendly, no cookies)   |
 | ORM             | Prisma                                              |
 | Database        | Supabase (Postgres)                                 |
 | File Storage    | Vercel Blob                                         |
