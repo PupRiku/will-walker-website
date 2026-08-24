@@ -433,7 +433,7 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 | `tests/e2e/mobile.spec.ts` | iPhone 12 + Pixel 5 only: hamburger, mobile menu, nav links, responsive layout |
 | `tests/e2e/admin.spec.ts` | API read checks (plays, productions), auth rejection (no creds, wrong creds, /admin) |
 
-**Helpers:** `tests/e2e/helpers/auth.ts` — `getAuthHeader()` for API auth. `tests/e2e/fixtures/plays.ts` — known slugs/titles.
+**Fixtures:** `tests/e2e/fixtures/plays.ts` — known slugs/titles. Admin auth headers are built inline in `admin.spec.ts`.
 
 ---
 
