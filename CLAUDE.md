@@ -396,7 +396,7 @@ npm test          # run all tests once
 npm run test:ui   # Vitest UI (browser-based watcher)
 ```
 
-**Config:** `vitest.config.ts` at project root — jsdom environment, setup file at `src/test/setup.ts`, `@/*` alias wired to `./src/`.
+**Config:** `vitest.config.mts` at project root — jsdom environment, setup file at `src/test/setup.ts`, `@/*` alias wired to `./src/`.
 
 **Test locations:**
 
