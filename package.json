@@ -55,8 +55,6 @@
   "overrides": {
     "fast-uri": "^3.1.2",
     "sharp": "^0.35.3",
-    "hono": "^4.12.18",
-    "@hono/node-server": "^1.19.13",
     "postcss": "^8.5.10"
   }
 }
