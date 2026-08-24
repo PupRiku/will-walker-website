@@ -49,7 +49,7 @@ will-walker-website/
 │       └── Placeholder-PDF.pdf       # Dev placeholder only
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx               # Root layout: fonts, metadata, Header, Footer, KoFiWidget, Umami script
+│   │   ├── layout.tsx               # Root layout: fonts, metadata, JSON-LD (no Umami — see (public)/layout.tsx)
 │   │   ├── globals.css              # Global CSS variables + base styles (see Design Tokens below)
 │   │   ├── page.tsx                 # Home page: Hero, About, Plays (carousel), Contact
 │   │   ├── page.module.css
@@ -354,6 +354,34 @@ When updating social profiles, update **both** `SocialLinks.tsx` (UI icons) and 
 
 ---
 
+## Analytics Events
+
+Umami records pageviews automatically (including App Router client-side navigations). It does **not** auto-track outbound link clicks or file downloads, so every event below is tagged explicitly.
+
+All six are clicks, so they use declarative `data-umami-event` attributes rather than `window.umami.track()` — no async race with the script, no JS. Umami turns `data-umami-event-<name>` into an event property `<name>`.
+
+| Event | Where | Properties |
+|---|---|---|
+| `apply-for-rights` | `Modal.tsx`, `works/[slug]/page.tsx`, `WorksClient.tsx` | `play` (except works-page), `placement` |
+| `purchase-rights` | `Modal.tsx`, `works/[slug]/page.tsx` | `play`, `placement` |
+| `read-sample` | `Modal.tsx`, `works/[slug]/page.tsx` | `play`, `placement` |
+| `royalties-scale-download` | `works/[slug]/page.tsx`, `WorksClient.tsx` | `play` (play page only), `placement` |
+| `play-modal-open` | `Plays.tsx` (carousel slide button) | `play` |
+| `modal-view-full-page` | `Modal.tsx` ("View Full Page →") | `play` |
+
+`placement` is one of `modal` (home carousel), `play-page` (`/works/[slug]`), or `works-page` (`/works`). It exists so you can tell which surface actually drives licensing inquiries. It is omitted where an event fires from only one place.
+
+Conventions when adding events:
+
+- Keep the play slug in a **property**, never in the event name — otherwise the event list becomes 80+ unusable rows.
+- Prefer `data-umami-event` attributes for anything click-driven. If you must call `window.umami.track()`, optional-chain it (`window.umami?.track(...)`) because the script loads `async`.
+- Coverage: `Modal.test.tsx` and `playPage.test.tsx` assert the event attributes on 8 of the 11 tagged elements. The 3 uncovered sites are `Plays.tsx` (carousel) and the two in `WorksClient.tsx`, neither of which has a component test.
+- `/thank-you` pageviews already serve as a contact-form conversion count — no event needed.
+
+The Ko-fi floating widget is a third-party iframe and **cannot** be instrumented; the Ko-fi link in `Header.tsx` could be.
+
+---
+
 ## Accessibility
 
 This site has solid accessibility practices — maintain them on any changes:
@@ -447,7 +475,7 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 - The actual direct connection (`db.<ref>.supabase.co:5432`) causes `ENETUNREACH` errors on Vercel's build servers because it's IPv6-only.
 - All environment variables must be set in Vercel before deploying (see Environment Variables section)
 
-**Analytics:** Umami is self-hosted on Railway at umami-production-6409.up.railway.app. The tracking script is injected via `next/script` in `layout.tsx` using `NEXT_PUBLIC_UMAMI_WEBSITE_ID` and `NEXT_PUBLIC_UMAMI_URL` env vars. Both must be set in Vercel environment variables.
+**Analytics:** Umami is self-hosted on Railway at umami-production-6409.up.railway.app. The tracking script is injected via `next/script` in `src/app/(public)/layout.tsx` — deliberately **not** the root layout, so `/admin/*` pageviews are not counted as site traffic. It uses `NEXT_PUBLIC_UMAMI_WEBSITE_ID` and `NEXT_PUBLIC_UMAMI_URL` env vars; both must be set in Vercel environment variables. See Analytics Events below for the custom events.
 
 **ISR (Incremental Static Regeneration):**
 - Play pages (`/works/[slug]`) and `/productions` revalidate every 60 seconds
