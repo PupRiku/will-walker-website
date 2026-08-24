@@ -417,7 +417,7 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 - **Run:** `npm run test:e2e` (headless) · `npm run test:e2e:ui` (UI mode) · `npm run test:e2e:report` (open HTML report)
 - **Config:** `playwright.config.ts` at project root — runs against `http://localhost:3000` (dev server auto-starts if not already running)
 - **Browsers:** Chromium, Firefox, WebKit (desktop) + iPhone 12 and Pixel 5 (mobile viewports)
-- **Coverage:** 355 tests, 24 skipped (mobile-only tests on desktop projects), 1 known flaky (WebKit genre filter — passes on retry, timing issue)
+- **Coverage:** 380 tests collected (76 per project × 5 projects, 8 files); 24 skip on the 3 desktop projects (mobile.spec.ts is gated on `isMobile`), so 356 actually run. 1 known flaky (WebKit genre filter — passes on retry, timing issue)
 - **Manual only** — not wired to CI
 - Do not use `page.waitForTimeout()` — use proper Playwright `waitFor` assertions
 - Admin write operations (add/edit/delete) are intentionally excluded from E2E — covered by manual test plan
