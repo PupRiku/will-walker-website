@@ -1,8 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 test.describe('Navigation and routing', () => {
   // Helper to click a nav link — opens mobile menu first if on mobile
-  async function clickNavLink(page: any, isMobile: boolean, name: RegExp) {
+  async function clickNavLink(page: Page, isMobile: boolean, name: RegExp) {
     if (isMobile) {
       await page.getByRole('button', { name: /open navigation menu/i }).tap();
       await expect(
@@ -61,7 +61,6 @@ test.describe('Navigation and routing', () => {
   });
 
   test('clicking "CV" nav link navigates to /cv', async ({
-    page,
     browser,
     isMobile,
   }) => {

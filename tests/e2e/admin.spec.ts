@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { getAuthHeader, ADMIN_USER, ADMIN_PASSWORD } from './helpers/auth';
 
 test.describe('Admin API (read-only checks)', () => {
   test('GET /api/plays returns 200 and an array of 60 plays', async ({ request }) => {

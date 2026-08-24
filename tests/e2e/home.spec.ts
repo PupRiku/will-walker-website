@@ -1,7 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 test.describe('Home page', () => {
-  async function openCarouselModal(page: any) {
+  async function openCarouselModal(page: Page) {
     // Wait for Embla to initialize — first slide button must be enabled
     const firstSlide = page.locator('#plays button').first();
     await expect(firstSlide).toBeVisible({ timeout: 10000 });
