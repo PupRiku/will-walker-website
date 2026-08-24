@@ -11,8 +11,9 @@ vi.mock('next/image', () => ({
 }));
 
 vi.mock('next/link', () => ({
-  default: ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => (
-    <a href={href} className={className}>{children}</a>
+  // Spread the rest so data-* attributes (e.g. Umami event tags) survive the mock.
+  default: ({ href, children, ...rest }: { href: string; children: React.ReactNode } & Record<string, unknown>) => (
+    <a href={href} {...rest}>{children}</a>
   ),
 }));
 
@@ -122,5 +123,39 @@ describe('PlayPage (/works/[slug])', () => {
 
   it('throws NEXT_NOT_FOUND for an unknown slug', async () => {
     await expect(renderPlayPage('this-slug-does-not-exist')).rejects.toThrow('NEXT_NOT_FOUND');
+  });
+});
+
+describe('PlayPage analytics events', () => {
+  it('tags "Read Sample" with the read-sample event', async () => {
+    await renderPlayPage('play-with-pdf');
+    const link = screen.getByText('Read Sample').closest('a');
+    expect(link).toHaveAttribute('data-umami-event', 'read-sample');
+    expect(link).toHaveAttribute('data-umami-event-play', 'play-with-pdf');
+    expect(link).toHaveAttribute('data-umami-event-placement', 'play-page');
+  });
+
+  it('tags "Purchase Rights" with the purchase-rights event', async () => {
+    await renderPlayPage('published-play');
+    const link = screen.getByText('Purchase Rights').closest('a');
+    expect(link).toHaveAttribute('data-umami-event', 'purchase-rights');
+    expect(link).toHaveAttribute('data-umami-event-play', 'published-play');
+    expect(link).toHaveAttribute('data-umami-event-placement', 'play-page');
+  });
+
+  it('tags "Apply for Performance Rights" with the apply-for-rights event', async () => {
+    await renderPlayPage('unpublished-play');
+    const link = screen.getByText('Apply for Performance Rights').closest('a');
+    expect(link).toHaveAttribute('data-umami-event', 'apply-for-rights');
+    expect(link).toHaveAttribute('data-umami-event-play', 'unpublished-play');
+    expect(link).toHaveAttribute('data-umami-event-placement', 'play-page');
+  });
+
+  it('tags the royalties download with the royalties-scale-download event', async () => {
+    await renderPlayPage('unpublished-play');
+    const link = screen.getByText('Download Royalties Scale').closest('a');
+    expect(link).toHaveAttribute('data-umami-event', 'royalties-scale-download');
+    expect(link).toHaveAttribute('data-umami-event-play', 'unpublished-play');
+    expect(link).toHaveAttribute('data-umami-event-placement', 'play-page');
   });
 });

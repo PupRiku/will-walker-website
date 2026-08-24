@@ -150,6 +150,9 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.modalButton}
+                  data-umami-event="read-sample"
+                  data-umami-event-play={play.slug}
+                  data-umami-event-placement="modal"
                 >
                   Read Sample
                 </a>
@@ -160,6 +163,9 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.modalButton}
+                  data-umami-event="purchase-rights"
+                  data-umami-event-play={play.slug}
+                  data-umami-event-placement="modal"
                 >
                   Purchase Rights
                 </a>
@@ -169,12 +175,20 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`${styles.modalButton} ${styles.applyButton}`}
+                  data-umami-event="apply-for-rights"
+                  data-umami-event-play={play.slug}
+                  data-umami-event-placement="modal"
                 >
                   Apply for Rights
                 </a>
               )}
             </div>
-            <Link href={`/works/${play.slug}`} className={styles.viewPageLink}>
+            <Link
+              href={`/works/${play.slug}`}
+              className={styles.viewPageLink}
+              data-umami-event="modal-view-full-page"
+              data-umami-event-play={play.slug}
+            >
               View Full Page →
             </Link>
           </div>

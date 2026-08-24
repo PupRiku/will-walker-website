@@ -80,6 +80,9 @@ export default async function PlayPage({ params }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.button}
+                data-umami-event="read-sample"
+                data-umami-event-play={work.slug}
+                data-umami-event-placement="play-page"
               >
                 Read Sample
               </a>
@@ -90,6 +93,9 @@ export default async function PlayPage({ params }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.button}
+                data-umami-event="purchase-rights"
+                data-umami-event-play={work.slug}
+                data-umami-event-placement="play-page"
               >
                 Purchase Rights
               </a>
@@ -99,6 +105,9 @@ export default async function PlayPage({ params }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`${styles.button} ${styles.applyButton}`}
+                data-umami-event="apply-for-rights"
+                data-umami-event-play={work.slug}
+                data-umami-event-placement="play-page"
               >
                 Apply for Performance Rights
               </a>
@@ -107,6 +116,9 @@ export default async function PlayPage({ params }: Props) {
               href="/pdfs/royalties_scale.pdf"
               className={`${styles.button} ${styles.downloadButton}`}
               download
+              data-umami-event="royalties-scale-download"
+              data-umami-event-play={work.slug}
+              data-umami-event-placement="play-page"
             >
               <BsDownload aria-hidden="true" />
               Download Royalties Scale

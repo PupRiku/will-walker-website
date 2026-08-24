@@ -122,6 +122,8 @@ export default function WorksClient() {
           href="/pdfs/royalties_scale.pdf"
           className={styles.royaltiesLink}
           download
+          data-umami-event="royalties-scale-download"
+          data-umami-event-placement="works-page"
         >
           <BsDownload />
           Download Royalties Scale
@@ -132,6 +134,8 @@ export default function WorksClient() {
           target="_blank"
           rel="noopener noreferrer"
           className={styles.globalApplyButton}
+          data-umami-event="apply-for-rights"
+          data-umami-event-placement="works-page"
         >
           Apply for Performance Rights
         </Link>

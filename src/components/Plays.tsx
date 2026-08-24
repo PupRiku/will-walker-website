@@ -124,6 +124,8 @@ export default function Plays({ plays }: PlaysProps) {
                 <button
                   onClick={() => handleOpenModal(work)}
                   className={styles.slide__link}
+                  data-umami-event="play-modal-open"
+                  data-umami-event-play={work.slug}
                 >
                   <div className={styles.slide__image_wrapper}>
                     {work.published && (

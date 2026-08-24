@@ -12,8 +12,9 @@ vi.mock('next/image', () => ({
 }));
 
 vi.mock('next/link', () => ({
-  default: ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => (
-    <a href={href} className={className}>{children}</a>
+  // Spread the rest so data-* attributes (e.g. Umami event tags) survive the mock.
+  default: ({ href, children, ...rest }: { href: string; children: React.ReactNode } & Record<string, unknown>) => (
+    <a href={href} {...rest}>{children}</a>
   ),
 }));
 
@@ -134,5 +135,44 @@ describe('Modal', () => {
     const link = screen.getByText('View Full Page →');
     expect(link).toBeInTheDocument();
     expect(link.closest('a')).toHaveAttribute('href', '/works/test-play');
+  });
+});
+
+describe('Modal analytics events', () => {
+  const publishedPlay: Work = {
+    ...mockPlay,
+    published: true,
+    purchase: 'https://example.com/buy',
+  };
+
+  it('tags "Read Sample" with the read-sample event', () => {
+    render(<Modal isOpen={true} onClose={vi.fn()} play={mockPlay} />);
+    const link = screen.getByText('Read Sample').closest('a');
+    expect(link).toHaveAttribute('data-umami-event', 'read-sample');
+    expect(link).toHaveAttribute('data-umami-event-play', 'test-play');
+    expect(link).toHaveAttribute('data-umami-event-placement', 'modal');
+  });
+
+  it('tags "Purchase Rights" with the purchase-rights event', () => {
+    render(<Modal isOpen={true} onClose={vi.fn()} play={publishedPlay} />);
+    const link = screen.getByText('Purchase Rights').closest('a');
+    expect(link).toHaveAttribute('data-umami-event', 'purchase-rights');
+    expect(link).toHaveAttribute('data-umami-event-play', 'test-play');
+    expect(link).toHaveAttribute('data-umami-event-placement', 'modal');
+  });
+
+  it('tags "Apply for Rights" with the apply-for-rights event', () => {
+    render(<Modal isOpen={true} onClose={vi.fn()} play={mockPlay} />);
+    const link = screen.getByText('Apply for Rights').closest('a');
+    expect(link).toHaveAttribute('data-umami-event', 'apply-for-rights');
+    expect(link).toHaveAttribute('data-umami-event-play', 'test-play');
+    expect(link).toHaveAttribute('data-umami-event-placement', 'modal');
+  });
+
+  it('tags "View Full Page" with the modal-view-full-page event', () => {
+    render(<Modal isOpen={true} onClose={vi.fn()} play={mockPlay} />);
+    const link = screen.getByText('View Full Page →').closest('a');
+    expect(link).toHaveAttribute('data-umami-event', 'modal-view-full-page');
+    expect(link).toHaveAttribute('data-umami-event-play', 'test-play');
   });
 });
