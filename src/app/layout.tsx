@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Lora, Lato, Special_Elite } from 'next/font/google';
-import Script from 'next/script';
 import './globals.css';
 
 const lora = Lora({
@@ -60,15 +59,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
-        {children}
-        <Script
-          async
-          src={`${process.env.NEXT_PUBLIC_UMAMI_URL}/script.js`}
-          data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-          strategy="afterInteractive"
-        />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
