@@ -175,4 +175,43 @@ describe('Modal analytics events', () => {
     expect(link).toHaveAttribute('data-umami-event', 'modal-view-full-page');
     expect(link).toHaveAttribute('data-umami-event-play', 'test-play');
   });
+
+  it('renders a "Request Perusal" button', () => {
+    render(<Modal isOpen={true} onClose={vi.fn()} play={mockPlay} />);
+    expect(
+      screen.getByRole('button', { name: 'Request Perusal' })
+    ).toBeInTheDocument();
+  });
+
+  it('opens the perusal dialog with the play title without closing itself', () => {
+    const onClose = vi.fn();
+    render(<Modal isOpen={true} onClose={onClose} play={mockPlay} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Request Perusal' }));
+
+    expect(
+      screen.getByRole('heading', { name: 'Request Perusal Copy' })
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Name')).toBeInTheDocument();
+    // The play modal stays open behind the nested dialog.
+    expect(onClose).not.toHaveBeenCalled();
+    expect(screen.getByText(mockPlay.synopsis)).toBeInTheDocument();
+  });
+
+  it('lets Escape close only the perusal dialog while it is open', () => {
+    const onClose = vi.fn();
+    render(<Modal isOpen={true} onClose={onClose} play={mockPlay} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Request Perusal' }));
+    fireEvent.keyDown(document, { key: 'Escape' });
+
+    expect(
+      screen.queryByRole('heading', { name: 'Request Perusal Copy' })
+    ).not.toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
+
+    // With the nested dialog gone, Escape closes the play modal again.
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
 });

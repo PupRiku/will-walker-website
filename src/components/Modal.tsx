@@ -6,6 +6,7 @@ import Link from 'next/link';
 import styles from './Modal.module.css';
 import { Work } from '@/types/play';
 import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
+import PerusalRequestButton from './PerusalRequestButton';
 
 type ModalProps = {
   isOpen: boolean;
@@ -20,6 +21,9 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  // Set while the nested perusal dialog is open so this modal stops handling
+  // Escape and Tab — the dialog on top owns the keyboard.
+  const nestedDialogOpenRef = useRef(false);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -45,6 +49,7 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (nestedDialogOpenRef.current) return;
       if (e.key === 'Escape') {
         onClose();
         return;
@@ -183,6 +188,14 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
                 </a>
               )}
             </div>
+
+            <PerusalRequestButton
+              playTitle={play.title}
+              onOpenChange={(open) => {
+                nestedDialogOpenRef.current = open;
+              }}
+            />
+
             <Link
               href={`/works/${play.slug}`}
               className={styles.viewPageLink}
