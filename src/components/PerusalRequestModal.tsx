@@ -144,50 +144,55 @@ export default function PerusalRequestModal({
         </h2>
         <p className={styles.modalSubtitle}>{playTitle}</p>
 
-        <form
-          action={`https://formsubmit.co/${recipientEmail}`}
-          method="POST"
-          className={styles.form}
-        >
-          <input
-            type="hidden"
-            name="_subject"
-            value={`Perusal Request — ${playTitle}`}
-          />
-          <input
-            type="hidden"
-            name="_next"
-            value={`${baseUrl}/thank-you`}
-          />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="play" value={playTitle} />
-
-          <div className={styles.formGroup} suppressHydrationWarning>
-            <label htmlFor="perusal-name" className={styles.label}>
-              Name
-            </label>
+        <div className={styles.formLayout}>
+          <form
+            id="perusal-request-form"
+            action={`https://formsubmit.co/${recipientEmail}`}
+            method="POST"
+            className={styles.form}
+          >
             <input
-              id="perusal-name"
-              type="text"
-              name="name"
-              required
-              className={styles.input}
+              type="hidden"
+              name="_subject"
+              value={`Perusal Request — ${playTitle}`}
             />
-          </div>
+            <input type="hidden" name="_next" value={`${baseUrl}/thank-you`} />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="play" value={playTitle} />
 
-          <div className={styles.formGroup} suppressHydrationWarning>
-            <label htmlFor="perusal-email" className={styles.label}>
-              Email
-            </label>
-            <input
-              id="perusal-email"
-              type="email"
-              name="email"
-              required
-              className={styles.input}
-            />
-          </div>
+            <div className={styles.formGroup} suppressHydrationWarning>
+              <label htmlFor="perusal-name" className={styles.label}>
+                Name
+              </label>
+              <input
+                id="perusal-name"
+                type="text"
+                name="name"
+                required
+                className={styles.input}
+              />
+            </div>
 
+            <div className={styles.formGroup} suppressHydrationWarning>
+              <label htmlFor="perusal-email" className={styles.label}>
+                Email
+              </label>
+              <input
+                id="perusal-email"
+                type="email"
+                name="email"
+                required
+                className={styles.input}
+              />
+            </div>
+          </form>
+
+          {/* Deliberately outside <form>. The widget renders a hidden
+              g-recaptcha-response textarea, and any named field inside the
+              form gets serialized by FormSubmit and pasted into the email
+              Will receives. We only use the token to gate the button, so it
+              never needs to be sent. The submit button below reattaches to
+              the form by id. */}
           <div className={styles.captchaGroup}>
             <ReCAPTCHA
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
@@ -200,6 +205,7 @@ export default function PerusalRequestModal({
           <div className={styles.submitGroup}>
             <button
               type="submit"
+              form="perusal-request-form"
               className={styles.submitButton}
               disabled={!captchaVerified}
               aria-describedby="perusal-submit-help"
@@ -216,7 +222,7 @@ export default function PerusalRequestModal({
                 : 'Complete the verification above to enable sending.'}
             </p>
           </div>
-        </form>
+        </div>
       </div>
     </div>,
     document.body,

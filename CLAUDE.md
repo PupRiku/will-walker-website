@@ -228,6 +228,7 @@ export type Production = {
 - On success, redirects to `/thank-you` via hidden `_next` field
 - reCAPTCHA v2 via `react-google-recaptcha` — submit button is disabled until captcha is verified
 - `_captcha: false` hidden field disables FormSubmit's own captcha (we use our own)
+- The reCAPTCHA widget is rendered **outside** the `<form>` element, with the submit button reattached via `form="contact-form"`. reCAPTCHA renders a hidden `g-recaptcha-response` textarea, and FormSubmit serializes every named field in the form into the email body — leaving it inside dumps a wall of token text into Will's inbox. `PerusalRequestModal.tsx` does the same thing for the same reason.
 
 ### `Header.tsx`
 - Responsive nav with desktop links and mobile hamburger toggle
