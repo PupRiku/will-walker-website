@@ -1,7 +1,17 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import styles from './PerusalRequestModal.module.css';
+
+const ReCAPTCHA = dynamic(() => import('react-google-recaptcha'), {
+  ssr: false,
+  loading: () => (
+    <div className={styles.captchaPlaceholder} aria-hidden="true">
+      Loading verification…
+    </div>
+  ),
+});
 
 type PerusalRequestModalProps = {
   isOpen: boolean;
@@ -20,6 +30,14 @@ export default function PerusalRequestModal({
   const contentRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const recipientEmail = process.env.NEXT_PUBLIC_RECIPIENT_EMAIL;
+
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+
+  // The widget unmounts with the dialog, so a reopened dialog gets a fresh
+  // gate rather than inheriting a solved captcha from the last time.
+  useEffect(() => {
+    if (!isOpen) setCaptchaVerified(false);
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -138,9 +156,34 @@ export default function PerusalRequestModal({
             />
           </div>
 
-          <button type="submit" className={styles.submitButton}>
-            Send Request
-          </button>
+          <div className={styles.captchaGroup}>
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+              onChange={(token: string | null) =>
+                setCaptchaVerified(Boolean(token))
+              }
+            />
+          </div>
+
+          <div className={styles.submitGroup}>
+            <button
+              type="submit"
+              className={styles.submitButton}
+              disabled={!captchaVerified}
+              aria-describedby="perusal-submit-help"
+            >
+              Send Request
+            </button>
+            <p
+              id="perusal-submit-help"
+              className={styles.helperText}
+              aria-live="polite"
+            >
+              {captchaVerified
+                ? 'Ready to send.'
+                : 'Complete the verification above to enable sending.'}
+            </p>
+          </div>
         </form>
       </div>
     </div>

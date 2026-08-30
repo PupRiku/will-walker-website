@@ -508,7 +508,7 @@ Edit `socialLinks` array in `SocialLinks.tsx` and update `sameAs` in `layout.tsx
 Edit `src/components/KoFiWidget.tsx`
 
 **Request Perusal button and modal**
-`src/components/PerusalRequestButton.tsx` + `PerusalRequestModal.tsx` — uses FormSubmit.co, same pattern as Contact form
+`src/components/PerusalRequestButton.tsx` + `PerusalRequestModal.tsx` — uses FormSubmit.co, same pattern as Contact form (including the reCAPTCHA v2 gate on submit)
 
 ---
 
