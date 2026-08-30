@@ -89,6 +89,18 @@ describe('PerusalRequestModal', () => {
     expect(submit).toHaveAttribute('type', 'submit');
   });
 
+  it('points the FormSubmit redirect at the current environment', () => {
+    vi.stubEnv('NEXT_PUBLIC_BASE_URL', 'http://localhost:3000');
+    const { baseElement } = render(
+      <PerusalRequestModal isOpen={true} onClose={vi.fn()} playTitle="Test Play" />
+    );
+
+    expect(baseElement.querySelector('input[name="_next"]')).toHaveValue(
+      'http://localhost:3000/thank-you'
+    );
+    vi.unstubAllEnvs();
+  });
+
   it('keeps submit disabled until the captcha is solved', async () => {
     render(
       <PerusalRequestModal

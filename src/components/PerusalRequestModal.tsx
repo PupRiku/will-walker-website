@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import dynamic from 'next/dynamic';
 import styles from './PerusalRequestModal.module.css';
 
@@ -27,9 +28,13 @@ export default function PerusalRequestModal({
   onClose,
   playTitle,
 }: PerusalRequestModalProps) {
+  const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const recipientEmail = process.env.NEXT_PUBLIC_RECIPIENT_EMAIL;
+  const baseUrl = (
+    process.env.NEXT_PUBLIC_BASE_URL ?? 'https://willwalkermontgomeriewrites.com'
+  ).replace(/\/$/, '');
 
   const [captchaVerified, setCaptchaVerified] = useState(false);
 
@@ -44,6 +49,25 @@ export default function PerusalRequestModal({
 
     const previouslyFocused = document.activeElement as HTMLElement | null;
     closeButtonRef.current?.focus();
+
+    // Same treatment Modal.tsx gives the page behind it: mark every sibling
+    // subtree from this overlay up to <body> as inert so screen reader virtual
+    // cursors and Tab cannot reach what is underneath. Because this dialog
+    // portals to <body>, that covers the play modal when it opened us — only
+    // one dialog is ever exposed to assistive tech. Elements that are already
+    // inert are skipped so we do not clear state the play modal owns.
+    const inertedElements: Element[] = [];
+    let node: Element | null = overlayRef.current;
+    while (node && node.parentElement && node !== document.body) {
+      const parent = node.parentElement;
+      for (const sibling of Array.from(parent.children)) {
+        if (sibling !== node && !sibling.hasAttribute('inert')) {
+          sibling.setAttribute('inert', '');
+          inertedElements.push(sibling);
+        }
+      }
+      node = parent;
+    }
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -73,6 +97,8 @@ export default function PerusalRequestModal({
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      // Clear inert before restoring focus so the trigger is focusable again.
+      for (const el of inertedElements) el.removeAttribute('inert');
       previouslyFocused?.focus?.();
     };
   }, [isOpen, onClose]);
@@ -85,13 +111,19 @@ export default function PerusalRequestModal({
     e.stopPropagation();
   };
 
-  return (
+  // Portalled to <body> so that, when the play modal opens this one, the two
+  // dialogs are DOM siblings rather than nested — that is what lets the play
+  // modal be inerted above. React still routes events through the component
+  // tree, so Modal's stopPropagation on its content keeps a click on this
+  // backdrop from closing the play modal too.
+  return createPortal(
     <div
       className={styles.modalOverlay}
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="perusal-modal-title"
+      ref={overlayRef}
     >
       <div
         className={styles.modalContent}
@@ -125,7 +157,7 @@ export default function PerusalRequestModal({
           <input
             type="hidden"
             name="_next"
-            value="https://willwalkermontgomeriewrites.com/thank-you"
+            value={`${baseUrl}/thank-you`}
           />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="play" value={playTitle} />
@@ -186,6 +218,7 @@ export default function PerusalRequestModal({
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

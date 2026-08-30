@@ -198,6 +198,36 @@ describe('Modal analytics events', () => {
     expect(screen.getByText(mockPlay.synopsis)).toBeInTheDocument();
   });
 
+  it('inerts the play modal while the perusal dialog is open', () => {
+    const { container } = render(
+      <Modal isOpen={true} onClose={vi.fn()} play={mockPlay} />
+    );
+    expect(container).not.toHaveAttribute('inert');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Request Perusal' }));
+    // The perusal dialog portals to <body>, so the subtree holding the play
+    // modal becomes a sibling it can inert.
+    expect(container).toHaveAttribute('inert');
+
+    const closeButtons = screen.getAllByRole('button', { name: 'Close dialog' });
+    fireEvent.click(closeButtons[closeButtons.length - 1]);
+    expect(container).not.toHaveAttribute('inert');
+  });
+
+  it('closes only the perusal dialog when its backdrop is clicked', () => {
+    const onClose = vi.fn();
+    render(<Modal isOpen={true} onClose={onClose} play={mockPlay} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Request Perusal' }));
+    // Last child of <body> is the portalled perusal overlay.
+    fireEvent.click(document.body.lastElementChild as HTMLElement);
+
+    expect(
+      screen.queryByRole('heading', { name: 'Request Perusal Copy' })
+    ).not.toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
   it('lets Escape close only the perusal dialog while it is open', () => {
     const onClose = vi.fn();
     render(<Modal isOpen={true} onClose={onClose} play={mockPlay} />);
