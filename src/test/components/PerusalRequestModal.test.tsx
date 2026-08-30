@@ -101,6 +101,26 @@ describe('PerusalRequestModal', () => {
     vi.unstubAllEnvs();
   });
 
+  it('keeps the captcha token out of the submitted form', async () => {
+    const { baseElement } = render(
+      <PerusalRequestModal isOpen={true} onClose={vi.fn()} playTitle="Test Play" />
+    );
+
+    const form = baseElement.querySelector('form') as HTMLFormElement;
+    const captcha = await screen.findByRole('button', { name: 'Solve captcha' });
+
+    // The real widget renders a hidden g-recaptcha-response textarea. Anything
+    // named inside the form is serialized by FormSubmit and pasted into the
+    // email, so the widget has to live outside it.
+    expect(form).not.toContainElement(captcha);
+    expect(form.querySelector('[name="g-recaptcha-response"]')).toBeNull();
+
+    // The button still submits this form, via the form= attribute.
+    const submit = screen.getByRole('button', { name: 'Send Request' });
+    expect(form).not.toContainElement(submit);
+    expect(submit).toHaveAttribute('form', form.id);
+  });
+
   it('keeps submit disabled until the captcha is solved', async () => {
     render(
       <PerusalRequestModal
