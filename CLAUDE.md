@@ -507,6 +507,9 @@ Edit `socialLinks` array in `SocialLinks.tsx` and update `sameAs` in `layout.tsx
 **Change Ko-fi button color or label**
 Edit `src/components/KoFiWidget.tsx`
 
+**Request Perusal button and modal**
+`src/components/PerusalRequestButton.tsx` + `PerusalRequestModal.tsx` — uses FormSubmit.co, same pattern as Contact form
+
 ---
 
 ## Admin Authentication
