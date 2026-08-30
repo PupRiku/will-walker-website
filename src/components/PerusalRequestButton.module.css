@@ -1,0 +1,30 @@
+.perusalButton {
+  /* Block-level flex so the "Back to All Works" link below sits on its own line. */
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: var(--color-accent-primary);
+  border: 2px solid var(--color-accent-primary);
+  border-radius: 0.375rem;
+  font-family: var(--font-family-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.perusalButton:hover {
+  opacity: 0.75;
+}
+
+@media (max-width: 768px) {
+  .perusalButton {
+    width: 100%;
+    justify-content: center;
+  }
+}

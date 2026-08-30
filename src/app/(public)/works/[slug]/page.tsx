@@ -7,6 +7,7 @@ import styles from './page.module.css';
 import { BsDownload } from 'react-icons/bs';
 import { prisma } from '@/lib/prisma';
 import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
+import PerusalRequestButton from '@/components/PerusalRequestButton';
 
 export const revalidate = 60;
 
@@ -124,6 +125,8 @@ export default async function PlayPage({ params }: Props) {
               Download Royalties Scale
             </a>
           </div>
+
+          <PerusalRequestButton playTitle={work.title} />
 
           <Link href="/works" className={styles.backLink}>
             ← Back to All Works
