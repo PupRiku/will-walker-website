@@ -69,7 +69,9 @@ export default function Header() {
           </li>
         </ul>
         <div className={styles.actions}>
-          <SocialLinks />
+          <div className={styles.desktopSocials}>
+            <SocialLinks />
+          </div>
           <a
             href="https://walker-montgomerie-designs-shop.fourthwall.com/"
             target="_blank"
