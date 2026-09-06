@@ -77,6 +77,8 @@ export default function Header() {
             target="_blank"
             rel="noopener noreferrer"
             className={styles.merchButton}
+            data-umami-event="merch-store"
+            data-umami-event-placement="header"
           >
             Merch Store
           </a>
@@ -155,6 +157,8 @@ export default function Header() {
           target="_blank"
           rel="noopener noreferrer"
           className={styles.mobileMerchLink}
+          data-umami-event="merch-store"
+          data-umami-event-placement="mobile-menu"
           onClick={closeMenu}
         >
           Merch Store
@@ -164,6 +168,7 @@ export default function Header() {
           target="_blank"
           rel="noopener noreferrer"
           className={styles.mobileKofiLink}
+          onClick={closeMenu}
         >
           Support Me on Ko-fi
         </a>

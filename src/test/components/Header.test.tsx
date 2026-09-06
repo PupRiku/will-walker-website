@@ -78,6 +78,32 @@ describe('Header', () => {
     expect(() => fireEvent.click(homeLinks[homeLinks.length - 1])).not.toThrow();
   });
 
+  it('tags both Merch Store links for Umami', () => {
+    render(<Header />);
+    const merchLinks = screen.getAllByRole('link', { name: 'Merch Store' });
+    expect(merchLinks).toHaveLength(2);
+    merchLinks.forEach((link) => {
+      expect(link).toHaveAttribute('data-umami-event', 'merch-store');
+      expect(link).toHaveAttribute(
+        'href',
+        'https://walker-montgomerie-designs-shop.fourthwall.com/'
+      );
+    });
+    expect(
+      merchLinks.map((link) => link.getAttribute('data-umami-event-placement'))
+    ).toEqual(['header', 'mobile-menu']);
+  });
+
+  it('closes the mobile menu when an external link is clicked', () => {
+    render(<Header />);
+    const hamburger = screen.getByRole('button', { name: 'Open navigation menu' });
+    fireEvent.click(hamburger);
+    expect(hamburger).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.click(screen.getByRole('link', { name: 'Support Me on Ko-fi' }));
+    expect(hamburger).toHaveAttribute('aria-expanded', 'false');
+  });
+
   it('logo image has descriptive alt text', () => {
     render(<Header />);
     expect(
