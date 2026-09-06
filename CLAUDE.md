@@ -234,6 +234,8 @@ export type Production = {
 - Responsive nav with desktop links and mobile hamburger toggle
 - Mobile menu uses `isOpen` state and CSS class toggling (`.isOpen`)
 - `SocialLinks` appears in both the desktop `.actions` area and the mobile menu
+- The **Merch Store** link lives here alongside the "Contact Me" button — it points to the Fourthwall store at `https://walker-montgomerie-designs-shop.fourthwall.com/` and opens in a new tab (`target="_blank" rel="noopener noreferrer"`). On desktop it sits immediately left of "Contact Me" in `.actions`, styled with `.merchButton` (the outlined counterpart to the filled `.ctaButton`); on mobile it is the second-to-last item in the menu, above "Support Me on Ko-fi". To change the store URL, edit both occurrences in `Header.tsx`. Both are tagged with the `merch-store` Umami event (see Analytics Events).
+- **Header responsive tiers.** The desktop row holds five nav links, five social icons and two buttons, which stop fitting together well before the 768px hamburger breakpoint. `.nav` carries a `gap` so the links can never touch the actions column; at **1180px** the desktop social icons (`.desktopSocials`) are hidden — they remain in the footer and in the mobile menu — and at **960px** the logo, link font, and button padding all tighten. Both buttons are `white-space: nowrap` so their labels never wrap to two lines, and `.merchButton` subtracts its 2px border from the padding so it matches `.ctaButton`'s height exactly. Verified 769—1536px with no horizontal overflow. A `max-height: 720px` query shrinks the mobile menu for short phones.
 
 ### `SocialLinks.tsx`
 - Hardcoded array of 5 social links: Facebook, Instagram, Ko-fi, New Play Exchange, Dramatists Guild
@@ -369,17 +371,18 @@ All six are clicks, so they use declarative `data-umami-event` attributes rather
 | `royalties-scale-download` | `works/[slug]/page.tsx`, `WorksClient.tsx` | `play` (play page only), `placement` |
 | `play-modal-open` | `Plays.tsx` (carousel slide button) | `play` |
 | `modal-view-full-page` | `Modal.tsx` ("View Full Page →") | `play` |
+| `merch-store` | `Header.tsx` (desktop actions + mobile menu) | `placement` |
 
-`placement` is one of `modal` (home carousel), `play-page` (`/works/[slug]`), or `works-page` (`/works`). It exists so you can tell which surface actually drives licensing inquiries. It is omitted where an event fires from only one place.
+`placement` is one of `modal` (home carousel), `play-page` (`/works/[slug]`), `works-page` (`/works`), `header` (desktop header row), or `mobile-menu` (hamburger menu). It exists so you can tell which surface actually drives licensing inquiries. It is omitted where an event fires from only one place.
 
 Conventions when adding events:
 
 - Keep the play slug in a **property**, never in the event name — otherwise the event list becomes 80+ unusable rows.
 - Prefer `data-umami-event` attributes for anything click-driven. If you must call `window.umami.track()`, optional-chain it (`window.umami?.track(...)`) because the script loads `async`.
-- Coverage: `Modal.test.tsx` and `playPage.test.tsx` assert the event attributes on 8 of the 11 tagged elements. The 3 uncovered sites are `Plays.tsx` (carousel) and the two in `WorksClient.tsx`, neither of which has a component test.
+- Coverage: `Modal.test.tsx`, `playPage.test.tsx` and `Header.test.tsx` assert the event attributes on 10 of the 13 tagged elements. The 3 uncovered sites are `Plays.tsx` (carousel) and the two in `WorksClient.tsx`, neither of which has a component test.
 - `/thank-you` pageviews already serve as a contact-form conversion count — no event needed.
 
-The Ko-fi floating widget is a third-party iframe and **cannot** be instrumented; the Ko-fi link in `Header.tsx` could be.
+The Ko-fi floating widget is a third-party iframe and **cannot** be instrumented; the Ko-fi links in `Header.tsx` could be — only the Merch Store link there is tagged so far.
 
 ---
 

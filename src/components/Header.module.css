@@ -21,6 +21,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* Guarantees breathing room between the centred links and the actions
+     column, which otherwise butt together once the header runs out of slack. */
+  gap: 2.5rem;
 }
 
 .brand {
@@ -69,18 +72,102 @@
   gap: 1.5rem;
 }
 
+.actions > * {
+  flex-shrink: 0;
+}
+
 .ctaButton {
   background-color: var(--color-accent-primary);
   color: var(--color-background);
   font-weight: 700;
   padding: 0.5rem 1.25rem;
   border-radius: 0.375rem;
+  white-space: nowrap;
   transition: opacity 0.2s ease-in-out;
 }
 
 .ctaButton:hover {
   opacity: 0.9;
   text-decoration: none;
+}
+
+/*
+ * Outlined counterpart to .ctaButton. The 2px border is subtracted from the
+ * padding so both buttons render at the same height sitting side by side.
+ */
+.merchButton {
+  background-color: transparent;
+  color: var(--color-accent-primary);
+  border: 2px solid var(--color-accent-primary);
+  font-weight: 700;
+  padding: calc(0.5rem - 2px) calc(1.25rem - 2px);
+  border-radius: 0.375rem;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
+
+.merchButton:hover {
+  background-color: var(--color-accent-primary);
+  color: var(--color-background);
+  text-decoration: none;
+}
+
+/*
+ * Desktop tiers between the full-width layout and the 768px hamburger.
+ * Five nav links, five social icons and two buttons do not coexist below
+ * ~1180px, so the icons step aside first -- they are duplicated in the footer
+ * and in the mobile menu -- and everything else tightens at 960px.
+ */
+@media (max-width: 1180px) {
+  .desktopSocials {
+    display: none;
+  }
+
+  .nav {
+    gap: 1.75rem;
+  }
+
+  .actions {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .header {
+    padding: 1rem;
+  }
+
+  .nav {
+    gap: 1rem;
+  }
+
+  .logoImage {
+    width: 72px;
+  }
+
+  .links {
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+  }
+
+  .actions {
+    gap: 0.5rem;
+  }
+
+  .ctaButton,
+  .merchButton {
+    font-size: 0.875rem;
+  }
+
+  .ctaButton {
+    padding: 0.45rem 0.875rem;
+  }
+
+  .merchButton {
+    padding: calc(0.45rem - 2px) calc(0.875rem - 2px);
+  }
 }
 
 @media (max-width: 768px) {
@@ -126,6 +213,7 @@
     text-decoration: none;
   }
 
+  .mobileMerchLink,
   .mobileKofiLink {
     color: var(--color-accent-primary) !important;
   }
@@ -143,5 +231,21 @@
     border-top: 1px solid var(--color-accent-subtle);
     padding-top: 2rem;
     margin-top: 2rem;
+  }
+}
+
+/* Seven links plus the socials row do not fit a short phone at 2rem. */
+@media (max-width: 768px) and (max-height: 720px) {
+  .mobileMenu {
+    gap: 1.25rem;
+  }
+
+  .mobileMenu a {
+    font-size: 1.5rem;
+  }
+
+  .mobileSocials {
+    padding-top: 1.25rem;
+    margin-top: 1.25rem;
   }
 }
