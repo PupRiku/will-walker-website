@@ -83,6 +83,28 @@
   text-decoration: none;
 }
 
+/*
+ * Outlined counterpart to .ctaButton. The 2px border is subtracted from the
+ * padding so both buttons render at the same height sitting side by side.
+ */
+.merchButton {
+  background-color: transparent;
+  color: var(--color-accent-primary);
+  border: 2px solid var(--color-accent-primary);
+  font-weight: 700;
+  padding: calc(0.5rem - 2px) calc(1.25rem - 2px);
+  border-radius: 0.375rem;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
+
+.merchButton:hover {
+  background-color: var(--color-accent-primary);
+  color: var(--color-background);
+  text-decoration: none;
+}
+
 @media (max-width: 768px) {
   .links,
   .actions {
@@ -126,6 +148,7 @@
     text-decoration: none;
   }
 
+  .mobileMerchLink,
   .mobileKofiLink {
     color: var(--color-accent-primary) !important;
   }

@@ -234,6 +234,7 @@ export type Production = {
 - Responsive nav with desktop links and mobile hamburger toggle
 - Mobile menu uses `isOpen` state and CSS class toggling (`.isOpen`)
 - `SocialLinks` appears in both the desktop `.actions` area and the mobile menu
+- The **Merch Store** link lives here alongside the "Contact Me" button — it points to the Fourthwall store at `https://walker-montgomerie-designs-shop.fourthwall.com/` and opens in a new tab (`target="_blank" rel="noopener noreferrer"`). On desktop it sits immediately left of "Contact Me" in `.actions`, styled with `.merchButton` (the outlined counterpart to the filled `.ctaButton`); on mobile it is the second-to-last item in the menu, above "Support Me on Ko-fi". To change the store URL, edit both occurrences in `Header.tsx`.
 
 ### `SocialLinks.tsx`
 - Hardcoded array of 5 social links: Facebook, Instagram, Ko-fi, New Play Exchange, Dramatists Guild

@@ -70,6 +70,14 @@ export default function Header() {
         </ul>
         <div className={styles.actions}>
           <SocialLinks />
+          <a
+            href="https://walker-montgomerie-designs-shop.fourthwall.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.merchButton}
+          >
+            Merch Store
+          </a>
           <Link href="/#contact" className={styles.ctaButton}>
             Contact Me
           </Link>
@@ -140,6 +148,15 @@ export default function Header() {
         <Link href="/#contact" onClick={closeMenu}>
           Contact Me
         </Link>
+        <a
+          href="https://walker-montgomerie-designs-shop.fourthwall.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.mobileMerchLink}
+          onClick={closeMenu}
+        >
+          Merch Store
+        </a>
         <a
           href="https://www.ko-fi.com/williamlwalkermontgomerie"
           target="_blank"
