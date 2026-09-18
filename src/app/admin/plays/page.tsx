@@ -10,6 +10,7 @@ import {
 } from '@/lib/constants';
 import AdminModal from '@/components/admin/AdminModal';
 import { slugify, timeAgo } from '@/utils/admin';
+import { validatePurchaseUrl } from '@/utils/purchase';
 import styles from './page.module.css';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -225,6 +226,11 @@ function PlayModal({
   const [saveError, setSaveError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  // Only surface the purchase URL error once the field has been left or a save
+  // was attempted, so it doesn't flash while the URL is still being typed.
+  const [purchaseTouched, setPurchaseTouched] = useState(false);
+  const purchaseError = validatePurchaseUrl(form.purchase);
+  const showPurchaseError = purchaseTouched && purchaseError !== null;
 
   function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => {
@@ -237,6 +243,10 @@ function PlayModal({
   }
 
   async function handleSave() {
+    if (purchaseError) {
+      setPurchaseTouched(true);
+      return;
+    }
     setSaving(true);
     setSaveError(null);
     try {
@@ -362,14 +372,29 @@ function PlayModal({
 
           {/* Purchase URL */}
           <div className={styles.field}>
-            <label className={styles.label}>Purchase URL</label>
+            <label className={styles.label} htmlFor="play-purchase-url">
+              Purchase URL
+            </label>
             <input
-              type="text"
-              className={styles.input}
+              id="play-purchase-url"
+              type="url"
+              inputMode="url"
+              className={`${styles.input} ${showPurchaseError ? styles.inputInvalid : ''}`}
               value={form.purchase}
               onChange={(e) => setField('purchase', e.target.value)}
+              onBlur={() => {
+                setPurchaseTouched(true);
+                setField('purchase', form.purchase.trim());
+              }}
               placeholder="https://…"
+              aria-invalid={showPurchaseError}
+              aria-describedby={showPurchaseError ? 'play-purchase-url-error' : undefined}
             />
+            {showPurchaseError && (
+              <p id="play-purchase-url-error" className={styles.fieldError} role="alert">
+                {purchaseError}
+              </p>
+            )}
           </div>
 
           {/* Cover Image — full width */}
