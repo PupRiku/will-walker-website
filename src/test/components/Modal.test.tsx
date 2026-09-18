@@ -183,6 +183,47 @@ describe('Modal analytics events', () => {
     ).toBeInTheDocument();
   });
 
+  it('hides "Request Perusal" for published plays with a purchase URL', () => {
+    render(
+      <Modal
+        isOpen={true}
+        onClose={vi.fn()}
+        play={{ ...mockPlay, published: true, purchase: 'https://example.com/buy' }}
+      />
+    );
+    expect(
+      screen.queryByRole('button', { name: 'Request Perusal' })
+    ).toBeNull();
+  });
+
+  it('shows "Request Perusal" for published plays without a purchase URL', () => {
+    render(
+      <Modal
+        isOpen={true}
+        onClose={vi.fn()}
+        play={{ ...mockPlay, published: true, purchase: '' }}
+      />
+    );
+    expect(
+      screen.getByRole('button', { name: 'Request Perusal' })
+    ).toBeInTheDocument();
+  });
+
+  it('treats a whitespace-only purchase URL as no purchase URL', () => {
+    render(
+      <Modal
+        isOpen={true}
+        onClose={vi.fn()}
+        play={{ ...mockPlay, published: true, purchase: '   ' }}
+      />
+    );
+    expect(screen.queryByText('Purchase Rights')).toBeNull();
+    expect(screen.getByText('Apply for Rights')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Request Perusal' })
+    ).toBeInTheDocument();
+  });
+
   it('opens the perusal dialog with the play title without closing itself', () => {
     const onClose = vi.fn();
     render(<Modal isOpen={true} onClose={onClose} play={mockPlay} />);
