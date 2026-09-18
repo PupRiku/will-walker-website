@@ -126,7 +126,9 @@ export default async function PlayPage({ params }: Props) {
             </a>
           </div>
 
-          <PerusalRequestButton playTitle={work.title} />
+          {!(work.published && work.purchase) && (
+            <PerusalRequestButton playTitle={work.title} />
+          )}
 
           <Link href="/works" className={styles.backLink}>
             ← Back to All Works
