@@ -190,6 +190,20 @@ describe('POST /api/plays', () => {
     expect(res.status).toBe(201)
     expect(vi.mocked(prisma.play.create).mock.calls[0][0].data.purchase).toBe('')
   })
+
+  it('returns 400 when pdfSrc is not an http(s) URL', async () => {
+    const res = await POST(makeRequest({ ...validPlayBody, pdfSrc: 'drive.google.com/file/d/abc' }))
+    expect(res.status).toBe(400)
+    expect((await res.json()).error).toMatch(/Sample PDF URL/)
+    expect(prisma.play.create).not.toHaveBeenCalled()
+  })
+
+  it('trims the sample PDF URL before saving', async () => {
+    vi.mocked(prisma.play.create).mockResolvedValue(mockPlay)
+    const res = await POST(makeRequest({ ...validPlayBody, pdfSrc: ' https://drive.google.com/file/d/abc ' }))
+    expect(res.status).toBe(201)
+    expect(vi.mocked(prisma.play.create).mock.calls[0][0].data.pdfSrc).toBe('https://drive.google.com/file/d/abc')
+  })
 })
 
 describe('PUT /api/plays/[slug]', () => {
@@ -229,6 +243,22 @@ describe('PUT /api/plays/[slug]', () => {
     const res = await PUT(req, ctx)
     expect(res.status).toBe(200)
     expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.purchase).toBe('https://example.com/buy')
+  })
+
+  it('returns 400 when pdfSrc is not an http(s) URL', async () => {
+    const [req, ctx] = makeSlugRequest('PUT', { ...validPlayBody, pdfSrc: 'TBD' })
+    const res = await PUT(req, ctx)
+    expect(res.status).toBe(400)
+    expect((await res.json()).error).toMatch(/Sample PDF URL/)
+    expect(prisma.play.update).not.toHaveBeenCalled()
+  })
+
+  it('trims the sample PDF URL before saving', async () => {
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', { ...validPlayBody, pdfSrc: ' https://drive.google.com/file/d/abc ' })
+    const res = await PUT(req, ctx)
+    expect(res.status).toBe(200)
+    expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.pdfSrc).toBe('https://drive.google.com/file/d/abc')
   })
 })
 

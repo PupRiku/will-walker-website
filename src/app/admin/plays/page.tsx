@@ -10,7 +10,7 @@ import {
 } from '@/lib/constants';
 import AdminModal from '@/components/admin/AdminModal';
 import { slugify, timeAgo } from '@/utils/admin';
-import { validatePurchaseUrl } from '@/utils/purchase';
+import { validateOptionalHttpUrl } from '@/utils/url';
 import styles from './page.module.css';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -206,6 +206,52 @@ function ToggleCard({
   );
 }
 
+// ── URL field ─────────────────────────────────────────────────────────────────
+
+type UrlFieldKey = 'pdfSrc' | 'purchase';
+
+function UrlField({
+  id,
+  label,
+  value,
+  error,
+  onChange,
+  onBlur,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  error: string | null;
+  onChange: (value: string) => void;
+  onBlur: () => void;
+}) {
+  const errorId = `${id}-error`;
+  return (
+    <div className={styles.field}>
+      <label className={styles.label} htmlFor={id}>
+        {label}
+      </label>
+      <input
+        id={id}
+        type="url"
+        inputMode="url"
+        className={`${styles.input} ${error ? styles.inputInvalid : ''}`}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur}
+        placeholder="https://…"
+        aria-invalid={error !== null}
+        aria-describedby={error ? errorId : undefined}
+      />
+      {error && (
+        <p id={errorId} className={styles.fieldError} role="alert">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
 // ── Play modal ─────────────────────────────────────────────────────────────────
 
 function PlayModal({
@@ -226,11 +272,16 @@ function PlayModal({
   const [saveError, setSaveError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
-  // Only surface the purchase URL error once the field has been left or a save
-  // was attempted, so it doesn't flash while the URL is still being typed.
-  const [purchaseTouched, setPurchaseTouched] = useState(false);
-  const purchaseError = validatePurchaseUrl(form.purchase);
-  const showPurchaseError = purchaseTouched && purchaseError !== null;
+  // Only surface a URL field's error once it has been left or a save was
+  // attempted, so it doesn't flash while the URL is still being typed.
+  const [urlTouched, setUrlTouched] = useState<Record<UrlFieldKey, boolean>>({
+    pdfSrc: false,
+    purchase: false,
+  });
+  const urlErrors: Record<UrlFieldKey, string | null> = {
+    pdfSrc: validateOptionalHttpUrl(form.pdfSrc, 'Sample PDF URL'),
+    purchase: validateOptionalHttpUrl(form.purchase, 'Purchase URL'),
+  };
 
   function setField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => {
@@ -243,8 +294,8 @@ function PlayModal({
   }
 
   async function handleSave() {
-    if (purchaseError) {
-      setPurchaseTouched(true);
+    if (urlErrors.pdfSrc || urlErrors.purchase) {
+      setUrlTouched({ pdfSrc: true, purchase: true });
       return;
     }
     setSaving(true);
@@ -358,44 +409,29 @@ function PlayModal({
             />
           </div>
 
-          {/* PDF URL */}
-          <div className={styles.field}>
-            <label className={styles.label}>Sample PDF URL</label>
-            <input
-              type="text"
-              className={styles.input}
-              value={form.pdfSrc}
-              onChange={(e) => setField('pdfSrc', e.target.value)}
-              placeholder="https://…"
-            />
-          </div>
+          <UrlField
+            id="play-pdf-url"
+            label="Sample PDF URL"
+            value={form.pdfSrc}
+            error={urlTouched.pdfSrc ? urlErrors.pdfSrc : null}
+            onChange={(v) => setField('pdfSrc', v)}
+            onBlur={() => {
+              setUrlTouched((prev) => ({ ...prev, pdfSrc: true }));
+              setField('pdfSrc', form.pdfSrc.trim());
+            }}
+          />
 
-          {/* Purchase URL */}
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="play-purchase-url">
-              Purchase URL
-            </label>
-            <input
-              id="play-purchase-url"
-              type="url"
-              inputMode="url"
-              className={`${styles.input} ${showPurchaseError ? styles.inputInvalid : ''}`}
-              value={form.purchase}
-              onChange={(e) => setField('purchase', e.target.value)}
-              onBlur={() => {
-                setPurchaseTouched(true);
-                setField('purchase', form.purchase.trim());
-              }}
-              placeholder="https://…"
-              aria-invalid={showPurchaseError}
-              aria-describedby={showPurchaseError ? 'play-purchase-url-error' : undefined}
-            />
-            {showPurchaseError && (
-              <p id="play-purchase-url-error" className={styles.fieldError} role="alert">
-                {purchaseError}
-              </p>
-            )}
-          </div>
+          <UrlField
+            id="play-purchase-url"
+            label="Purchase URL"
+            value={form.purchase}
+            error={urlTouched.purchase ? urlErrors.purchase : null}
+            onChange={(v) => setField('purchase', v)}
+            onBlur={() => {
+              setUrlTouched((prev) => ({ ...prev, purchase: true }));
+              setField('purchase', form.purchase.trim());
+            }}
+          />
 
           {/* Cover Image — full width */}
           <div className={styles.fieldFull}>

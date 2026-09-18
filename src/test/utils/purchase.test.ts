@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getPurchaseUrl, validatePurchaseUrl, PURCHASE_URL_ERROR } from '@/utils/purchase';
+import { getPurchaseUrl } from '@/utils/purchase';
 
 describe('getPurchaseUrl', () => {
   it('returns the URL for a published play with an https purchase link', () => {
@@ -39,32 +39,5 @@ describe('getPurchaseUrl', () => {
   it('returns null for non-http(s) schemes', () => {
     expect(getPurchaseUrl({ published: true, purchase: 'javascript:alert(1)' })).toBeNull();
     expect(getPurchaseUrl({ published: true, purchase: 'mailto:someone@example.com' })).toBeNull();
-  });
-});
-
-describe('validatePurchaseUrl', () => {
-  it('allows blank values', () => {
-    expect(validatePurchaseUrl(undefined)).toBeNull();
-    expect(validatePurchaseUrl(null)).toBeNull();
-    expect(validatePurchaseUrl('')).toBeNull();
-    expect(validatePurchaseUrl('   ')).toBeNull();
-  });
-
-  it('allows http(s) URLs, with or without surrounding whitespace', () => {
-    expect(validatePurchaseUrl('https://www.nextstagepress.com/r-u-r/')).toBeNull();
-    expect(validatePurchaseUrl('http://example.com')).toBeNull();
-    expect(validatePurchaseUrl('  https://example.com/buy  ')).toBeNull();
-  });
-
-  it('rejects text that is not a full http(s) URL', () => {
-    expect(validatePurchaseUrl('TBD')).toBe(PURCHASE_URL_ERROR);
-    expect(validatePurchaseUrl('www.example.com/buy')).toBe(PURCHASE_URL_ERROR);
-    expect(validatePurchaseUrl('javascript:alert(1)')).toBe(PURCHASE_URL_ERROR);
-    expect(validatePurchaseUrl('mailto:someone@example.com')).toBe(PURCHASE_URL_ERROR);
-  });
-
-  it('rejects non-string values', () => {
-    expect(validatePurchaseUrl(42)).toBe(PURCHASE_URL_ERROR);
-    expect(validatePurchaseUrl({})).toBe(PURCHASE_URL_ERROR);
   });
 });
