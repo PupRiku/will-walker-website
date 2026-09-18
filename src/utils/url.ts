@@ -1,5 +1,12 @@
-/** True when `value` parses as an absolute http(s) URL. */
+/**
+ * True when `value` is written out as an absolute http(s) URL. The explicit
+ * prefix check matters: `new URL()` also accepts shorthand like
+ * `https:example.com` or `https:\example.com` and normalises it, but the raw
+ * string is what gets stored and rendered, and a browser resolves those forms
+ * relative to the current page instead of to the intended site.
+ */
 export function isHttpUrl(value: string): boolean {
+  if (!/^https?:\/\//i.test(value)) return false;
   try {
     const url = new URL(value);
     return url.protocol === 'http:' || url.protocol === 'https:';
@@ -9,7 +16,7 @@ export function isHttpUrl(value: string): boolean {
 }
 
 export function urlFieldError(label: string): string {
-  return `${label} must be a full web address starting with https:// (or leave it blank)`;
+  return `${label} must be a full web address starting with https:// or http:// (or leave it blank)`;
 }
 
 /**

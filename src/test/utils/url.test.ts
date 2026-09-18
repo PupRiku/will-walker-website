@@ -7,6 +7,22 @@ describe('isHttpUrl', () => {
     expect(isHttpUrl('http://example.com')).toBe(true);
   });
 
+  it('accepts an upper-case scheme', () => {
+    expect(isHttpUrl('HTTPS://example.com/buy')).toBe(true);
+  });
+
+  it('rejects scheme shorthand that URL() would otherwise normalise', () => {
+    expect(isHttpUrl('https:example.com')).toBe(false);
+    expect(isHttpUrl('http:example.com')).toBe(false);
+    expect(isHttpUrl('https:/example.com')).toBe(false);
+    expect(isHttpUrl('https:\\\\example.com')).toBe(false);
+    expect(isHttpUrl('http:\\example.com')).toBe(false);
+  });
+
+  it('rejects a bare scheme with no host', () => {
+    expect(isHttpUrl('https://')).toBe(false);
+  });
+
   it('rejects relative paths, bare domains and other schemes', () => {
     expect(isHttpUrl('/pdfs/sample.pdf')).toBe(false);
     expect(isHttpUrl('www.example.com')).toBe(false);
@@ -34,6 +50,7 @@ describe('validateOptionalHttpUrl', () => {
     expect(validateOptionalHttpUrl('www.example.com/buy', 'Purchase URL')).toBe(urlFieldError('Purchase URL'));
     expect(validateOptionalHttpUrl('drive.google.com/x', 'Sample PDF URL')).toBe(urlFieldError('Sample PDF URL'));
     expect(validateOptionalHttpUrl('javascript:alert(1)', 'Sample PDF URL')).toBe(urlFieldError('Sample PDF URL'));
+    expect(validateOptionalHttpUrl('https:example.com', 'Purchase URL')).toBe(urlFieldError('Purchase URL'));
   });
 
   it('rejects non-string values', () => {
@@ -43,7 +60,7 @@ describe('validateOptionalHttpUrl', () => {
 
   it('builds a readable message', () => {
     expect(urlFieldError('Sample PDF URL')).toBe(
-      'Sample PDF URL must be a full web address starting with https:// (or leave it blank)'
+      'Sample PDF URL must be a full web address starting with https:// or http:// (or leave it blank)'
     );
   });
 });
