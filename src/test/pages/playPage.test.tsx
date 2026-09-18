@@ -65,7 +65,14 @@ const playWithPdf = makePlay({
   pdfSrc: 'https://example.com/sample.pdf',
 });
 
-const allPlays = [publishedPlay, unpublishedPlay, playWithPdf];
+const publishedPlayNoPurchase = makePlay({
+  slug: 'published-no-purchase',
+  title: 'Published No Purchase',
+  published: true,
+  purchase: '',
+});
+
+const allPlays = [publishedPlay, unpublishedPlay, playWithPdf, publishedPlayNoPurchase];
 
 const mockFetchPlay = vi.fn(async (slug: string): Promise<Play | null> => {
   return allPlays.find((p) => p.slug === slug) ?? null;
@@ -119,6 +126,21 @@ describe('PlayPage (/works/[slug])', () => {
     await renderPlayPage('unpublished-play');
     expect(screen.getByText('Apply for Performance Rights')).toBeInTheDocument();
     expect(screen.queryByText('Purchase Rights')).toBeNull();
+  });
+
+  it('hides "Request Perusal" for published works with a purchase URL', async () => {
+    await renderPlayPage('published-play');
+    expect(screen.queryByRole('button', { name: 'Request Perusal' })).toBeNull();
+  });
+
+  it('shows "Request Perusal" for unpublished works', async () => {
+    await renderPlayPage('unpublished-play');
+    expect(screen.getByRole('button', { name: 'Request Perusal' })).toBeInTheDocument();
+  });
+
+  it('shows "Request Perusal" for published works without a purchase URL', async () => {
+    await renderPlayPage('published-no-purchase');
+    expect(screen.getByRole('button', { name: 'Request Perusal' })).toBeInTheDocument();
   });
 
   it('throws NEXT_NOT_FOUND for an unknown slug', async () => {
