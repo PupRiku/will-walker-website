@@ -189,12 +189,14 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
               )}
             </div>
 
-            <PerusalRequestButton
-              playTitle={play.title}
-              onOpenChange={(open) => {
-                nestedDialogOpenRef.current = open;
-              }}
-            />
+            {!(play.published && play.purchase) && (
+              <PerusalRequestButton
+                playTitle={play.title}
+                onOpenChange={(open) => {
+                  nestedDialogOpenRef.current = open;
+                }}
+              />
+            )}
 
             <Link
               href={`/works/${play.slug}`}
