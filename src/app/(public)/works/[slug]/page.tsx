@@ -8,6 +8,7 @@ import { BsDownload } from 'react-icons/bs';
 import { prisma } from '@/lib/prisma';
 import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
 import PerusalRequestButton from '@/components/PerusalRequestButton';
+import { getPurchaseUrl } from '@/utils/purchase';
 
 export const revalidate = 60;
 
@@ -40,6 +41,8 @@ export default async function PlayPage({ params }: Props) {
   if (!work) {
     notFound();
   }
+
+  const purchaseUrl = getPurchaseUrl(work);
 
   return (
     <main className={styles.pageWrapper}>
@@ -88,9 +91,9 @@ export default async function PlayPage({ params }: Props) {
                 Read Sample
               </a>
             )}
-            {work.published && work.purchase ? (
+            {purchaseUrl ? (
               <a
-                href={work.purchase}
+                href={purchaseUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.button}
@@ -126,7 +129,7 @@ export default async function PlayPage({ params }: Props) {
             </a>
           </div>
 
-          {!(work.published && work.purchase) && (
+          {!purchaseUrl && (
             <PerusalRequestButton playTitle={work.title} />
           )}
 

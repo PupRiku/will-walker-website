@@ -72,7 +72,20 @@ const publishedPlayNoPurchase = makePlay({
   purchase: '',
 });
 
-const allPlays = [publishedPlay, unpublishedPlay, playWithPdf, publishedPlayNoPurchase];
+const publishedPlayBlankPurchase = makePlay({
+  slug: 'published-blank-purchase',
+  title: 'Published Blank Purchase',
+  published: true,
+  purchase: '   ',
+});
+
+const allPlays = [
+  publishedPlay,
+  unpublishedPlay,
+  playWithPdf,
+  publishedPlayNoPurchase,
+  publishedPlayBlankPurchase,
+];
 
 const mockFetchPlay = vi.fn(async (slug: string): Promise<Play | null> => {
   return allPlays.find((p) => p.slug === slug) ?? null;
@@ -140,6 +153,13 @@ describe('PlayPage (/works/[slug])', () => {
 
   it('shows "Request Perusal" for published works without a purchase URL', async () => {
     await renderPlayPage('published-no-purchase');
+    expect(screen.getByRole('button', { name: 'Request Perusal' })).toBeInTheDocument();
+  });
+
+  it('treats a whitespace-only purchase URL as no purchase URL', async () => {
+    await renderPlayPage('published-blank-purchase');
+    expect(screen.queryByText('Purchase Rights')).toBeNull();
+    expect(screen.getByText('Apply for Performance Rights')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Request Perusal' })).toBeInTheDocument();
   });
 

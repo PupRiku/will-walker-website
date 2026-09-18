@@ -7,6 +7,7 @@ import styles from './Modal.module.css';
 import { Work } from '@/types/play';
 import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
 import PerusalRequestButton from './PerusalRequestButton';
+import { getPurchaseUrl } from '@/utils/purchase';
 
 type ModalProps = {
   isOpen: boolean;
@@ -88,6 +89,8 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
     return null;
   }
 
+  const purchaseUrl = getPurchaseUrl(play);
+
   const handleContentClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
@@ -162,9 +165,9 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
                   Read Sample
                 </a>
               )}
-              {play.published && play.purchase ? (
+              {purchaseUrl ? (
                 <a
-                  href={play.purchase}
+                  href={purchaseUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.modalButton}
@@ -189,7 +192,7 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
               )}
             </div>
 
-            {!(play.published && play.purchase) && (
+            {!purchaseUrl && (
               <PerusalRequestButton
                 playTitle={play.title}
                 onOpenChange={(open) => {
