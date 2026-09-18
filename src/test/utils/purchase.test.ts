@@ -36,6 +36,10 @@ describe('getPurchaseUrl', () => {
     expect(getPurchaseUrl({ published: true, purchase: 'example.com/buy' })).toBeNull();
   });
 
+  it('returns null for scheme shorthand like https:example.com', () => {
+    expect(getPurchaseUrl({ published: true, purchase: 'https:example.com/buy' })).toBeNull();
+  });
+
   it('returns null for non-http(s) schemes', () => {
     expect(getPurchaseUrl({ published: true, purchase: 'javascript:alert(1)' })).toBeNull();
     expect(getPurchaseUrl({ published: true, purchase: 'mailto:someone@example.com' })).toBeNull();

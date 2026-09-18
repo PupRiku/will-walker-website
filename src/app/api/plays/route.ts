@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma, isPrismaErrorCode } from '@/lib/prisma';
 import { requireAuth } from '@/lib/auth';
 import { VALID_CATEGORIES, ERROR_MESSAGES } from '@/lib/constants';
+import { validateOptionalHttpUrl } from '@/utils/url';
 
 function validatePlay(body: Record<string, unknown>) {
   const { title, slug, category, runtime, cast, synopsis, imageSrc } = body;
@@ -22,6 +23,11 @@ function validatePlay(body: Record<string, unknown>) {
     return 'synopsis is required';
   if (!imageSrc || typeof imageSrc !== 'string' || !imageSrc.trim())
     return 'imageSrc is required';
+
+  const pdfSrcError = validateOptionalHttpUrl(body.pdfSrc, 'Sample PDF URL');
+  if (pdfSrcError) return pdfSrcError;
+  const purchaseError = validateOptionalHttpUrl(body.purchase, 'Purchase URL');
+  if (purchaseError) return purchaseError;
 
   return null;
 }
@@ -81,8 +87,8 @@ export async function POST(request: Request) {
         cast: (body.cast as string).trim(),
         synopsis: (body.synopsis as string).trim(),
         imageSrc: (body.imageSrc as string).trim(),
-        pdfSrc: typeof body.pdfSrc === 'string' ? body.pdfSrc : '',
-        purchase: typeof body.purchase === 'string' ? body.purchase : '',
+        pdfSrc: typeof body.pdfSrc === 'string' ? body.pdfSrc.trim() : '',
+        purchase: typeof body.purchase === 'string' ? body.purchase.trim() : '',
         published: typeof body.published === 'boolean' ? body.published : false,
         featured: typeof body.featured === 'boolean' ? body.featured : false,
         featuredOrder:

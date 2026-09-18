@@ -634,6 +634,18 @@
 
 /* ── Modal footer ─────────────────────────────────────── */
 
+.inputInvalid,
+.inputInvalid:focus {
+  border-color: #b71c1c;
+}
+
+.fieldError {
+  font-family: var(--font-family-body);
+  font-size: 0.75rem;
+  color: #b71c1c;
+  margin: 0.25rem 0 0;
+}
+
 .saveError {
   font-family: var(--font-family-body);
   font-size: 0.8rem;
