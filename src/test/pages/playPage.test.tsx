@@ -82,12 +82,27 @@ const publishedPlayBlankPurchase = makePlay({
   purchase: '   ',
 });
 
+const playWithBanner = makePlay({
+  slug: 'play-with-banner',
+  title: 'Play With Banner',
+  bannerText: 'Free to Produce as a Veterans Fundraiser',
+  bannerColor: '#4b5320',
+});
+
+const royaltiesOffPlay = makePlay({
+  slug: 'royalties-off-play',
+  title: 'Royalties Off Play',
+  showRoyaltiesButton: false,
+});
+
 const allPlays = [
   publishedPlay,
   unpublishedPlay,
   playWithPdf,
   publishedPlayNoPurchase,
   publishedPlayBlankPurchase,
+  playWithBanner,
+  royaltiesOffPlay,
 ];
 
 const mockFetchPlay = vi.fn(async (slug: string): Promise<Play | null> => {
@@ -168,6 +183,32 @@ describe('PlayPage (/works/[slug])', () => {
 
   it('throws NEXT_NOT_FOUND for an unknown slug', async () => {
     await expect(renderPlayPage('this-slug-does-not-exist')).rejects.toThrow('NEXT_NOT_FOUND');
+  });
+
+  it('renders the banner with the chosen background color when bannerText is set', async () => {
+    await renderPlayPage('play-with-banner');
+    const banner = screen.getByText('Free to Produce as a Veterans Fundraiser');
+    expect(banner).toHaveStyle({ backgroundColor: '#4b5320' });
+  });
+
+  it('does not render a banner when bannerText is blank', async () => {
+    await renderPlayPage('unpublished-play');
+    expect(screen.queryByText('Free to Produce as a Veterans Fundraiser')).toBeNull();
+  });
+
+  it('shows "Download Royalties Scale" when showRoyaltiesButton is true and the play is unpublished', async () => {
+    await renderPlayPage('unpublished-play');
+    expect(screen.getByText('Download Royalties Scale')).toBeInTheDocument();
+  });
+
+  it('hides "Download Royalties Scale" when showRoyaltiesButton is false', async () => {
+    await renderPlayPage('royalties-off-play');
+    expect(screen.queryByText('Download Royalties Scale')).toBeNull();
+  });
+
+  it('hides "Download Royalties Scale" for published plays even when the toggle is on', async () => {
+    await renderPlayPage('published-play');
+    expect(screen.queryByText('Download Royalties Scale')).toBeNull();
   });
 });
 

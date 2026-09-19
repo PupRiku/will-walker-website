@@ -10,6 +10,7 @@ import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
 import PerusalRequestButton from '@/components/PerusalRequestButton';
 import { getPurchaseUrl } from '@/utils/purchase';
 import { shouldShowRoyaltiesButton } from '@/utils/royalties';
+import { getContrastTextColor } from '@/utils/color';
 
 export const revalidate = 60;
 
@@ -72,7 +73,14 @@ export default async function PlayPage({ params }: Props) {
           {work.bannerText && (
             <div
               className={styles.banner}
-              style={work.bannerColor ? { backgroundColor: work.bannerColor } : undefined}
+              style={
+                work.bannerColor
+                  ? {
+                      backgroundColor: work.bannerColor,
+                      color: getContrastTextColor(work.bannerColor),
+                    }
+                  : undefined
+              }
             >
               {work.bannerText}
             </div>

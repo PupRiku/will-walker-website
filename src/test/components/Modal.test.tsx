@@ -136,6 +136,23 @@ describe('Modal', () => {
     expect(link).toBeInTheDocument();
     expect(link.closest('a')).toHaveAttribute('href', '/works/test-play');
   });
+
+  it('renders the banner with the chosen background color when bannerText is set', () => {
+    render(
+      <Modal
+        isOpen={true}
+        onClose={vi.fn()}
+        play={{ ...mockPlay, bannerText: 'Free to Produce as a Veterans Fundraiser', bannerColor: '#4b5320' }}
+      />
+    );
+    const banner = screen.getByText('Free to Produce as a Veterans Fundraiser');
+    expect(banner).toHaveStyle({ backgroundColor: '#4b5320' });
+  });
+
+  it('does not render a banner when bannerText is blank', () => {
+    render(<Modal isOpen={true} onClose={vi.fn()} play={mockPlay} />);
+    expect(screen.queryByText('Free to Produce as a Veterans Fundraiser')).toBeNull();
+  });
 });
 
 describe('Modal analytics events', () => {
