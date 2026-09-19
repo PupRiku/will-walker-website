@@ -3,6 +3,7 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '../src/generated/prisma/client'
 import { worksData } from '../src/data/works'
 import { productionsData } from '../src/data/productions'
+import { normalizeShowRoyaltiesButton } from '../src/utils/royalties'
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 const prisma = new PrismaClient({ adapter })
@@ -13,6 +14,14 @@ async function main() {
   // Seed plays
   for (const work of worksData) {
     const featuredOrder = work.featured ? ++featuredCounter : null
+    const published = work.published ?? false
+    // Published plays never show the royalties button — see
+    // normalizeShowRoyaltiesButton for why this must be enforced wherever a
+    // play is written, not just through the admin API.
+    const showRoyaltiesButton = normalizeShowRoyaltiesButton(
+      published,
+      work.showRoyaltiesButton ?? true,
+    )
 
     await prisma.play.upsert({
       where: { slug: work.slug },
@@ -25,9 +34,12 @@ async function main() {
         imageSrc: work.imageSrc,
         pdfSrc: work.pdfSrc ?? '',
         purchase: work.purchase ?? '',
-        published: work.published ?? false,
+        published,
         featured: work.featured ?? false,
         featuredOrder,
+        bannerText: work.bannerText ?? '',
+        bannerColor: work.bannerColor ?? '',
+        showRoyaltiesButton,
       },
       create: {
         slug: work.slug,
@@ -39,9 +51,12 @@ async function main() {
         imageSrc: work.imageSrc,
         pdfSrc: work.pdfSrc ?? '',
         purchase: work.purchase ?? '',
-        published: work.published ?? false,
+        published,
         featured: work.featured ?? false,
         featuredOrder,
+        bannerText: work.bannerText ?? '',
+        bannerColor: work.bannerColor ?? '',
+        showRoyaltiesButton,
       },
     })
   }
