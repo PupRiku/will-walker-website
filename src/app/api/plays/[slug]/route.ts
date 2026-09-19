@@ -3,6 +3,7 @@ import { prisma, isPrismaErrorCode } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
 import { VALID_CATEGORIES, ERROR_MESSAGES } from '@/lib/constants'
 import { validateOptionalHttpUrl } from '@/utils/url'
+import { normalizeShowRoyaltiesButton } from '@/utils/royalties'
 
 function validatePlay(body: Record<string, unknown>) {
   const { title, slug, category, runtime, cast, synopsis, imageSrc } = body
@@ -69,6 +70,10 @@ export async function PUT(request: Request, { params }: { params: Params }) {
   }
 
   try {
+    const published = typeof body.published === 'boolean' ? body.published : false
+    const requestedShowRoyaltiesButton =
+      typeof body.showRoyaltiesButton === 'boolean' ? body.showRoyaltiesButton : true
+
     const play = await prisma.play.update({
       where: { slug },
       data: {
@@ -81,13 +86,12 @@ export async function PUT(request: Request, { params }: { params: Params }) {
         imageSrc: (body.imageSrc as string).trim(),
         pdfSrc: typeof body.pdfSrc === 'string' ? body.pdfSrc.trim() : '',
         purchase: typeof body.purchase === 'string' ? body.purchase.trim() : '',
-        published: typeof body.published === 'boolean' ? body.published : false,
+        published,
         featured: typeof body.featured === 'boolean' ? body.featured : false,
         featuredOrder: typeof body.featuredOrder === 'number' ? body.featuredOrder : null,
         bannerText: typeof body.bannerText === 'string' ? body.bannerText.trim() : '',
         bannerColor: typeof body.bannerColor === 'string' ? body.bannerColor.trim() : '',
-        showRoyaltiesButton:
-          typeof body.showRoyaltiesButton === 'boolean' ? body.showRoyaltiesButton : true,
+        showRoyaltiesButton: normalizeShowRoyaltiesButton(published, requestedShowRoyaltiesButton),
       },
     })
     return NextResponse.json(play)

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { shouldShowRoyaltiesButton } from '@/utils/royalties';
+import { shouldShowRoyaltiesButton, normalizeShowRoyaltiesButton } from '@/utils/royalties';
 
 describe('shouldShowRoyaltiesButton', () => {
   it('hides the button for published plays even when the toggle is on', () => {
@@ -24,5 +24,20 @@ describe('shouldShowRoyaltiesButton', () => {
     expect(
       shouldShowRoyaltiesButton({ published: false, showRoyaltiesButton: undefined }),
     ).toBe(true);
+  });
+});
+
+describe('normalizeShowRoyaltiesButton', () => {
+  it('forces false for a published play even when the requested value is true', () => {
+    expect(normalizeShowRoyaltiesButton(true, true)).toBe(false);
+  });
+
+  it('keeps false for a published play', () => {
+    expect(normalizeShowRoyaltiesButton(true, false)).toBe(false);
+  });
+
+  it('passes through the requested value for an unpublished play', () => {
+    expect(normalizeShowRoyaltiesButton(false, true)).toBe(true);
+    expect(normalizeShowRoyaltiesButton(false, false)).toBe(false);
   });
 });

@@ -207,6 +207,47 @@ describe('POST /api/plays', () => {
     expect(res.status).toBe(201)
     expect(vi.mocked(prisma.play.create).mock.calls[0][0].data.pdfSrc).toBe('https://drive.google.com/file/d/abc')
   })
+
+  it('defaults bannerText, bannerColor and showRoyaltiesButton when omitted', async () => {
+    vi.mocked(prisma.play.create).mockResolvedValue(mockPlay)
+    const res = await POST(makeRequest(validPlayBody))
+    expect(res.status).toBe(201)
+    const data = vi.mocked(prisma.play.create).mock.calls[0][0].data
+    expect(data.bannerText).toBe('')
+    expect(data.bannerColor).toBe('')
+    expect(data.showRoyaltiesButton).toBe(true)
+  })
+
+  it('trims bannerText and bannerColor before saving', async () => {
+    vi.mocked(prisma.play.create).mockResolvedValue(mockPlay)
+    const res = await POST(
+      makeRequest({ ...validPlayBody, bannerText: '  Free to Produce  ', bannerColor: ' #4b5320 ' }),
+    )
+    expect(res.status).toBe(201)
+    const data = vi.mocked(prisma.play.create).mock.calls[0][0].data
+    expect(data.bannerText).toBe('Free to Produce')
+    expect(data.bannerColor).toBe('#4b5320')
+  })
+
+  it('persists showRoyaltiesButton: false for an unpublished play', async () => {
+    vi.mocked(prisma.play.create).mockResolvedValue(mockPlay)
+    const res = await POST(
+      makeRequest({ ...validPlayBody, published: false, showRoyaltiesButton: false }),
+    )
+    expect(res.status).toBe(201)
+    expect(vi.mocked(prisma.play.create).mock.calls[0][0].data.showRoyaltiesButton).toBe(false)
+  })
+
+  it('forces showRoyaltiesButton to false for a published play even when the request sends true', async () => {
+    vi.mocked(prisma.play.create).mockResolvedValue(mockPlay)
+    const res = await POST(
+      makeRequest({ ...validPlayBody, published: true, purchase: 'https://example.com/buy', showRoyaltiesButton: true }),
+    )
+    expect(res.status).toBe(201)
+    const data = vi.mocked(prisma.play.create).mock.calls[0][0].data
+    expect(data.published).toBe(true)
+    expect(data.showRoyaltiesButton).toBe(false)
+  })
 })
 
 describe('PUT /api/plays/[slug]', () => {
@@ -262,6 +303,62 @@ describe('PUT /api/plays/[slug]', () => {
     const res = await PUT(req, ctx)
     expect(res.status).toBe(200)
     expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.pdfSrc).toBe('https://drive.google.com/file/d/abc')
+  })
+
+  it('trims bannerText and bannerColor before saving', async () => {
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', {
+      ...validPlayBody,
+      bannerText: '  Free to Produce  ',
+      bannerColor: ' #4b5320 ',
+    })
+    const res = await PUT(req, ctx)
+    expect(res.status).toBe(200)
+    const data = vi.mocked(prisma.play.update).mock.calls[0][0].data
+    expect(data.bannerText).toBe('Free to Produce')
+    expect(data.bannerColor).toBe('#4b5320')
+  })
+
+  it('persists showRoyaltiesButton: false for an unpublished play', async () => {
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', {
+      ...validPlayBody,
+      published: false,
+      showRoyaltiesButton: false,
+    })
+    const res = await PUT(req, ctx)
+    expect(res.status).toBe(200)
+    expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.showRoyaltiesButton).toBe(false)
+  })
+
+  it('forces showRoyaltiesButton to false for a published play even when the request sends true', async () => {
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', {
+      ...validPlayBody,
+      published: true,
+      purchase: 'https://example.com/buy',
+      showRoyaltiesButton: true,
+    })
+    const res = await PUT(req, ctx)
+    expect(res.status).toBe(200)
+    const data = vi.mocked(prisma.play.update).mock.calls[0][0].data
+    expect(data.published).toBe(true)
+    expect(data.showRoyaltiesButton).toBe(false)
+  })
+
+  it('forces showRoyaltiesButton to false when publishing a play that previously had the toggle on', async () => {
+    // Simulates a row created before this field existed, or one where the
+    // stored toggle is stale true from before it was published — the API
+    // must not trust the client's value once published is true.
+    vi.mocked(prisma.play.update).mockResolvedValue({ ...mockPlay, showRoyaltiesButton: true })
+    const [req, ctx] = makeSlugRequest('PUT', {
+      ...validPlayBody,
+      published: true,
+      purchase: 'https://example.com/buy',
+      showRoyaltiesButton: true,
+    })
+    await PUT(req, ctx)
+    expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.showRoyaltiesButton).toBe(false)
   })
 })
 
