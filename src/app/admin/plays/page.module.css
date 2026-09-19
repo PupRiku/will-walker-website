@@ -558,6 +558,30 @@
   gap: 1rem;
 }
 
+.colorPickerRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.colorPickerLabel {
+  font-family: var(--font-family-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.colorPicker {
+  width: 48px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid rgba(121, 85, 72, 0.2);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  background: none;
+}
+
 .toggleCard {
   flex: 1;
   display: flex;
@@ -576,6 +600,11 @@
 .toggleCardOn {
   border-color: var(--color-accent-primary);
   background-color: rgba(121, 85, 72, 0.04);
+}
+
+.toggleCardDisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .toggleCardText {

@@ -21,6 +21,9 @@ model Play {
   published     Boolean  @default(false)
   featured      Boolean  @default(false)
   featuredOrder Int?
+  bannerText          String  @default("")
+  bannerColor         String  @default("")
+  showRoyaltiesButton Boolean @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }

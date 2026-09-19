@@ -46,7 +46,12 @@ type FormState = {
   imageSrc: string;
   published: boolean;
   featured: boolean;
+  bannerText: string;
+  bannerColor: string;
+  showRoyaltiesButton: boolean;
 };
+
+const DEFAULT_BANNER_COLOR = '#795548';
 
 const EMPTY_FORM: FormState = {
   title: '',
@@ -60,6 +65,9 @@ const EMPTY_FORM: FormState = {
   imageSrc: '',
   published: false,
   featured: false,
+  bannerText: '',
+  bannerColor: DEFAULT_BANNER_COLOR,
+  showRoyaltiesButton: true,
 };
 
 function playToForm(play: Play): FormState {
@@ -75,6 +83,9 @@ function playToForm(play: Play): FormState {
     imageSrc: play.imageSrc,
     published: play.published,
     featured: play.featured,
+    bannerText: play.bannerText,
+    bannerColor: play.bannerColor || DEFAULT_BANNER_COLOR,
+    showRoyaltiesButton: play.showRoyaltiesButton,
   };
 }
 
@@ -181,14 +192,18 @@ function ToggleCard({
   description,
   checked,
   onChange,
+  disabled,
 }: {
   label: string;
   description: string;
   checked: boolean;
   onChange: (v: boolean) => void;
+  disabled?: boolean;
 }) {
   return (
-    <label className={`${styles.toggleCard} ${checked ? styles.toggleCardOn : ''}`}>
+    <label
+      className={`${styles.toggleCard} ${checked ? styles.toggleCardOn : ''} ${disabled ? styles.toggleCardDisabled : ''}`}
+    >
       <div className={styles.toggleCardText}>
         <span className={styles.toggleCardLabel}>{label}</span>
         <span className={styles.toggleCardDesc}>{description}</span>
@@ -199,6 +214,7 @@ function ToggleCard({
       <input
         type="checkbox"
         checked={checked}
+        disabled={disabled}
         onChange={(e) => onChange(e.target.checked)}
         className={styles.toggleInput}
       />
@@ -288,6 +304,12 @@ function PlayModal({
       const next = { ...prev, [key]: value };
       if (key === 'title' && !slugEdited) {
         next.slug = slugify(value as string);
+      }
+      // Published plays are licensed through a publisher, so the flat
+      // royalties scale button is force-hidden — keep the stored toggle in
+      // sync so the admin UI can't show it as "on" while it's suppressed.
+      if (key === 'published' && value === true) {
+        next.showRoyaltiesButton = false;
       }
       return next;
     });
@@ -461,6 +483,37 @@ function PlayModal({
             </div>
           </div>
 
+          {/* Banner — full width */}
+          <div className={styles.fieldFull}>
+            <label className={styles.label} htmlFor="play-banner-text">
+              Banner Text (optional)
+            </label>
+            <input
+              id="play-banner-text"
+              type="text"
+              className={styles.input}
+              value={form.bannerText}
+              onChange={(e) => setField('bannerText', e.target.value)}
+              placeholder="e.g. Free to Produce as a Veterans Fundraiser"
+            />
+            <p className={styles.fieldHint}>
+              Shown as a colored banner on the play&rsquo;s modal and full page. Leave
+              blank to hide it.
+            </p>
+            <div className={styles.colorPickerRow}>
+              <label className={styles.colorPickerLabel} htmlFor="play-banner-color">
+                Banner Color
+              </label>
+              <input
+                id="play-banner-color"
+                type="color"
+                className={styles.colorPicker}
+                value={form.bannerColor || DEFAULT_BANNER_COLOR}
+                onChange={(e) => setField('bannerColor', e.target.value)}
+              />
+            </div>
+          </div>
+
           {/* Visibility toggles — full width */}
           <div className={styles.fieldFull}>
             <label className={styles.label}>Visibility</label>
@@ -476,6 +529,17 @@ function PlayModal({
                 description="Eligible for the homepage carousel"
                 checked={form.featured}
                 onChange={(v) => setField('featured', v)}
+              />
+              <ToggleCard
+                label="Show Royalties Scale Button"
+                description={
+                  form.published
+                    ? 'Always off for Published plays'
+                    : 'Show the Download Royalties Scale button'
+                }
+                checked={form.published ? false : form.showRoyaltiesButton}
+                onChange={(v) => setField('showRoyaltiesButton', v)}
+                disabled={form.published}
               />
             </div>
           </div>

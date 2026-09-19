@@ -9,6 +9,7 @@ import { prisma } from '@/lib/prisma';
 import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
 import PerusalRequestButton from '@/components/PerusalRequestButton';
 import { getPurchaseUrl } from '@/utils/purchase';
+import { shouldShowRoyaltiesButton } from '@/utils/royalties';
 
 export const revalidate = 60;
 
@@ -43,6 +44,7 @@ export default async function PlayPage({ params }: Props) {
   }
 
   const purchaseUrl = getPurchaseUrl(work);
+  const showRoyalties = shouldShowRoyaltiesButton(work);
 
   return (
     <main className={styles.pageWrapper}>
@@ -66,6 +68,15 @@ export default async function PlayPage({ params }: Props) {
               <p className={styles.runtime}>{work.runtime}</p>
             )}
           </div>
+
+          {work.bannerText && (
+            <div
+              className={styles.banner}
+              style={work.bannerColor ? { backgroundColor: work.bannerColor } : undefined}
+            >
+              {work.bannerText}
+            </div>
+          )}
 
           <h1 className={styles.title}>{work.title}</h1>
 
@@ -116,17 +127,19 @@ export default async function PlayPage({ params }: Props) {
                 Apply for Performance Rights
               </a>
             )}
-            <a
-              href="/pdfs/royalties_scale.pdf"
-              className={`${styles.button} ${styles.downloadButton}`}
-              download
-              data-umami-event="royalties-scale-download"
-              data-umami-event-play={work.slug}
-              data-umami-event-placement="play-page"
-            >
-              <BsDownload aria-hidden="true" />
-              Download Royalties Scale
-            </a>
+            {showRoyalties && (
+              <a
+                href="/pdfs/royalties_scale.pdf"
+                className={`${styles.button} ${styles.downloadButton}`}
+                download
+                data-umami-event="royalties-scale-download"
+                data-umami-event-play={work.slug}
+                data-umami-event-placement="play-page"
+              >
+                <BsDownload aria-hidden="true" />
+                Download Royalties Scale
+              </a>
+            )}
           </div>
 
           {!purchaseUrl && (

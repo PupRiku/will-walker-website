@@ -129,6 +129,15 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
             />
           </div>
           <div className={styles.modalText}>
+            {play.bannerText && (
+              <div
+                className={styles.banner}
+                style={play.bannerColor ? { backgroundColor: play.bannerColor } : undefined}
+              >
+                {play.bannerText}
+              </div>
+            )}
+
             <h2 id="modal-title" className={styles.modalTitle}>
               {play.title}
             </h2>

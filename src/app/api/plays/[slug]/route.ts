@@ -84,6 +84,10 @@ export async function PUT(request: Request, { params }: { params: Params }) {
         published: typeof body.published === 'boolean' ? body.published : false,
         featured: typeof body.featured === 'boolean' ? body.featured : false,
         featuredOrder: typeof body.featuredOrder === 'number' ? body.featuredOrder : null,
+        bannerText: typeof body.bannerText === 'string' ? body.bannerText.trim() : '',
+        bannerColor: typeof body.bannerColor === 'string' ? body.bannerColor.trim() : '',
+        showRoyaltiesButton:
+          typeof body.showRoyaltiesButton === 'boolean' ? body.showRoyaltiesButton : true,
       },
     })
     return NextResponse.json(play)

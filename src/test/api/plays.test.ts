@@ -44,6 +44,9 @@ const mockPlay = {
   published: false,
   featured: false,
   featuredOrder: null,
+  bannerText: '',
+  bannerColor: '',
+  showRoyaltiesButton: true,
   createdAt: new Date(),
   updatedAt: new Date(),
 }

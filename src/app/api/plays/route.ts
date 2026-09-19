@@ -93,6 +93,10 @@ export async function POST(request: Request) {
         featured: typeof body.featured === 'boolean' ? body.featured : false,
         featuredOrder:
           typeof body.featuredOrder === 'number' ? body.featuredOrder : null,
+        bannerText: typeof body.bannerText === 'string' ? body.bannerText.trim() : '',
+        bannerColor: typeof body.bannerColor === 'string' ? body.bannerColor.trim() : '',
+        showRoyaltiesButton:
+          typeof body.showRoyaltiesButton === 'boolean' ? body.showRoyaltiesButton : true,
       },
     });
     return NextResponse.json(play, { status: 201 });

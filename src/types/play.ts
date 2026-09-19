@@ -12,6 +12,9 @@ export type Work = {
   published?: boolean;
   purchase?: string;
   runtime?: string;
+  bannerText?: string;
+  bannerColor?: string;
+  showRoyaltiesButton?: boolean;
 };
 
 // Full shape returned by GET /api/plays (matches Prisma Play model).
@@ -30,6 +33,9 @@ export type Play = {
   published: boolean;
   featured: boolean;
   featuredOrder: number | null;
+  bannerText: string;
+  bannerColor: string;
+  showRoyaltiesButton: boolean;
   createdAt: string;
   updatedAt: string;
 };
