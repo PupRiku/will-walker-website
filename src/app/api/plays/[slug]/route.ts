@@ -3,7 +3,6 @@ import { prisma, isPrismaErrorCode } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
 import { VALID_CATEGORIES, ERROR_MESSAGES } from '@/lib/constants'
 import { validateOptionalHttpUrl } from '@/utils/url'
-import { normalizeShowRoyaltiesButton } from '@/utils/royalties'
 import { normalizeHexColor, validateOptionalHexColor } from '@/utils/color'
 
 function validatePlay(body: Record<string, unknown>) {
@@ -74,8 +73,27 @@ export async function PUT(request: Request, { params }: { params: Params }) {
 
   try {
     const published = typeof body.published === 'boolean' ? body.published : false
-    const requestedShowRoyaltiesButton =
-      typeof body.showRoyaltiesButton === 'boolean' ? body.showRoyaltiesButton : true
+
+    // A PUT that omits bannerText/bannerColor/showRoyaltiesButton (an older
+    // cached admin bundle, or another API client written before these
+    // fields existed) must not reset them — that would silently clear a
+    // configured banner or re-enable a manual royalties opt-out on every
+    // edit. Only touch a field when the request actually sent it, except
+    // showRoyaltiesButton must still be forced off for a published play
+    // regardless of what the request sent or omitted, since that invariant
+    // has to hold everywhere a play is written.
+    const optionalUpdates: Record<string, unknown> = {}
+    if (typeof body.bannerText === 'string') {
+      optionalUpdates.bannerText = body.bannerText.trim()
+    }
+    if (typeof body.bannerColor === 'string') {
+      optionalUpdates.bannerColor = normalizeHexColor(body.bannerColor) ?? ''
+    }
+    if (published) {
+      optionalUpdates.showRoyaltiesButton = false
+    } else if (typeof body.showRoyaltiesButton === 'boolean') {
+      optionalUpdates.showRoyaltiesButton = body.showRoyaltiesButton
+    }
 
     const play = await prisma.play.update({
       where: { slug },
@@ -92,10 +110,7 @@ export async function PUT(request: Request, { params }: { params: Params }) {
         published,
         featured: typeof body.featured === 'boolean' ? body.featured : false,
         featuredOrder: typeof body.featuredOrder === 'number' ? body.featuredOrder : null,
-        bannerText: typeof body.bannerText === 'string' ? body.bannerText.trim() : '',
-        bannerColor:
-          typeof body.bannerColor === 'string' ? (normalizeHexColor(body.bannerColor) ?? '') : '',
-        showRoyaltiesButton: normalizeShowRoyaltiesButton(published, requestedShowRoyaltiesButton),
+        ...optionalUpdates,
       },
     })
     return NextResponse.json(play)

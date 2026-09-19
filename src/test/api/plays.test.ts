@@ -390,6 +390,33 @@ describe('PUT /api/plays/[slug]', () => {
     await PUT(req, ctx)
     expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.showRoyaltiesButton).toBe(false)
   })
+
+  it('leaves bannerText, bannerColor and showRoyaltiesButton untouched when the request omits them', async () => {
+    // An older/cached admin bundle or another API client predating these
+    // fields must not reset a configured banner or a manual royalties
+    // opt-out just by editing an unrelated field.
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', { ...validPlayBody, published: false })
+    await PUT(req, ctx)
+    const data = vi.mocked(prisma.play.update).mock.calls[0][0].data
+    expect(data).not.toHaveProperty('bannerText')
+    expect(data).not.toHaveProperty('bannerColor')
+    expect(data).not.toHaveProperty('showRoyaltiesButton')
+  })
+
+  it('still forces showRoyaltiesButton to false on publish even when the request omits it', async () => {
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', {
+      ...validPlayBody,
+      published: true,
+      purchase: 'https://example.com/buy',
+    })
+    await PUT(req, ctx)
+    const data = vi.mocked(prisma.play.update).mock.calls[0][0].data
+    expect(data.showRoyaltiesButton).toBe(false)
+    expect(data).not.toHaveProperty('bannerText')
+    expect(data).not.toHaveProperty('bannerColor')
+  })
 })
 
 describe('DELETE /api/plays/[slug]', () => {
