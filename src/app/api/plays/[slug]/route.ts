@@ -4,6 +4,7 @@ import { requireAuth } from '@/lib/auth'
 import { VALID_CATEGORIES, ERROR_MESSAGES } from '@/lib/constants'
 import { validateOptionalHttpUrl } from '@/utils/url'
 import { normalizeShowRoyaltiesButton } from '@/utils/royalties'
+import { normalizeHexColor, validateOptionalHexColor } from '@/utils/color'
 
 function validatePlay(body: Record<string, unknown>) {
   const { title, slug, category, runtime, cast, synopsis, imageSrc } = body
@@ -29,6 +30,8 @@ function validatePlay(body: Record<string, unknown>) {
   if (pdfSrcError) return pdfSrcError
   const purchaseError = validateOptionalHttpUrl(body.purchase, 'Purchase URL')
   if (purchaseError) return purchaseError
+  const bannerColorError = validateOptionalHexColor(body.bannerColor, 'Banner Color')
+  if (bannerColorError) return bannerColorError
 
   return null
 }
@@ -90,7 +93,8 @@ export async function PUT(request: Request, { params }: { params: Params }) {
         featured: typeof body.featured === 'boolean' ? body.featured : false,
         featuredOrder: typeof body.featuredOrder === 'number' ? body.featuredOrder : null,
         bannerText: typeof body.bannerText === 'string' ? body.bannerText.trim() : '',
-        bannerColor: typeof body.bannerColor === 'string' ? body.bannerColor.trim() : '',
+        bannerColor:
+          typeof body.bannerColor === 'string' ? (normalizeHexColor(body.bannerColor) ?? '') : '',
         showRoyaltiesButton: normalizeShowRoyaltiesButton(published, requestedShowRoyaltiesButton),
       },
     })

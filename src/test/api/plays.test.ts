@@ -218,15 +218,29 @@ describe('POST /api/plays', () => {
     expect(data.showRoyaltiesButton).toBe(true)
   })
 
-  it('trims bannerText and bannerColor before saving', async () => {
+  it('trims bannerText and normalizes bannerColor before saving', async () => {
     vi.mocked(prisma.play.create).mockResolvedValue(mockPlay)
     const res = await POST(
-      makeRequest({ ...validPlayBody, bannerText: '  Free to Produce  ', bannerColor: ' #4b5320 ' }),
+      makeRequest({ ...validPlayBody, bannerText: '  Free to Produce  ', bannerColor: ' #4B5320 ' }),
     )
     expect(res.status).toBe(201)
     const data = vi.mocked(prisma.play.create).mock.calls[0][0].data
     expect(data.bannerText).toBe('Free to Produce')
     expect(data.bannerColor).toBe('#4b5320')
+  })
+
+  it('expands a 3-digit bannerColor shorthand to 6 digits', async () => {
+    vi.mocked(prisma.play.create).mockResolvedValue(mockPlay)
+    const res = await POST(makeRequest({ ...validPlayBody, bannerColor: '#abc' }))
+    expect(res.status).toBe(201)
+    expect(vi.mocked(prisma.play.create).mock.calls[0][0].data.bannerColor).toBe('#aabbcc')
+  })
+
+  it('returns 400 when bannerColor is not a valid hex color', async () => {
+    const res = await POST(makeRequest({ ...validPlayBody, bannerColor: 'not-a-color' }))
+    expect(res.status).toBe(400)
+    expect((await res.json()).error).toMatch(/Banner Color/)
+    expect(prisma.play.create).not.toHaveBeenCalled()
   })
 
   it('persists showRoyaltiesButton: false for an unpublished play', async () => {
@@ -305,18 +319,34 @@ describe('PUT /api/plays/[slug]', () => {
     expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.pdfSrc).toBe('https://drive.google.com/file/d/abc')
   })
 
-  it('trims bannerText and bannerColor before saving', async () => {
+  it('trims bannerText and normalizes bannerColor before saving', async () => {
     vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
     const [req, ctx] = makeSlugRequest('PUT', {
       ...validPlayBody,
       bannerText: '  Free to Produce  ',
-      bannerColor: ' #4b5320 ',
+      bannerColor: ' #4B5320 ',
     })
     const res = await PUT(req, ctx)
     expect(res.status).toBe(200)
     const data = vi.mocked(prisma.play.update).mock.calls[0][0].data
     expect(data.bannerText).toBe('Free to Produce')
     expect(data.bannerColor).toBe('#4b5320')
+  })
+
+  it('expands a 3-digit bannerColor shorthand to 6 digits', async () => {
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', { ...validPlayBody, bannerColor: '#abc' })
+    const res = await PUT(req, ctx)
+    expect(res.status).toBe(200)
+    expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.bannerColor).toBe('#aabbcc')
+  })
+
+  it('returns 400 when bannerColor is not a valid hex color', async () => {
+    const [req, ctx] = makeSlugRequest('PUT', { ...validPlayBody, bannerColor: 'not-a-color' })
+    const res = await PUT(req, ctx)
+    expect(res.status).toBe(400)
+    expect((await res.json()).error).toMatch(/Banner Color/)
+    expect(prisma.play.update).not.toHaveBeenCalled()
   })
 
   it('persists showRoyaltiesButton: false for an unpublished play', async () => {
