@@ -45,6 +45,19 @@
   margin-bottom: 1rem;
 }
 
+.banner {
+  display: inline-block;
+  background-color: var(--color-accent-primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.25rem;
+}
+
 .genre {
   font-family: var(--font-family-accent);
   color: var(--color-accent-primary);

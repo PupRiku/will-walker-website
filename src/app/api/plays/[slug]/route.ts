@@ -3,6 +3,7 @@ import { prisma, isPrismaErrorCode } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
 import { VALID_CATEGORIES, ERROR_MESSAGES } from '@/lib/constants'
 import { validateOptionalHttpUrl } from '@/utils/url'
+import { normalizeHexColor, validateOptionalHexColor } from '@/utils/color'
 
 function validatePlay(body: Record<string, unknown>) {
   const { title, slug, category, runtime, cast, synopsis, imageSrc } = body
@@ -28,6 +29,8 @@ function validatePlay(body: Record<string, unknown>) {
   if (pdfSrcError) return pdfSrcError
   const purchaseError = validateOptionalHttpUrl(body.purchase, 'Purchase URL')
   if (purchaseError) return purchaseError
+  const bannerColorError = validateOptionalHexColor(body.bannerColor, 'Banner Color')
+  if (bannerColorError) return bannerColorError
 
   return null
 }
@@ -69,6 +72,29 @@ export async function PUT(request: Request, { params }: { params: Params }) {
   }
 
   try {
+    const published = typeof body.published === 'boolean' ? body.published : false
+
+    // A PUT that omits bannerText/bannerColor/showRoyaltiesButton (an older
+    // cached admin bundle, or another API client written before these
+    // fields existed) must not reset them — that would silently clear a
+    // configured banner or re-enable a manual royalties opt-out on every
+    // edit. Only touch a field when the request actually sent it, except
+    // showRoyaltiesButton must still be forced off for a published play
+    // regardless of what the request sent or omitted, since that invariant
+    // has to hold everywhere a play is written.
+    const optionalUpdates: Record<string, unknown> = {}
+    if (typeof body.bannerText === 'string') {
+      optionalUpdates.bannerText = body.bannerText.trim()
+    }
+    if (typeof body.bannerColor === 'string') {
+      optionalUpdates.bannerColor = normalizeHexColor(body.bannerColor) ?? ''
+    }
+    if (published) {
+      optionalUpdates.showRoyaltiesButton = false
+    } else if (typeof body.showRoyaltiesButton === 'boolean') {
+      optionalUpdates.showRoyaltiesButton = body.showRoyaltiesButton
+    }
+
     const play = await prisma.play.update({
       where: { slug },
       data: {
@@ -81,9 +107,10 @@ export async function PUT(request: Request, { params }: { params: Params }) {
         imageSrc: (body.imageSrc as string).trim(),
         pdfSrc: typeof body.pdfSrc === 'string' ? body.pdfSrc.trim() : '',
         purchase: typeof body.purchase === 'string' ? body.purchase.trim() : '',
-        published: typeof body.published === 'boolean' ? body.published : false,
+        published,
         featured: typeof body.featured === 'boolean' ? body.featured : false,
         featuredOrder: typeof body.featuredOrder === 'number' ? body.featuredOrder : null,
+        ...optionalUpdates,
       },
     })
     return NextResponse.json(play)

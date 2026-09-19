@@ -3,6 +3,7 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '../src/generated/prisma/client'
 import { worksData } from '../src/data/works'
 import { productionsData } from '../src/data/productions'
+import { normalizeShowRoyaltiesButton } from '../src/utils/royalties'
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 const prisma = new PrismaClient({ adapter })
@@ -13,9 +14,18 @@ async function main() {
   // Seed plays
   for (const work of worksData) {
     const featuredOrder = work.featured ? ++featuredCounter : null
+    const published = work.published ?? false
 
     await prisma.play.upsert({
       where: { slug: work.slug },
+      // worksData (the archived seed source) has no bannerText, bannerColor,
+      // or showRoyaltiesButton fields, so the update branch must not touch
+      // them — doing so would reset an existing play's admin-managed banner,
+      // or a manually opted-out showRoyaltiesButton, back to defaults on
+      // every `prisma db seed` run. The one exception is forcing the
+      // royalties toggle off when a play becomes published, since that
+      // invariant (see normalizeShowRoyaltiesButton) must hold everywhere a
+      // play is written, not just through the admin API.
       update: {
         title: work.title,
         category: work.category,
@@ -25,9 +35,10 @@ async function main() {
         imageSrc: work.imageSrc,
         pdfSrc: work.pdfSrc ?? '',
         purchase: work.purchase ?? '',
-        published: work.published ?? false,
+        published,
         featured: work.featured ?? false,
         featuredOrder,
+        ...(published ? { showRoyaltiesButton: false } : {}),
       },
       create: {
         slug: work.slug,
@@ -39,9 +50,12 @@ async function main() {
         imageSrc: work.imageSrc,
         pdfSrc: work.pdfSrc ?? '',
         purchase: work.purchase ?? '',
-        published: work.published ?? false,
+        published,
         featured: work.featured ?? false,
         featuredOrder,
+        bannerText: '',
+        bannerColor: '',
+        showRoyaltiesButton: normalizeShowRoyaltiesButton(published, true),
       },
     })
   }

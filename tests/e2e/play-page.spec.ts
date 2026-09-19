@@ -41,8 +41,8 @@ test.describe('/works/hamlet-a-horatio-story', () => {
     await expect(page.getByRole('link', { name: /purchase rights/i })).toBeVisible();
   });
 
-  test('"Download Royalties Scale" button is present', async ({ page }) => {
-    await expect(page.getByRole('link', { name: /royalties scale/i })).toBeVisible();
+  test('"Download Royalties Scale" button is hidden for published plays', async ({ page }) => {
+    await expect(page.getByRole('link', { name: /royalties scale/i })).not.toBeVisible();
   });
 
   test('"← Back to All Works" link navigates to /works', async ({ page }) => {
@@ -72,6 +72,10 @@ test.describe('/works/echoes-of-valor', () => {
 
   test('no "Purchase Rights" button', async ({ page }) => {
     await expect(page.getByRole('link', { name: /purchase rights/i })).not.toBeVisible();
+  });
+
+  test('"Download Royalties Scale" button is present for unpublished plays', async ({ page }) => {
+    await expect(page.getByRole('link', { name: /royalties scale/i })).toBeVisible();
   });
 });
 

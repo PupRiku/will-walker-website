@@ -81,6 +81,19 @@
   margin-bottom: 1.5rem;
 }
 
+.banner {
+  display: inline-block;
+  background-color: var(--color-accent-primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+}
+
 .modalHeading {
   font-family: var(--font-family-heading);
   font-weight: 700;
