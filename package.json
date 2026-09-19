@@ -20,7 +20,7 @@
     "@prisma/client": "^7.7.0",
     "@vercel/blob": "^2.3.3",
     "embla-carousel-react": "^8.6.0",
-    "next": "^15.5.23",
+    "next": "^15.5.24",
     "pg": "^8.20.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -46,7 +46,7 @@
     "eslint-config-next": "15.3.3",
     "jsdom": "^29.0.2",
     "prisma": "^7.7.0",
-    "sharp": "^0.35.3",
+    "sharp": "^0.35.4",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5",
@@ -54,9 +54,10 @@
   },
   "overrides": {
     "fast-uri": "^3.1.2",
-    "sharp": "^0.35.3",
+    "sharp": "^0.35.4",
     "postcss": "^8.5.10",
     "mysql2": "^3.24.3",
-    "deepmerge-ts": "^8.0.2"
+    "deepmerge-ts": "^8.0.2",
+    "js-yaml": "^4.3.2"
   }
 }
