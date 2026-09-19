@@ -15,16 +15,17 @@ async function main() {
   for (const work of worksData) {
     const featuredOrder = work.featured ? ++featuredCounter : null
     const published = work.published ?? false
-    // Published plays never show the royalties button — see
-    // normalizeShowRoyaltiesButton for why this must be enforced wherever a
-    // play is written, not just through the admin API.
-    const showRoyaltiesButton = normalizeShowRoyaltiesButton(
-      published,
-      work.showRoyaltiesButton ?? true,
-    )
 
     await prisma.play.upsert({
       where: { slug: work.slug },
+      // worksData (the archived seed source) has no bannerText, bannerColor,
+      // or showRoyaltiesButton fields, so the update branch must not touch
+      // them — doing so would reset an existing play's admin-managed banner,
+      // or a manually opted-out showRoyaltiesButton, back to defaults on
+      // every `prisma db seed` run. The one exception is forcing the
+      // royalties toggle off when a play becomes published, since that
+      // invariant (see normalizeShowRoyaltiesButton) must hold everywhere a
+      // play is written, not just through the admin API.
       update: {
         title: work.title,
         category: work.category,
@@ -37,9 +38,7 @@ async function main() {
         published,
         featured: work.featured ?? false,
         featuredOrder,
-        bannerText: work.bannerText ?? '',
-        bannerColor: work.bannerColor ?? '',
-        showRoyaltiesButton,
+        ...(published ? { showRoyaltiesButton: false } : {}),
       },
       create: {
         slug: work.slug,
@@ -54,9 +53,9 @@ async function main() {
         published,
         featured: work.featured ?? false,
         featuredOrder,
-        bannerText: work.bannerText ?? '',
-        bannerColor: work.bannerColor ?? '',
-        showRoyaltiesButton,
+        bannerText: '',
+        bannerColor: '',
+        showRoyaltiesButton: normalizeShowRoyaltiesButton(published, true),
       },
     })
   }
