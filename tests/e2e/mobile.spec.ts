@@ -103,8 +103,11 @@ test.describe('Mobile layout', () => {
     const purchaseBtn = page.getByRole('link', { name: /purchase rights/i });
     await purchaseBtn.scrollIntoViewIfNeeded();
     await expect(purchaseBtn).toBeVisible();
-    const royaltiesBtn = page.getByRole('link', { name: /royalties scale/i });
-    await royaltiesBtn.scrollIntoViewIfNeeded();
-    await expect(royaltiesBtn).toBeVisible();
+    // Hamlet is published, so the royalties scale button is intentionally
+    // hidden — it's a flat-fee button that doesn't apply once a play is
+    // licensed through a publisher.
+    await expect(
+      page.getByRole('link', { name: /royalties scale/i }),
+    ).not.toBeVisible();
   });
 });
