@@ -14,7 +14,7 @@ type PlaysProps = {
 
 const PrevButton = (props: { onClick: () => void; enabled: boolean }) => (
   <button
-    className={`${styles.embla__button} ${styles.embla__button__prev}`}
+    className={`${styles.embla__button} ${styles['embla__button--prev']}`}
     onClick={props.onClick}
     disabled={!props.enabled}
     aria-label="Previous slide"
@@ -30,7 +30,7 @@ const PrevButton = (props: { onClick: () => void; enabled: boolean }) => (
 
 const NextButton = (props: { onClick: () => void; enabled: boolean }) => (
   <button
-    className={`${styles.embla__button} ${styles.embla__button__next}`}
+    className={`${styles.embla__button} ${styles['embla__button--next']}`}
     onClick={props.onClick}
     disabled={!props.enabled}
     aria-label="Next slide"
