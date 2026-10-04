@@ -11,6 +11,7 @@ import {
 import AdminModal from '@/components/admin/AdminModal';
 import { slugify, timeAgo } from '@/utils/admin';
 import { validateOptionalHttpUrl } from '@/utils/url';
+import { MONTH_NAMES, sortAccolades, validateAccolades } from '@/utils/accolades';
 import styles from './page.module.css';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -49,6 +50,16 @@ type FormState = {
   bannerText: string;
   bannerColor: string;
   showRoyaltiesButton: boolean;
+  accolades: AccoladeRow[];
+};
+
+// Year is a string while editing so the field can be cleared/typed freely;
+// it is converted to a number when the form is saved.
+type AccoladeRow = {
+  name: string;
+  organization: string;
+  month: number;
+  year: string;
 };
 
 const DEFAULT_BANNER_COLOR = '#795548';
@@ -68,6 +79,7 @@ const EMPTY_FORM: FormState = {
   bannerText: '',
   bannerColor: DEFAULT_BANNER_COLOR,
   showRoyaltiesButton: true,
+  accolades: [],
 };
 
 function playToForm(play: Play): FormState {
@@ -86,7 +98,35 @@ function playToForm(play: Play): FormState {
     bannerText: play.bannerText,
     bannerColor: play.bannerColor || DEFAULT_BANNER_COLOR,
     showRoyaltiesButton: play.showRoyaltiesButton,
+    accolades: sortAccolades(play.accolades).map((a) => ({
+      name: a.name,
+      organization: a.organization,
+      month: a.month,
+      year: String(a.year),
+    })),
   };
+}
+
+const EMPTY_ACCOLADE: AccoladeRow = {
+  name: '',
+  organization: '',
+  month: new Date().getMonth() + 1,
+  year: '',
+};
+
+const isBlankAccolade = (a: AccoladeRow) =>
+  !a.name.trim() && !a.organization.trim() && !a.year.trim();
+
+// Returns an error message for the first half-filled or invalid row, else null.
+function validateAccoladeRows(rows: AccoladeRow[]): string | null {
+  // Validate all populated rows in a single call so the row-count limit is
+  // enforced here exactly as the API enforces it.
+  const error = validateAccolades(
+    rows
+      .filter((r) => !isBlankAccolade(r))
+      .map((r) => ({ ...r, year: Number(r.year) || 0 }))
+  );
+  return error ? `Accolades: ${error}` : null;
 }
 
 // ── Upload zone component ──────────────────────────────────────────────────────
@@ -315,9 +355,32 @@ function PlayModal({
     });
   }
 
+  function updateAccolade(index: number, patch: Partial<AccoladeRow>) {
+    setForm((prev) => ({
+      ...prev,
+      accolades: prev.accolades.map((a, i) => (i === index ? { ...a, ...patch } : a)),
+    }));
+  }
+
+  function addAccolade() {
+    setForm((prev) => ({ ...prev, accolades: [...prev.accolades, { ...EMPTY_ACCOLADE }] }));
+  }
+
+  function removeAccolade(index: number) {
+    setForm((prev) => ({
+      ...prev,
+      accolades: prev.accolades.filter((_, i) => i !== index),
+    }));
+  }
+
   async function handleSave() {
     if (urlErrors.pdfSrc || urlErrors.purchase) {
       setUrlTouched({ pdfSrc: true, purchase: true });
+      return;
+    }
+    const accoladeError = validateAccoladeRows(form.accolades);
+    if (accoladeError) {
+      setSaveError(accoladeError);
       return;
     }
     setSaving(true);
@@ -332,7 +395,12 @@ function PlayModal({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          accolades: form.accolades
+            .filter((a) => !isBlankAccolade(a))
+            .map((a) => ({ ...a, year: Number(a.year) })),
+        }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -514,6 +582,68 @@ function PlayModal({
             </div>
           </div>
 
+          {/* Accolades — full width */}
+          <div className={styles.fieldFull}>
+            <label className={styles.label}>Accolades (optional)</label>
+            <p className={styles.fieldHint}>
+              Awards this play has won. Shown newest first on the play&rsquo;s modal and
+              full page; a trophy appears on its card.
+            </p>
+            <div className={styles.accoladeList}>
+              {form.accolades.map((a, i) => (
+                <div key={i} className={styles.accoladeRow}>
+                  <input
+                    type="text"
+                    className={styles.input}
+                    value={a.name}
+                    onChange={(e) => updateAccolade(i, { name: e.target.value })}
+                    placeholder="Award name"
+                    aria-label={`Accolade ${i + 1} award name`}
+                  />
+                  <input
+                    type="text"
+                    className={styles.input}
+                    value={a.organization}
+                    onChange={(e) => updateAccolade(i, { organization: e.target.value })}
+                    placeholder="Organization"
+                    aria-label={`Accolade ${i + 1} organization`}
+                  />
+                  <select
+                    className={styles.select}
+                    value={a.month}
+                    onChange={(e) => updateAccolade(i, { month: Number(e.target.value) })}
+                    aria-label={`Accolade ${i + 1} month`}
+                  >
+                    {MONTH_NAMES.map((m, idx) => (
+                      <option key={m} value={idx + 1}>{m}</option>
+                    ))}
+                  </select>
+                  <input
+                    type="number"
+                    className={styles.input}
+                    value={a.year}
+                    onChange={(e) => updateAccolade(i, { year: e.target.value })}
+                    placeholder="Year"
+                    min={1900}
+                    max={2100}
+                    aria-label={`Accolade ${i + 1} year`}
+                  />
+                  <button
+                    type="button"
+                    className={styles.btnDelete}
+                    onClick={() => removeAccolade(i)}
+                    aria-label={`Remove accolade ${i + 1}`}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button type="button" className={styles.btnSecondary} onClick={addAccolade}>
+              + Add Accolade
+            </button>
+          </div>
+
           {/* Visibility toggles — full width */}
           <div className={styles.fieldFull}>
             <label className={styles.label}>Visibility</label>
@@ -644,7 +774,9 @@ export default function PlaysPage() {
   const fetchPlays = useCallback(async () => {
     setFetchError(false);
     try {
-      const res = await fetch('/api/plays');
+      // The endpoint is CDN-cacheable for the public site; the admin must always
+      // see fresh data or a just-saved edit appears missing when reopened.
+      const res = await fetch('/api/plays', { cache: 'no-store' });
       if (!res.ok) throw new Error('fetch failed');
       setPlays(await res.json());
     } catch {

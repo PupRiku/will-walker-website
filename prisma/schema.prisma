@@ -26,6 +26,20 @@ model Play {
   showRoyaltiesButton Boolean @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  accolades     Accolade[]
+}
+
+model Accolade {
+  id           String   @id @default(cuid())
+  playId       String
+  play         Play     @relation(fields: [playId], references: [id], onDelete: Cascade)
+  name         String
+  organization String
+  month        Int
+  year         Int
+  createdAt    DateTime @default(now())
+
+  @@index([playId])
 }
 
 model Production {

@@ -155,6 +155,34 @@ describe('Modal', () => {
   });
 });
 
+describe('Modal accolades', () => {
+  it('lists accolades newest first after the Runtime section', () => {
+    render(
+      <Modal
+        isOpen={true}
+        onClose={vi.fn()}
+        play={{
+          ...mockPlay,
+          accolades: [
+            { name: 'Older Award', organization: 'Org A', month: 5, year: 2019 },
+            { name: 'Newer Award', organization: 'Org B', month: 2, year: 2024 },
+          ],
+        }}
+      />
+    );
+    const items = screen.getAllByRole('listitem').map((li) => li.textContent);
+    expect(items).toEqual(['Newer AwardOrg B · February 2024', 'Older AwardOrg A · May 2019']);
+    const runtime = screen.getByRole('heading', { name: 'Runtime' });
+    const accolades = screen.getByRole('heading', { name: 'Accolades' });
+    expect(runtime.compareDocumentPosition(accolades) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('omits the Accolades section when there are none', () => {
+    render(<Modal isOpen={true} onClose={vi.fn()} play={mockPlay} />);
+    expect(screen.queryByRole('heading', { name: 'Accolades' })).toBeNull();
+  });
+});
+
 describe('Modal analytics events', () => {
   const publishedPlay: Work = {
     ...mockPlay,

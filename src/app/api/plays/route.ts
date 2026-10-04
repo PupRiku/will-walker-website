@@ -5,6 +5,7 @@ import { VALID_CATEGORIES, ERROR_MESSAGES } from '@/lib/constants';
 import { validateOptionalHttpUrl } from '@/utils/url';
 import { normalizeShowRoyaltiesButton } from '@/utils/royalties';
 import { normalizeHexColor, validateOptionalHexColor } from '@/utils/color';
+import { validateAccolades, toAccoladeCreateData } from '@/utils/accolades';
 
 function validatePlay(body: Record<string, unknown>) {
   const { title, slug, category, runtime, cast, synopsis, imageSrc } = body;
@@ -32,6 +33,8 @@ function validatePlay(body: Record<string, unknown>) {
   if (purchaseError) return purchaseError;
   const bannerColorError = validateOptionalHexColor(body.bannerColor, 'Banner Color');
   if (bannerColorError) return bannerColorError;
+  const accoladesError = validateAccolades(body.accolades);
+  if (accoladesError) return accoladesError;
 
   return null;
 }
@@ -43,6 +46,7 @@ export async function GET() {
         { featuredOrder: { sort: 'asc', nulls: 'last' } },
         { title: 'asc' },
       ],
+      include: { accolades: true },
     });
     return NextResponse.json(plays, {
       headers: {
@@ -105,7 +109,11 @@ export async function POST(request: Request) {
         bannerColor:
           typeof body.bannerColor === 'string' ? (normalizeHexColor(body.bannerColor) ?? '') : '',
         showRoyaltiesButton: normalizeShowRoyaltiesButton(published, requestedShowRoyaltiesButton),
+        ...(Array.isArray(body.accolades) && body.accolades.length > 0
+          ? { accolades: { create: toAccoladeCreateData(body.accolades) } }
+          : {}),
       },
+      include: { accolades: true },
     });
     return NextResponse.json(play, { status: 201 });
   } catch (e: unknown) {

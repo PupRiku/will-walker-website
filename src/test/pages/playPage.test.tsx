@@ -43,6 +43,7 @@ function makePlay(overrides: Partial<Play> = {}): Play {
     bannerText: '',
     bannerColor: '',
     showRoyaltiesButton: true,
+    accolades: [],
     createdAt: '2024-01-01T00:00:00.000Z',
     updatedAt: '2024-01-01T00:00:00.000Z',
     ...overrides,
@@ -95,7 +96,18 @@ const royaltiesOffPlay = makePlay({
   showRoyaltiesButton: false,
 });
 
+const playWithAccolades = makePlay({
+  slug: 'play-with-accolades',
+  title: 'Play With Accolades',
+  accolades: [
+    { name: 'Best New Play', organization: 'Texas Theatre Guild', month: 3, year: 2021 },
+    { name: 'Audience Choice', organization: 'Paris Playhouse', month: 11, year: 2023 },
+    { name: 'Finalist', organization: 'Lone Star Festival', month: 1, year: 2023 },
+  ],
+});
+
 const allPlays = [
+  playWithAccolades,
   publishedPlay,
   unpublishedPlay,
   playWithPdf,
@@ -122,6 +134,24 @@ async function renderPlayPage(slug: string) {
 }
 
 describe('PlayPage (/works/[slug])', () => {
+  it('lists accolades in reverse chronological order below the cast', async () => {
+    await renderPlayPage('play-with-accolades');
+    const heading = screen.getByRole('heading', { name: 'Accolades' });
+    const names = screen.getAllByRole('listitem').map((li) => li.textContent);
+    expect(names).toEqual([
+      'Audience ChoiceParis Playhouse · November 2023',
+      'FinalistLone Star Festival · January 2023',
+      'Best New PlayTexas Theatre Guild · March 2021',
+    ]);
+    const cast = screen.getByText('Cast:');
+    expect(cast.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('omits the Accolades section when the play has none', async () => {
+    await renderPlayPage('unpublished-play');
+    expect(screen.queryByRole('heading', { name: 'Accolades' })).toBeNull();
+  });
+
   it('renders the play title as an h1', async () => {
     await renderPlayPage('unpublished-play');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Unpublished Play');

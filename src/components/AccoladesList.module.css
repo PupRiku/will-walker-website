@@ -1,0 +1,28 @@
+.accolades {
+  margin: 0 0 1.5rem;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--color-accent-primary);
+}
+
+.name {
+  font-weight: 700;
+}
+
+.meta {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}

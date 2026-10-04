@@ -9,6 +9,7 @@ import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
 import PerusalRequestButton from './PerusalRequestButton';
 import { getPurchaseUrl } from '@/utils/purchase';
 import { getContrastTextColor } from '@/utils/color';
+import AccoladesList from './AccoladesList';
 
 type ModalProps = {
   isOpen: boolean;
@@ -167,6 +168,8 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
                 <p>{play.runtime}</p>
               </>
             )}
+
+            <AccoladesList accolades={play.accolades} headingClassName={styles.modalHeading} />
 
             <div className={styles.buttonGroup}>
               {play.pdfSrc && (

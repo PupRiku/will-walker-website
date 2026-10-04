@@ -160,6 +160,14 @@ export const worksData: Work[] = [ ... ];
 3. Toggle "Featured" on to include it in the home page carousel
 4. Save — the page will live within 60 seconds (ISR revalidation)
 
+### Accolades
+
+Plays can have optional awards, stored in the `Accolade` table (`name`, `organization`, `month` 1–12, `year`; cascade-deleted with the play) and exposed as `accolades: Accolade[]` on `Play` (optional on `Work`).
+
+- **Admin:** the play form has an "Accolades (optional)" section with add/remove rows. PUT replaces the whole set only when `accolades` is an array; omitting it leaves existing rows untouched (same rule as `bannerText`). Validation lives in `validateAccolades` (`src/utils/accolades.ts`), shared by the form and both API routes.
+- **Display:** `AccoladeBadge` (🏆, top-left of the cover so it never collides with the top-right "Published" ribbon) on the carousel and `/works` cards; `AccoladesList` (reverse chronological via `sortAccolades`, dates via `formatAccoladeDate`) in the modal after Runtime and on the play page after Cast. Neither appears when a play has no accolades.
+- **Migration:** `20261004120000_add_accolades` is already applied to the production database — do not re-run it. For any future migration, `prisma migrate deploy` hangs through the transaction pooler (port 6543); run it with `DATABASE_URL` pointed at the session pooler (same host, port 5432, without the `?pgbouncer=true...` query string), then keep using 6543 for the app.
+
 ---
 
 ## Production Photos
@@ -439,6 +447,7 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 | `src/test/components/Modal.test.tsx` | Render, conditional buttons, "View Full Page" link, overlay click, aria attributes |
 | `src/test/components/Header.test.tsx` | Nav links, hamburger toggle, aria-label, logo alt text |
 | `src/test/pages/playPage.test.tsx` | Title, synopsis, ribbon badge, conditional buttons, notFound for unknown slug |
+| `src/test/utils/accolades.test.ts` | `sortAccolades`, `formatAccoladeDate`, `validateAccolades` (accolade rendering is also covered in Modal/playPage tests, API behavior in `src/test/api/plays.test.ts`) |
 | `src/test/pages/productions.test.tsx` | Empty state, section headings per production, photo src/alt, captions present/absent |
 
 **Mocking pattern:** `next/image` and `next/link` are mocked with simple HTML equivalents in each component/page test file. `SocialLinks` is mocked in `Header.test.tsx`. `next/navigation` is mocked in playPage.test.tsx (`notFound` throws to allow assertion).
