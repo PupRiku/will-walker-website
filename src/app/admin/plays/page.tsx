@@ -119,13 +119,14 @@ const isBlankAccolade = (a: AccoladeRow) =>
 
 // Returns an error message for the first half-filled or invalid row, else null.
 function validateAccoladeRows(rows: AccoladeRow[]): string | null {
-  for (const row of rows.filter((r) => !isBlankAccolade(r))) {
-    const error = validateAccolades([
-      { ...row, year: Number(row.year) || 0 },
-    ]);
-    if (error) return `Accolades: ${error}`;
-  }
-  return null;
+  // Validate all populated rows in a single call so the row-count limit is
+  // enforced here exactly as the API enforces it.
+  const error = validateAccolades(
+    rows
+      .filter((r) => !isBlankAccolade(r))
+      .map((r) => ({ ...r, year: Number(r.year) || 0 }))
+  );
+  return error ? `Accolades: ${error}` : null;
 }
 
 // ── Upload zone component ──────────────────────────────────────────────────────

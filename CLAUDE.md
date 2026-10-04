@@ -166,7 +166,7 @@ Plays can have optional awards, stored in the `Accolade` table (`name`, `organiz
 
 - **Admin:** the play form has an "Accolades (optional)" section with add/remove rows. PUT replaces the whole set only when `accolades` is an array; omitting it leaves existing rows untouched (same rule as `bannerText`). Validation lives in `validateAccolades` (`src/utils/accolades.ts`), shared by the form and both API routes.
 - **Display:** `AccoladeBadge` (🏆, top-left of the cover so it never collides with the top-right "Published" ribbon) on the carousel and `/works` cards; `AccoladesList` (reverse chronological via `sortAccolades`, dates via `formatAccoladeDate`) in the modal after Runtime and on the play page after Cast. Neither appears when a play has no accolades.
-- **Migration:** `20261004120000_add_accolades` must be applied to Supabase (`npx prisma migrate deploy`) before deploying.
+- **Migration:** `20261004120000_add_accolades` is already applied to the production database — do not re-run it. For any future migration, `prisma migrate deploy` hangs through the transaction pooler (port 6543); run it with `DATABASE_URL` pointed at the session pooler (same host, port 5432, without the `?pgbouncer=true...` query string), then keep using 6543 for the app.
 
 ---
 
