@@ -27,10 +27,10 @@ export default async function Home() {
         <div className={styles.imageContainer}>
           <Image
             className={styles.image}
-            src="/images/assets/Will_Walker.jpg"
-            alt="A friendly headshot of Will Walker, a man with a goatee, smiling warmly at the camera. He is wearing a black beret, a dark jacket, and a vibrant blue bow tie, posed in front of a royal blue curtain."
-            width={500}
-            height={500}
+            src="/images/assets/will_profile.jpg"
+            alt="A portrait of Will Walker, a bearded man with blue eyes and a playful, wide-eyed expression. He wears a black flat cap, a green plaid shirt, and a black vest against a warm, mottled brown backdrop."
+            width={800}
+            height={1067}
             priority
           />
         </div>

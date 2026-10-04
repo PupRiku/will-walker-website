@@ -42,7 +42,7 @@ will-walker-website/
 ├── public/
 │   ├── images/
 │   │   ├── covers/      # All play cover art — all pre-optimized via Sharp; run optimize-images before committing new files
-│   │   ├── assets/      # Site UI images: logo.png, Will_Walker.jpg, about_will.jpg, casting_note_icon.png, script_placeholder.png
+│   │   ├── assets/      # Site UI images: logo.png, Will_Walker.jpg, will_profile.jpg, casting_note_icon.png, script_placeholder.png
 │   │   └── photos/      # Production photos (empty — will receive photos later)
 │   └── pdfs/
 │       ├── royalties_scale.pdf       # Downloadable — do not modify
