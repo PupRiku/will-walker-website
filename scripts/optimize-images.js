@@ -11,7 +11,7 @@ const DIRS = {
 
 const LOGO = 'logo.png';
 const CASTING_NOTE = 'casting_note_icon.png';
-const HEADSHOT_JPGS = new Set(['Will_Walker.jpg', 'about_will.jpg']);
+const HEADSHOT_JPGS = new Set(['Will_Walker.jpg', 'will_profile.jpg']);
 
 function formatBytes(bytes) {
   if (bytes < 1024) return bytes + ' B';

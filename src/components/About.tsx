@@ -30,9 +30,9 @@ export default function About() {
 
           <div className={styles.imageWrapper}>
             <Image
-              src="/images/assets/about_will.jpg"
-              alt="A photo of Will Walker in what appears to be a library or study. He looks directly at the camera with a curious expression, wearing a green plaid shirt, black vest, and a dark flat cap, set against a backdrop of floor-to-ceiling antique books."
-              width={400}
+              src="/images/assets/Will_Walker.jpg"
+              alt="A friendly headshot of Will Walker, a man with a goatee, smiling warmly at the camera. He is wearing a black beret, a dark jacket, and a vibrant blue bow tie, posed in front of a royal blue curtain."
+              width={500}
               height={500}
               className={styles.aboutImage}
             />
