@@ -5,6 +5,7 @@ import { VALID_CATEGORIES, ERROR_MESSAGES } from '@/lib/constants'
 import { validateOptionalHttpUrl } from '@/utils/url'
 import { normalizeHexColor, validateOptionalHexColor } from '@/utils/color'
 import { validateAccolades, toAccoladeCreateData } from '@/utils/accolades'
+import { validateHistory, toHistoryCreateData } from '@/utils/history'
 import { revalidatePlays } from '@/lib/revalidate'
 
 function validatePlay(body: Record<string, unknown>) {
@@ -35,6 +36,8 @@ function validatePlay(body: Record<string, unknown>) {
   if (bannerColorError) return bannerColorError
   const accoladesError = validateAccolades(body.accolades)
   if (accoladesError) return accoladesError
+  const historyError = validateHistory(body.history)
+  if (historyError) return historyError
 
   return null
 }
@@ -44,7 +47,7 @@ type Params = Promise<{ slug: string }>
 export async function GET(_request: Request, { params }: { params: Params }) {
   const { slug } = await params
   try {
-    const play = await prisma.play.findUnique({ where: { slug }, include: { accolades: true } })
+    const play = await prisma.play.findUnique({ where: { slug }, include: { accolades: true, history: true } })
     if (!play) return NextResponse.json({ error: ERROR_MESSAGES.NOT_FOUND }, { status: 404 })
     return NextResponse.json(play)
   } catch (error) {
@@ -107,6 +110,14 @@ export async function PUT(request: Request, { params }: { params: Params }) {
       }
     }
 
+    // Same rule for history.
+    if (Array.isArray(body.history)) {
+      optionalUpdates.history = {
+        deleteMany: {},
+        create: toHistoryCreateData(body.history),
+      }
+    }
+
     const play = await prisma.play.update({
       where: { slug },
       data: {
@@ -124,7 +135,7 @@ export async function PUT(request: Request, { params }: { params: Params }) {
         featuredOrder: typeof body.featuredOrder === 'number' ? body.featuredOrder : null,
         ...optionalUpdates,
       },
-      include: { accolades: true },
+      include: { accolades: true, history: true },
     })
     // Both slugs: the old page must stop serving if the slug was renamed.
     revalidatePlays(slug, play.slug)

@@ -54,6 +54,7 @@ const mockPlay = {
   bannerColor: '',
   showRoyaltiesButton: true,
   accolades: [],
+  history: [],
   createdAt: new Date(),
   updatedAt: new Date(),
 }
@@ -111,7 +112,7 @@ describe('GET /api/plays', () => {
         { featuredOrder: { sort: 'asc', nulls: 'last' } },
         { title: 'asc' },
       ],
-      include: { accolades: true },
+      include: { accolades: true, history: true },
     })
   })
 })
@@ -609,5 +610,52 @@ describe('PUT /api/plays/[slug]/feature-order', () => {
     const [req, ctx] = makeFeatureRequest({ direction: 'up' }, false)
     const res = await putFeatureOrder(req, ctx)
     expect(res.status).toBe(401)
+  })
+})
+
+describe('history', () => {
+  const entry = { type: ' Staged Reading ', month: 6, year: 2022, location: ' Paris, TX ' }
+  const trimmed = { type: 'Staged Reading', month: 6, year: 2022, location: 'Paris, TX' }
+
+  it('POST creates nested history with trimmed values', async () => {
+    vi.mocked(requireAuth).mockReturnValue(true)
+    vi.mocked(prisma.play.create).mockResolvedValue(mockPlay)
+    const res = await POST(makeRequest({ ...validPlayBody, history: [entry] }))
+    expect(res.status).toBe(201)
+    expect(vi.mocked(prisma.play.create).mock.calls[0][0].data.history).toEqual({
+      create: [trimmed],
+    })
+  })
+
+  it.each([
+    ['blank type', { ...entry, type: '  ' }],
+    ['blank location', { ...entry, location: '' }],
+    ['month 13', { ...entry, month: 13 }],
+    ['non-integer year', { ...entry, year: 2022.5 }],
+    ['year out of range', { ...entry, year: 1800 }],
+  ])('POST rejects a history entry with %s', async (_label, bad) => {
+    vi.mocked(requireAuth).mockReturnValue(true)
+    const res = await POST(makeRequest({ ...validPlayBody, history: [bad] }))
+    expect(res.status).toBe(400)
+    expect(prisma.play.create).not.toHaveBeenCalled()
+  })
+
+  it('PUT replaces history when an array is sent', async () => {
+    vi.mocked(requireAuth).mockReturnValue(true)
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', { ...validPlayBody, history: [entry] })
+    await PUT(req, ctx)
+    expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.history).toEqual({
+      deleteMany: {},
+      create: [trimmed],
+    })
+  })
+
+  it('PUT leaves history untouched when the request omits it', async () => {
+    vi.mocked(requireAuth).mockReturnValue(true)
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', validPlayBody)
+    await PUT(req, ctx)
+    expect(vi.mocked(prisma.play.update).mock.calls[0][0].data).not.toHaveProperty('history')
   })
 })

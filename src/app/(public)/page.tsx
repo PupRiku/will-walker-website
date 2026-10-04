@@ -14,7 +14,7 @@ export default async function Home() {
       { featuredOrder: { sort: 'asc', nulls: 'last' } },
       { title: 'asc' },
     ],
-    include: { accolades: true },
+    include: { accolades: true, history: true },
   });
   const plays: Play[] = rows.map((p) => ({
     ...p,
@@ -24,6 +24,13 @@ export default async function Home() {
       organization,
       month,
       year,
+    })),
+    history: p.history.map(({ id, type, month, year, location }) => ({
+      id,
+      type,
+      month,
+      year,
+      location,
     })),
     createdAt: p.createdAt.toISOString(),
     updatedAt: p.updatedAt.toISOString(),

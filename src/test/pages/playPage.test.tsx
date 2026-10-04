@@ -44,6 +44,7 @@ function makePlay(overrides: Partial<Play> = {}): Play {
     bannerColor: '',
     showRoyaltiesButton: true,
     accolades: [],
+    history: [],
     createdAt: '2024-01-01T00:00:00.000Z',
     updatedAt: '2024-01-01T00:00:00.000Z',
     ...overrides,
@@ -96,6 +97,15 @@ const royaltiesOffPlay = makePlay({
   showRoyaltiesButton: false,
 });
 
+const playWithHistory = makePlay({
+  slug: 'play-with-history',
+  title: 'Play With History',
+  history: [
+    { type: 'Production', month: 11, year: 2023, location: 'Dallas, TX' },
+    { type: 'Staged Reading', month: 3, year: 2021, location: 'Paris, TX' },
+  ],
+});
+
 const playWithAccolades = makePlay({
   slug: 'play-with-accolades',
   title: 'Play With Accolades',
@@ -108,6 +118,7 @@ const playWithAccolades = makePlay({
 
 const allPlays = [
   playWithAccolades,
+  playWithHistory,
   publishedPlay,
   unpublishedPlay,
   playWithPdf,
@@ -145,6 +156,23 @@ describe('PlayPage (/works/[slug])', () => {
     ]);
     const cast = screen.getByText('Cast:');
     expect(cast.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('lists history in chronological order below the cast', async () => {
+    await renderPlayPage('play-with-history');
+    const heading = screen.getByRole('heading', { name: 'History' });
+    const items = screen.getAllByRole('listitem').map((li) => li.textContent);
+    expect(items).toEqual([
+      'Staged Reading - March 2021 - Paris, TX',
+      'Production - November 2023 - Dallas, TX',
+    ]);
+    const cast = screen.getByText('Cast:');
+    expect(cast.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('omits the History section when the play has none', async () => {
+    await renderPlayPage('unpublished-play');
+    expect(screen.queryByRole('heading', { name: 'History' })).toBeNull();
   });
 
   it('omits the Accolades section when the play has none', async () => {

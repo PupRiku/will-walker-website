@@ -12,6 +12,7 @@ import AdminModal from '@/components/admin/AdminModal';
 import { slugify, timeAgo } from '@/utils/admin';
 import { validateOptionalHttpUrl } from '@/utils/url';
 import { MONTH_NAMES, sortAccolades, validateAccolades } from '@/utils/accolades';
+import { sortHistory, validateHistory } from '@/utils/history';
 import styles from './page.module.css';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -51,6 +52,14 @@ type FormState = {
   bannerColor: string;
   showRoyaltiesButton: boolean;
   accolades: AccoladeRow[];
+  history: HistoryRow[];
+};
+
+type HistoryRow = {
+  type: string;
+  location: string;
+  month: number;
+  year: string;
 };
 
 // Year is a string while editing so the field can be cleared/typed freely;
@@ -80,6 +89,7 @@ const EMPTY_FORM: FormState = {
   bannerColor: DEFAULT_BANNER_COLOR,
   showRoyaltiesButton: true,
   accolades: [],
+  history: [],
 };
 
 function playToForm(play: Play): FormState {
@@ -104,7 +114,30 @@ function playToForm(play: Play): FormState {
       month: a.month,
       year: String(a.year),
     })),
+    history: sortHistory(play.history).map((h) => ({
+      type: h.type,
+      location: h.location,
+      month: h.month,
+      year: String(h.year),
+    })),
   };
+}
+
+const EMPTY_HISTORY: HistoryRow = {
+  type: '',
+  location: '',
+  month: new Date().getMonth() + 1,
+  year: '',
+};
+
+const isBlankHistory = (h: HistoryRow) => !h.type.trim() && !h.location.trim() && !h.year.trim();
+
+// Returns an error message for the first half-filled or invalid row, else null.
+function validateHistoryRows(rows: HistoryRow[]): string | null {
+  const error = validateHistory(
+    rows.filter((r) => !isBlankHistory(r)).map((r) => ({ ...r, year: Number(r.year) || 0 }))
+  );
+  return error ? `History: ${error}` : null;
 }
 
 const EMPTY_ACCOLADE: AccoladeRow = {
@@ -373,6 +406,21 @@ function PlayModal({
     }));
   }
 
+  function updateHistory(index: number, patch: Partial<HistoryRow>) {
+    setForm((prev) => ({
+      ...prev,
+      history: prev.history.map((h, i) => (i === index ? { ...h, ...patch } : h)),
+    }));
+  }
+
+  function addHistory() {
+    setForm((prev) => ({ ...prev, history: [...prev.history, { ...EMPTY_HISTORY }] }));
+  }
+
+  function removeHistory(index: number) {
+    setForm((prev) => ({ ...prev, history: prev.history.filter((_, i) => i !== index) }));
+  }
+
   async function handleSave() {
     if (urlErrors.pdfSrc || urlErrors.purchase) {
       setUrlTouched({ pdfSrc: true, purchase: true });
@@ -381,6 +429,11 @@ function PlayModal({
     const accoladeError = validateAccoladeRows(form.accolades);
     if (accoladeError) {
       setSaveError(accoladeError);
+      return;
+    }
+    const historyError = validateHistoryRows(form.history);
+    if (historyError) {
+      setSaveError(historyError);
       return;
     }
     setSaving(true);
@@ -400,6 +453,9 @@ function PlayModal({
           accolades: form.accolades
             .filter((a) => !isBlankAccolade(a))
             .map((a) => ({ ...a, year: Number(a.year) })),
+          history: form.history
+            .filter((h) => !isBlankHistory(h))
+            .map((h) => ({ ...h, year: Number(h.year) })),
         }),
       });
       if (!res.ok) {
@@ -641,6 +697,68 @@ function PlayModal({
             </div>
             <button type="button" className={styles.btnSecondary} onClick={addAccolade}>
               + Add Accolade
+            </button>
+          </div>
+
+          {/* History — full width */}
+          <div className={styles.fieldFull}>
+            <label className={styles.label}>History (optional)</label>
+            <p className={styles.fieldHint}>
+              Readings, workshops, productions and other milestones. Shown oldest first on the
+              play&rsquo;s modal and full page.
+            </p>
+            <div className={styles.accoladeList}>
+              {form.history.map((h, i) => (
+                <div key={i} className={styles.historyRow}>
+                  <input
+                    type="text"
+                    className={styles.input}
+                    value={h.type}
+                    onChange={(e) => updateHistory(i, { type: e.target.value })}
+                    placeholder="Type (e.g. Staged Reading)"
+                    aria-label={`History ${i + 1} type`}
+                  />
+                  <select
+                    className={styles.select}
+                    value={h.month}
+                    onChange={(e) => updateHistory(i, { month: Number(e.target.value) })}
+                    aria-label={`History ${i + 1} month`}
+                  >
+                    {MONTH_NAMES.map((m, idx) => (
+                      <option key={m} value={idx + 1}>{m}</option>
+                    ))}
+                  </select>
+                  <input
+                    type="number"
+                    className={styles.input}
+                    value={h.year}
+                    onChange={(e) => updateHistory(i, { year: e.target.value })}
+                    placeholder="Year"
+                    min={1900}
+                    max={2100}
+                    aria-label={`History ${i + 1} year`}
+                  />
+                  <input
+                    type="text"
+                    className={styles.input}
+                    value={h.location}
+                    onChange={(e) => updateHistory(i, { location: e.target.value })}
+                    placeholder="Location"
+                    aria-label={`History ${i + 1} location`}
+                  />
+                  <button
+                    type="button"
+                    className={styles.btnDelete}
+                    onClick={() => removeHistory(i)}
+                    aria-label={`Remove history entry ${i + 1}`}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button type="button" className={styles.btnSecondary} onClick={addHistory}>
+              + Add History
             </button>
           </div>
 

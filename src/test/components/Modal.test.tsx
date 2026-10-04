@@ -331,3 +331,35 @@ describe('Modal analytics events', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('Modal history', () => {
+  it('lists history oldest first after Runtime and Accolades', () => {
+    render(
+      <Modal
+        isOpen={true}
+        onClose={vi.fn()}
+        play={{
+          ...mockPlay,
+          accolades: [{ name: 'An Award', organization: 'Org', month: 1, year: 2024 }],
+          history: [
+            { type: 'Production', month: 2, year: 2024, location: 'Dallas, TX' },
+            { type: 'Staged Reading', month: 5, year: 2019, location: 'Paris, TX' },
+          ],
+        }}
+      />
+    );
+    const items = screen.getAllByRole('listitem').map((li) => li.textContent);
+    expect(items).toContain('Staged Reading - May 2019 - Paris, TX');
+    expect(items.indexOf('Staged Reading - May 2019 - Paris, TX')).toBeLessThan(
+      items.indexOf('Production - February 2024 - Dallas, TX')
+    );
+    const accolades = screen.getByRole('heading', { name: 'Accolades' });
+    const history = screen.getByRole('heading', { name: 'History' });
+    expect(accolades.compareDocumentPosition(history) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('omits the History section when there is none', () => {
+    render(<Modal isOpen={true} onClose={vi.fn()} play={mockPlay} />);
+    expect(screen.queryByRole('heading', { name: 'History' })).toBeNull();
+  });
+});

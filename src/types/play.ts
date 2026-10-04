@@ -6,6 +6,14 @@ export type Accolade = {
   year: number;
 };
 
+export type HistoryEntry = {
+  id?: string;
+  type: string;
+  month: number; // 1-12
+  year: number;
+  location: string;
+};
+
 // Minimal shape used by UI components and filter/sort utilities.
 // Kept optional-friendly so existing component and test code doesn't need updating.
 export type Work = {
@@ -24,6 +32,7 @@ export type Work = {
   bannerColor?: string;
   showRoyaltiesButton?: boolean;
   accolades?: Accolade[];
+  history?: HistoryEntry[];
 };
 
 // Full shape returned by GET /api/plays (matches Prisma Play model).
@@ -46,6 +55,7 @@ export type Play = {
   bannerColor: string;
   showRoyaltiesButton: boolean;
   accolades: Accolade[];
+  history: HistoryEntry[];
   createdAt: string;
   updatedAt: string;
 };

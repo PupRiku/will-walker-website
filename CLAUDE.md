@@ -170,6 +170,14 @@ Plays can have optional awards, stored in the `Accolade` table (`name`, `organiz
 
 ---
 
+### History
+
+Plays can have an optional production/reading history, stored in the `PlayHistory` table (`type`, `month` 1–12, `year`, `location`; cascade-deleted with the play) and exposed as `history: HistoryEntry[]` on `Play` (optional on `Work`).
+
+- **Admin:** the play form has a "History (optional)" section with add/remove rows. PUT replaces the whole set only when `history` is an array; omitting it leaves existing rows untouched. Validation lives in `validateHistory` (`src/utils/history.ts`), shared by the form and both API routes.
+- **Display:** `HistoryList` renders `type - Month Year - location`, oldest first (`sortHistory`, `formatHistoryEntry`), in the modal after Runtime/Accolades and on the play page after Cast/Accolades. No card badge. Nothing renders when a play has no history.
+- **Migration:** `20261004150000_add_play_history` must be applied to the database (see the session-pooler note under Accolades) before deploying.
+
 ## Production Photos
 
 Production photos are stored in Supabase and managed via the admin dashboard at `/admin/productions`. `src/data/productions.ts` is an archived reference file — do not import from it. Type definitions live in `src/types/production.ts`.
