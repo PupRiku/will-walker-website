@@ -6,6 +6,7 @@ import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
 import styles from './Plays.module.css';
 import Modal from './Modal';
+import AccoladeBadge from './AccoladeBadge';
 import type { Play } from '@/types/play';
 
 type PlaysProps = {
@@ -131,6 +132,7 @@ export default function Plays({ plays }: PlaysProps) {
                     {work.published && (
                       <div className={styles.ribbon}>Published</div>
                     )}
+                    <AccoladeBadge accolades={work.accolades} />
                     <Image
                       src={work.imageSrc}
                       alt={`Cover for ${work.title}`}

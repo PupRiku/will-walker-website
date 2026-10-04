@@ -8,6 +8,7 @@ import { filterWorks, sortWorks, type RuntimeBucket, type CastBucket, type SortO
 import styles from './page.module.css';
 import { BsDownload } from 'react-icons/bs';
 import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
+import AccoladeBadge from '@/components/AccoladeBadge';
 
 export default function WorksClient() {
   const [plays, setPlays] = useState<Play[]>([]);
@@ -259,6 +260,7 @@ export default function WorksClient() {
                   key={work.slug}
                 >
                   {work.published && <div className={styles.ribbon}>Published</div>}
+                  <AccoladeBadge accolades={work.accolades} />
                   <Image
                     src={work.imageSrc}
                     alt={`Cover for ${work.title}`}

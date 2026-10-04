@@ -102,6 +102,12 @@
   margin: 0 0 2rem 0;
 }
 
+.accoladesHeading {
+  font-family: var(--font-family-heading);
+  font-size: 1.1rem;
+  margin: 0 0 0.75rem 0;
+}
+
 .buttonGroup {
   display: flex;
   flex-wrap: wrap;

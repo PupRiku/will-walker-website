@@ -47,6 +47,7 @@ const mockPlay = {
   bannerText: '',
   bannerColor: '',
   showRoyaltiesButton: true,
+  accolades: [],
   createdAt: new Date(),
   updatedAt: new Date(),
 }
@@ -104,6 +105,7 @@ describe('GET /api/plays', () => {
         { featuredOrder: { sort: 'asc', nulls: 'last' } },
         { title: 'asc' },
       ],
+      include: { accolades: true },
     })
   })
 })
@@ -416,6 +418,65 @@ describe('PUT /api/plays/[slug]', () => {
     expect(data.showRoyaltiesButton).toBe(false)
     expect(data).not.toHaveProperty('bannerText')
     expect(data).not.toHaveProperty('bannerColor')
+  })
+})
+
+describe('accolades', () => {
+  const accolade = { name: ' Best Play ', organization: 'Guild', month: 6, year: 2022 }
+  const trimmed = { name: 'Best Play', organization: 'Guild', month: 6, year: 2022 }
+
+  it('POST creates nested accolades with trimmed values', async () => {
+    vi.mocked(requireAuth).mockReturnValue(true)
+    vi.mocked(prisma.play.create).mockResolvedValue(mockPlay)
+    const res = await POST(makeRequest({ ...validPlayBody, accolades: [accolade] }))
+    expect(res.status).toBe(201)
+    expect(vi.mocked(prisma.play.create).mock.calls[0][0].data.accolades).toEqual({
+      create: [trimmed],
+    })
+  })
+
+  it.each([
+    ['blank name', { ...accolade, name: '  ' }],
+    ['blank organization', { ...accolade, organization: '' }],
+    ['month 13', { ...accolade, month: 13 }],
+    ['month 0', { ...accolade, month: 0 }],
+    ['non-integer year', { ...accolade, year: 2022.5 }],
+    ['year out of range', { ...accolade, year: 1800 }],
+  ])('POST rejects an accolade with %s', async (_label, bad) => {
+    vi.mocked(requireAuth).mockReturnValue(true)
+    const res = await POST(makeRequest({ ...validPlayBody, accolades: [bad] }))
+    expect(res.status).toBe(400)
+    expect(prisma.play.create).not.toHaveBeenCalled()
+  })
+
+  it('PUT replaces accolades when an array is sent', async () => {
+    vi.mocked(requireAuth).mockReturnValue(true)
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', { ...validPlayBody, accolades: [accolade] })
+    await PUT(req, ctx)
+    expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.accolades).toEqual({
+      deleteMany: {},
+      create: [trimmed],
+    })
+  })
+
+  it('PUT clears accolades when an empty array is sent', async () => {
+    vi.mocked(requireAuth).mockReturnValue(true)
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', { ...validPlayBody, accolades: [] })
+    await PUT(req, ctx)
+    expect(vi.mocked(prisma.play.update).mock.calls[0][0].data.accolades).toEqual({
+      deleteMany: {},
+      create: [],
+    })
+  })
+
+  it('PUT leaves accolades untouched when the request omits them', async () => {
+    vi.mocked(requireAuth).mockReturnValue(true)
+    vi.mocked(prisma.play.update).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('PUT', validPlayBody)
+    await PUT(req, ctx)
+    expect(vi.mocked(prisma.play.update).mock.calls[0][0].data).not.toHaveProperty('accolades')
   })
 })
 

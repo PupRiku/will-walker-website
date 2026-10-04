@@ -4,6 +4,7 @@ import { requireAuth } from '@/lib/auth'
 import { VALID_CATEGORIES, ERROR_MESSAGES } from '@/lib/constants'
 import { validateOptionalHttpUrl } from '@/utils/url'
 import { normalizeHexColor, validateOptionalHexColor } from '@/utils/color'
+import { validateAccolades, toAccoladeCreateData } from '@/utils/accolades'
 
 function validatePlay(body: Record<string, unknown>) {
   const { title, slug, category, runtime, cast, synopsis, imageSrc } = body
@@ -31,6 +32,8 @@ function validatePlay(body: Record<string, unknown>) {
   if (purchaseError) return purchaseError
   const bannerColorError = validateOptionalHexColor(body.bannerColor, 'Banner Color')
   if (bannerColorError) return bannerColorError
+  const accoladesError = validateAccolades(body.accolades)
+  if (accoladesError) return accoladesError
 
   return null
 }
@@ -40,7 +43,7 @@ type Params = Promise<{ slug: string }>
 export async function GET(_request: Request, { params }: { params: Params }) {
   const { slug } = await params
   try {
-    const play = await prisma.play.findUnique({ where: { slug } })
+    const play = await prisma.play.findUnique({ where: { slug }, include: { accolades: true } })
     if (!play) return NextResponse.json({ error: ERROR_MESSAGES.NOT_FOUND }, { status: 404 })
     return NextResponse.json(play)
   } catch (error) {
@@ -94,6 +97,14 @@ export async function PUT(request: Request, { params }: { params: Params }) {
     } else if (typeof body.showRoyaltiesButton === 'boolean') {
       optionalUpdates.showRoyaltiesButton = body.showRoyaltiesButton
     }
+    // Same rule for accolades: only replace the set when the request sent an
+    // array, so an omitted field leaves existing accolades untouched.
+    if (Array.isArray(body.accolades)) {
+      optionalUpdates.accolades = {
+        deleteMany: {},
+        create: toAccoladeCreateData(body.accolades),
+      }
+    }
 
     const play = await prisma.play.update({
       where: { slug },
@@ -112,6 +123,7 @@ export async function PUT(request: Request, { params }: { params: Params }) {
         featuredOrder: typeof body.featuredOrder === 'number' ? body.featuredOrder : null,
         ...optionalUpdates,
       },
+      include: { accolades: true },
     })
     return NextResponse.json(play)
   } catch (e: unknown) {

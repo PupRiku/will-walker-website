@@ -11,6 +11,7 @@ import PerusalRequestButton from '@/components/PerusalRequestButton';
 import { getPurchaseUrl } from '@/utils/purchase';
 import { shouldShowRoyaltiesButton } from '@/utils/royalties';
 import { getContrastTextColor } from '@/utils/color';
+import AccoladesList from '@/components/AccoladesList';
 
 export const revalidate = 60;
 
@@ -95,6 +96,12 @@ export default async function PlayPage({ params }: Props) {
               <strong>Cast:</strong> {work.cast}
             </p>
           )}
+
+          <AccoladesList
+            accolades={work.accolades}
+            as="h2"
+            headingClassName={styles.accoladesHeading}
+          />
 
           <div className={styles.buttonGroup}>
             {work.pdfSrc && (
