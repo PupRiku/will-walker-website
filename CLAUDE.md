@@ -158,7 +158,7 @@ export const worksData: Work[] = [ ... ];
 1. Go to `/admin/plays` in the browser
 2. Click "Add New Play", fill in the form, upload cover art via the upload zone
 3. Toggle "Featured" on to include it in the home page carousel
-4. Save — the page will live within 60 seconds (ISR revalidation)
+4. Save — the public pages are revalidated immediately
 
 ### Accolades
 
@@ -492,7 +492,7 @@ npm run test:ui   # Vitest UI (browser-based watcher)
 
 **ISR (Incremental Static Regeneration):**
 - Play pages (`/works/[slug]`) and `/productions` revalidate every 60 seconds
-- Content changes made via the admin dashboard appear on the live site within 60 seconds without a manual redeploy
+- Content changes made via the admin dashboard appear on the live site immediately: every admin write route calls `revalidatePlays(...)` / `revalidateProductions()` (`src/lib/revalidate.ts`), which on-demand revalidates the affected pages and cached API responses. Revalidation errors are logged, never thrown. The 60-second `revalidate` is the fallback (e.g. for edits made outside the admin). When adding a new admin write route, call the matching helper.
 - `generateStaticParams` pre-renders all play pages at build time via a direct Prisma query (not the API)
 
 ---

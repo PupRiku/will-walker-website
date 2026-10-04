@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma, isPrismaErrorCode } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
+import { revalidateProductions } from '@/lib/revalidate'
 import { ERROR_MESSAGES } from '@/lib/constants'
 
 type Params = Promise<{ id: string }>
@@ -53,6 +54,7 @@ export async function PUT(request: Request, { params }: { params: Params }) {
         ...(typeof body.displayOrder === 'number' && { displayOrder: body.displayOrder }),
       },
     })
+    revalidateProductions()
     return NextResponse.json(photo)
   } catch (e: unknown) {
     if (isPrismaErrorCode(e, 'P2025')) {
@@ -75,6 +77,7 @@ export async function DELETE(request: Request, { params }: { params: Params }) {
 
   try {
     await prisma.productionPhoto.delete({ where: { id } })
+    revalidateProductions()
     return new NextResponse(null, { status: 204 })
   } catch (e: unknown) {
     if (isPrismaErrorCode(e, 'P2025')) {

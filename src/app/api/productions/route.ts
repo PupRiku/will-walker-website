@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
+import { revalidateProductions } from '@/lib/revalidate'
 import { ERROR_MESSAGES } from '@/lib/constants'
 
 function validatePhoto(body: Record<string, unknown>) {
@@ -128,6 +129,7 @@ export async function POST(request: Request) {
         displayOrder,
       },
     })
+    revalidateProductions()
     return NextResponse.json(photo, { status: 201 })
   } catch (error) {
     console.error('POST /api/productions error:', error)

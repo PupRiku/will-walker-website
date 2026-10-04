@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
 import { ERROR_MESSAGES } from '@/lib/constants'
+import { revalidatePlays } from '@/lib/revalidate'
 
 type Params = Promise<{ slug: string }>
 
@@ -65,5 +66,6 @@ export async function PUT(request: Request, { params }: { params: Params }) {
     }),
   ])
 
+  revalidatePlays(play.slug, adjacent.slug)
   return NextResponse.json(updated)
 }

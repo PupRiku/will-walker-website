@@ -24,7 +24,13 @@ vi.mock('@/lib/auth', () => ({
   requireAuth: vi.fn(),
 }))
 
+vi.mock('@/lib/revalidate', () => ({
+  revalidatePlays: vi.fn(),
+  revalidateProductions: vi.fn(),
+}))
+
 import { prisma } from '@/lib/prisma'
+import { revalidatePlays } from '@/lib/revalidate'
 import { requireAuth } from '@/lib/auth'
 import { GET as getAll, POST } from '@/app/api/plays/route'
 import { GET as getOne, PUT, DELETE } from '@/app/api/plays/[slug]/route'
@@ -477,6 +483,40 @@ describe('accolades', () => {
     const [req, ctx] = makeSlugRequest('PUT', validPlayBody)
     await PUT(req, ctx)
     expect(vi.mocked(prisma.play.update).mock.calls[0][0].data).not.toHaveProperty('accolades')
+  })
+})
+
+describe('public page revalidation', () => {
+  it('POST revalidates the new play', async () => {
+    vi.mocked(prisma.play.create).mockResolvedValue(mockPlay)
+    await POST(makeRequest(validPlayBody))
+    expect(revalidatePlays).toHaveBeenCalledWith('my-play')
+  })
+
+  it('POST does not revalidate when validation fails', async () => {
+    await POST(makeRequest({ ...validPlayBody, title: '' }))
+    expect(revalidatePlays).not.toHaveBeenCalled()
+  })
+
+  it('PUT revalidates both the old and new slug', async () => {
+    vi.mocked(prisma.play.update).mockResolvedValue({ ...mockPlay, slug: 'renamed' })
+    const [req, ctx] = makeSlugRequest('PUT', { ...validPlayBody, slug: 'renamed' })
+    await PUT(req, ctx)
+    expect(revalidatePlays).toHaveBeenCalledWith('my-play', 'renamed')
+  })
+
+  it('PUT does not revalidate when the play is not found', async () => {
+    vi.mocked(prisma.play.update).mockRejectedValue({ code: 'P2025' })
+    const [req, ctx] = makeSlugRequest('PUT', validPlayBody)
+    await PUT(req, ctx)
+    expect(revalidatePlays).not.toHaveBeenCalled()
+  })
+
+  it('DELETE revalidates the deleted slug', async () => {
+    vi.mocked(prisma.play.delete).mockResolvedValue(mockPlay)
+    const [req, ctx] = makeSlugRequest('DELETE')
+    await DELETE(req, ctx)
+    expect(revalidatePlays).toHaveBeenCalledWith('my-play')
   })
 })
 

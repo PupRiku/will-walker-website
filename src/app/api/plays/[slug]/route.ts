@@ -5,6 +5,7 @@ import { VALID_CATEGORIES, ERROR_MESSAGES } from '@/lib/constants'
 import { validateOptionalHttpUrl } from '@/utils/url'
 import { normalizeHexColor, validateOptionalHexColor } from '@/utils/color'
 import { validateAccolades, toAccoladeCreateData } from '@/utils/accolades'
+import { revalidatePlays } from '@/lib/revalidate'
 
 function validatePlay(body: Record<string, unknown>) {
   const { title, slug, category, runtime, cast, synopsis, imageSrc } = body
@@ -125,6 +126,8 @@ export async function PUT(request: Request, { params }: { params: Params }) {
       },
       include: { accolades: true },
     })
+    // Both slugs: the old page must stop serving if the slug was renamed.
+    revalidatePlays(slug, play.slug)
     return NextResponse.json(play)
   } catch (e: unknown) {
     if (isPrismaErrorCode(e, 'P2025')) {
@@ -147,6 +150,7 @@ export async function DELETE(request: Request, { params }: { params: Params }) {
 
   try {
     await prisma.play.delete({ where: { slug } })
+    revalidatePlays(slug)
     return new NextResponse(null, { status: 204 })
   } catch (e: unknown) {
     if (isPrismaErrorCode(e, 'P2025')) {
