@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
+import { revalidateProductions } from '@/lib/revalidate'
 import { ERROR_MESSAGES } from '@/lib/constants'
 
 type Params = Promise<{ id: string }>
@@ -64,5 +65,6 @@ export async function PUT(request: Request, { params }: { params: Params }) {
     }),
   ])
 
+  revalidateProductions()
   return NextResponse.json(updated)
 }

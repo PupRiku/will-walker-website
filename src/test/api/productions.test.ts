@@ -29,8 +29,14 @@ vi.mock('@/lib/auth', () => ({
   requireAuth: vi.fn(),
 }))
 
+vi.mock('@/lib/revalidate', () => ({
+  revalidatePlays: vi.fn(),
+  revalidateProductions: vi.fn(),
+}))
+
 import { prisma } from '@/lib/prisma'
 import { requireAuth } from '@/lib/auth'
+import { revalidateProductions } from '@/lib/revalidate'
 import { GET as getAll, POST } from '@/app/api/productions/route'
 import { GET as getOne, PUT, DELETE } from '@/app/api/productions/[id]/route'
 import { PUT as putPhotoOrder } from '@/app/api/productions/[id]/display-order/route'
@@ -154,6 +160,7 @@ describe('POST /api/productions', () => {
     const res = await POST(makeRequest('POST', validPhotoBody))
     expect(res.status).toBe(201)
     expect((await res.json()).id).toBe('photo-1')
+    expect(revalidateProductions).toHaveBeenCalledTimes(1)
   })
 
   it('creates a photo linked to an existing productionId (skips upsert)', async () => {
@@ -230,6 +237,7 @@ describe('PUT /api/productions/[id]', () => {
     const res = await PUT(req, ctx)
     expect(res.status).toBe(200)
     expect((await res.json()).id).toBe('photo-1')
+    expect(revalidateProductions).toHaveBeenCalledTimes(1)
   })
 
   it('returns 404 when photo does not exist', async () => {
@@ -253,6 +261,7 @@ describe('DELETE /api/productions/[id]', () => {
     const [req, ctx] = makeIdRequest('DELETE')
     const res = await DELETE(req, ctx)
     expect(res.status).toBe(204)
+    expect(revalidateProductions).toHaveBeenCalledTimes(1)
   })
 
   it('returns 404 when photo does not exist', async () => {
@@ -283,6 +292,7 @@ describe('PUT /api/productions/[id]/display-order', () => {
     const [req, ctx] = makePhotoOrderRequest('photo-1', 'up')
     const res = await putPhotoOrder(req, ctx)
     expect(res.status).toBe(200)
+    expect(revalidateProductions).toHaveBeenCalledTimes(1)
   })
 
   it('moves photo down', async () => {
@@ -338,6 +348,7 @@ describe('PUT /api/productions/groups/[id]/display-order', () => {
     const [req, ctx] = makeGroupOrderRequest('prod-2', 'up')
     const res = await putGroupOrder(req, ctx)
     expect(res.status).toBe(200)
+    expect(revalidateProductions).toHaveBeenCalledTimes(1)
   })
 
   it('moves production group down', async () => {

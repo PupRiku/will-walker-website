@@ -6,6 +6,7 @@ import { validateOptionalHttpUrl } from '@/utils/url';
 import { normalizeShowRoyaltiesButton } from '@/utils/royalties';
 import { normalizeHexColor, validateOptionalHexColor } from '@/utils/color';
 import { validateAccolades, toAccoladeCreateData } from '@/utils/accolades';
+import { revalidatePlays } from '@/lib/revalidate';
 
 function validatePlay(body: Record<string, unknown>) {
   const { title, slug, category, runtime, cast, synopsis, imageSrc } = body;
@@ -115,6 +116,7 @@ export async function POST(request: Request) {
       },
       include: { accolades: true },
     });
+    revalidatePlays(play.slug);
     return NextResponse.json(play, { status: 201 });
   } catch (e: unknown) {
     if (isPrismaErrorCode(e, 'P2002')) {
