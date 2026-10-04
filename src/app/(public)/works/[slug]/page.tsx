@@ -12,6 +12,7 @@ import { getPurchaseUrl } from '@/utils/purchase';
 import { shouldShowRoyaltiesButton } from '@/utils/royalties';
 import { getContrastTextColor } from '@/utils/color';
 import AccoladesList from '@/components/AccoladesList';
+import HistoryList from '@/components/HistoryList';
 
 export const revalidate = 60;
 
@@ -99,6 +100,12 @@ export default async function PlayPage({ params }: Props) {
 
           <AccoladesList
             accolades={work.accolades}
+            as="h2"
+            headingClassName={styles.accoladesHeading}
+          />
+
+          <HistoryList
+            history={work.history}
             as="h2"
             headingClassName={styles.accoladesHeading}
           />

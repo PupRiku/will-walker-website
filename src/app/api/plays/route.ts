@@ -6,6 +6,7 @@ import { validateOptionalHttpUrl } from '@/utils/url';
 import { normalizeShowRoyaltiesButton } from '@/utils/royalties';
 import { normalizeHexColor, validateOptionalHexColor } from '@/utils/color';
 import { validateAccolades, toAccoladeCreateData } from '@/utils/accolades';
+import { validateHistory, toHistoryCreateData } from '@/utils/history';
 import { revalidatePlays } from '@/lib/revalidate';
 
 function validatePlay(body: Record<string, unknown>) {
@@ -36,6 +37,8 @@ function validatePlay(body: Record<string, unknown>) {
   if (bannerColorError) return bannerColorError;
   const accoladesError = validateAccolades(body.accolades);
   if (accoladesError) return accoladesError;
+  const historyError = validateHistory(body.history);
+  if (historyError) return historyError;
 
   return null;
 }
@@ -47,7 +50,7 @@ export async function GET() {
         { featuredOrder: { sort: 'asc', nulls: 'last' } },
         { title: 'asc' },
       ],
-      include: { accolades: true },
+      include: { accolades: true, history: true },
     });
     return NextResponse.json(plays, {
       headers: {
@@ -113,8 +116,11 @@ export async function POST(request: Request) {
         ...(Array.isArray(body.accolades) && body.accolades.length > 0
           ? { accolades: { create: toAccoladeCreateData(body.accolades) } }
           : {}),
+        ...(Array.isArray(body.history) && body.history.length > 0
+          ? { history: { create: toHistoryCreateData(body.history) } }
+          : {}),
       },
-      include: { accolades: true },
+      include: { accolades: true, history: true },
     });
     revalidatePlays(play.slug);
     return NextResponse.json(play, { status: 201 });

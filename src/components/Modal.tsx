@@ -10,6 +10,7 @@ import PerusalRequestButton from './PerusalRequestButton';
 import { getPurchaseUrl } from '@/utils/purchase';
 import { getContrastTextColor } from '@/utils/color';
 import AccoladesList from './AccoladesList';
+import HistoryList from './HistoryList';
 
 type ModalProps = {
   isOpen: boolean;
@@ -170,6 +171,8 @@ export default function Modal({ isOpen, onClose, play }: ModalProps) {
             )}
 
             <AccoladesList accolades={play.accolades} headingClassName={styles.modalHeading} />
+
+            <HistoryList history={play.history} headingClassName={styles.modalHeading} />
 
             <div className={styles.buttonGroup}>
               {play.pdfSrc && (
