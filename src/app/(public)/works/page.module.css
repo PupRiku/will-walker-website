@@ -375,7 +375,7 @@
   padding: 0.5rem;
   box-sizing: border-box;
   border-radius: 12px;
-  background-color: #547e98; /* matches casting_note_icon.png */
+  background-color: var(--color-uil-tile); /* close to casting_note_icon.png, darkened for 4.5:1 text contrast */
   color: #fff;
   text-align: center;
   text-decoration: none;
