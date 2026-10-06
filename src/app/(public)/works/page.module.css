@@ -386,6 +386,10 @@
   color: #fff;
   text-decoration: none;
   transform: translateY(-3px);
+}
+
+/* The global focus ring is a box-shadow; don't let the hover shadow replace it. */
+.uilCuttingButton:hover:not(:focus-visible) {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
