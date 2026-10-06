@@ -113,6 +113,7 @@ All colors and fonts are defined as CSS custom properties on `:root`. Use these 
 --color-text: #33373d;             /* Near-black body text */
 --color-accent-primary: #795548;   /* Brown — buttons, links, focus rings */
 --color-accent-subtle: #eae5e0;    /* Light warm gray — subtle backgrounds */
+--color-uil-tile: #507a94;           /* Slate blue — UIL Cutting Authorization tile on /works (white text, 4.6:1) */
 
 --font-family-heading: var(--font-lora);          /* h1-h6 */
 --font-family-body: var(--font-lato);             /* body text */
@@ -377,7 +378,7 @@ When updating social profiles, update **both** `SocialLinks.tsx` (UI icons) and 
 
 Umami records pageviews automatically (including App Router client-side navigations). It does **not** auto-track outbound link clicks or file downloads, so every event below is tagged explicitly.
 
-All six are clicks, so they use declarative `data-umami-event` attributes rather than `window.umami.track()` — no async race with the script, no JS. Umami turns `data-umami-event-<name>` into an event property `<name>`.
+All of these are clicks, so they use declarative `data-umami-event` attributes rather than `window.umami.track()` — no async race with the script, no JS. Umami turns `data-umami-event-<name>` into an event property `<name>`.
 
 | Event | Where | Properties |
 |---|---|---|
@@ -387,6 +388,7 @@ All six are clicks, so they use declarative `data-umami-event` attributes rather
 | `royalties-scale-download` | `works/[slug]/page.tsx`, `WorksClient.tsx` | `play` (play page only), `placement` |
 | `play-modal-open` | `Plays.tsx` (carousel slide button) | `play` |
 | `modal-view-full-page` | `Modal.tsx` ("View Full Page →") | `play` |
+| `uil-cutting-authorization` | `WorksClient.tsx` (UIL tile) | `placement` |
 | `merch-store` | `Header.tsx` (desktop actions + mobile menu) | `placement` |
 
 `placement` is one of `modal` (home carousel), `play-page` (`/works/[slug]`), `works-page` (`/works`), `header` (desktop header row), or `mobile-menu` (hamburger menu). It exists so you can tell which surface actually drives licensing inquiries. It is omitted where an event fires from only one place.
@@ -395,7 +397,7 @@ Conventions when adding events:
 
 - Keep the play slug in a **property**, never in the event name — otherwise the event list becomes 80+ unusable rows.
 - Prefer `data-umami-event` attributes for anything click-driven. If you must call `window.umami.track()`, optional-chain it (`window.umami?.track(...)`) because the script loads `async`.
-- Coverage: `Modal.test.tsx`, `playPage.test.tsx` and `Header.test.tsx` assert the event attributes on 10 of the 13 tagged elements. The 3 uncovered sites are `Plays.tsx` (carousel) and the two in `WorksClient.tsx`, neither of which has a component test.
+- Coverage: `Modal.test.tsx`, `playPage.test.tsx` and `Header.test.tsx` assert the event attributes on 10 of the 14 tagged elements. The 4 uncovered sites are `Plays.tsx` (carousel) and the three in `WorksClient.tsx`, none of which has a component test.
 - `/thank-you` pageviews already serve as a contact-form conversion count — no event needed.
 
 The Ko-fi floating widget is a third-party iframe and **cannot** be instrumented; the Ko-fi links in `Header.tsx` could be — only the Merch Store link there is tagged so far.

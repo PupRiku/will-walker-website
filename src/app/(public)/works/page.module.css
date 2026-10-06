@@ -348,7 +348,66 @@
 
 .castingNoteButton:hover {
   transform: translateY(-3px);
+}
+
+/* The global focus ring is a box-shadow; don't let the hover shadow replace it. */
+.castingNoteButton:hover:not(:focus-visible) {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tileRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.tileRow .castingNoteButton {
+  margin: 0;
+}
+
+.uilCuttingButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 120px;
+  height: 120px;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 12px;
+  background-color: var(--color-uil-tile); /* close to casting_note_icon.png, darkened for 4.5:1 text contrast */
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.uilCuttingButton:hover {
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-3px);
+}
+
+/* The global focus ring is a box-shadow; don't let the hover shadow replace it. */
+.uilCuttingButton:hover:not(:focus-visible) {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.uilCuttingIcon {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.uilCuttingLabel {
+  font-family: var(--font-family-body);
+  font-weight: 700;
+  font-size: 0.8rem;
+  line-height: 1.15;
+  text-transform: uppercase;
 }
 
 .linksContainer {
@@ -358,6 +417,33 @@
   align-items: center;
   gap: 1.5rem;
   margin-bottom: 4rem;
+}
+
+/* Desktop: one two-column grid so the tiles line up with the link buttons
+   below (casting tile's right edge = royalties right edge, UIL tile's left
+   edge = apply left edge). Below 640px the rows stack/wrap as before. */
+@media (min-width: 640px) {
+  .actionsGrid {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    column-gap: 1.5rem;
+    row-gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .tileRow,
+  .linksContainer {
+    display: contents;
+  }
+
+  .tileRow .castingNoteButton {
+    justify-self: end;
+  }
+
+  .uilCuttingButton {
+    justify-self: start;
+  }
 }
 
 /* --- Casting Note Modal Styles --- */
