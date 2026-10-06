@@ -377,7 +377,7 @@ When updating social profiles, update **both** `SocialLinks.tsx` (UI icons) and 
 
 Umami records pageviews automatically (including App Router client-side navigations). It does **not** auto-track outbound link clicks or file downloads, so every event below is tagged explicitly.
 
-All six are clicks, so they use declarative `data-umami-event` attributes rather than `window.umami.track()` — no async race with the script, no JS. Umami turns `data-umami-event-<name>` into an event property `<name>`.
+All of these are clicks, so they use declarative `data-umami-event` attributes rather than `window.umami.track()` — no async race with the script, no JS. Umami turns `data-umami-event-<name>` into an event property `<name>`.
 
 | Event | Where | Properties |
 |---|---|---|
@@ -387,6 +387,7 @@ All six are clicks, so they use declarative `data-umami-event` attributes rather
 | `royalties-scale-download` | `works/[slug]/page.tsx`, `WorksClient.tsx` | `play` (play page only), `placement` |
 | `play-modal-open` | `Plays.tsx` (carousel slide button) | `play` |
 | `modal-view-full-page` | `Modal.tsx` ("View Full Page →") | `play` |
+| `uil-cutting-authorization` | `WorksClient.tsx` (UIL tile) | `placement` |
 | `merch-store` | `Header.tsx` (desktop actions + mobile menu) | `placement` |
 
 `placement` is one of `modal` (home carousel), `play-page` (`/works/[slug]`), `works-page` (`/works`), `header` (desktop header row), or `mobile-menu` (hamburger menu). It exists so you can tell which surface actually drives licensing inquiries. It is omitted where an event fires from only one place.

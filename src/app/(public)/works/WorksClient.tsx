@@ -6,7 +6,7 @@ import Link from 'next/link';
 import type { Play } from '@/types/play';
 import { filterWorks, sortWorks, type RuntimeBucket, type CastBucket, type SortOrder } from '@/utils/filterSort';
 import styles from './page.module.css';
-import { BsDownload } from 'react-icons/bs';
+import { BsDownload, BsFileEarmarkText } from 'react-icons/bs';
 import { APPLY_FOR_RIGHTS_URL } from '@/lib/constants';
 import AccoladeBadge from '@/components/AccoladeBadge';
 
@@ -104,42 +104,59 @@ export default function WorksClient() {
     <div className={styles.pageWrapper}>
       <h1 className={styles.heading}>All Works</h1>
 
-      <button
-        className={styles.castingNoteButton}
-        onClick={openCastingModal}
-        aria-label="Note on Casting Flexibility"
-      >
-        <Image
-          src="/images/assets/casting_note_icon.png"
-          alt=""
-          width={120}
-          height={120}
-          className={styles.castingNoteIcon}
-        />
-      </button>
+      <div className={styles.actionsGrid}>
+        <div className={styles.tileRow}>
+          <button
+            className={styles.castingNoteButton}
+            onClick={openCastingModal}
+            aria-label="Note on Casting Flexibility"
+          >
+            <Image
+              src="/images/assets/casting_note_icon.png"
+              alt=""
+              width={120}
+              height={120}
+              className={styles.castingNoteIcon}
+            />
+          </button>
 
-      <div className={styles.linksContainer}>
-        <a
-          href="/pdfs/royalties_scale.pdf"
-          className={styles.royaltiesLink}
-          download
-          data-umami-event="royalties-scale-download"
-          data-umami-event-placement="works-page"
-        >
-          <BsDownload />
-          Download Royalties Scale
-        </a>
+          <a
+            href="/pdfs/uil_cutting_authorization.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.uilCuttingButton}
+            aria-label="UIL Cutting Authorization (PDF, opens in a new tab)"
+            data-umami-event="uil-cutting-authorization"
+            data-umami-event-placement="works-page"
+          >
+            <BsFileEarmarkText className={styles.uilCuttingIcon} aria-hidden="true" />
+            <span className={styles.uilCuttingLabel}>UIL Cutting Authorization</span>
+          </a>
+        </div>
 
-        <Link
-          href={APPLY_FOR_RIGHTS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.globalApplyButton}
-          data-umami-event="apply-for-rights"
-          data-umami-event-placement="works-page"
-        >
-          Apply for Performance Rights
-        </Link>
+        <div className={styles.linksContainer}>
+          <a
+            href="/pdfs/royalties_scale.pdf"
+            className={styles.royaltiesLink}
+            download
+            data-umami-event="royalties-scale-download"
+            data-umami-event-placement="works-page"
+          >
+            <BsDownload />
+            Download Royalties Scale
+          </a>
+
+          <Link
+            href={APPLY_FOR_RIGHTS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.globalApplyButton}
+            data-umami-event="apply-for-rights"
+            data-umami-event-placement="works-page"
+          >
+            Apply for Performance Rights
+          </Link>
+        </div>
       </div>
 
       <div className={styles.filterBarOuter}>
