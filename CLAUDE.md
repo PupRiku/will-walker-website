@@ -358,6 +358,7 @@ Public routes live inside the `(public)` route group (`src/app/(public)/`) which
 - **Singleton:** `src/lib/prisma.ts` — use this everywhere in the app; uses `@prisma/adapter-pg` (required in Prisma v7)
 - **Seed script:** `prisma/seed.ts` — run with `npx prisma db seed`; uses `tsx` (not `ts-node`) due to ESM/CJS conflicts with the generated client
 - **Migrations:** `npx prisma migrate dev --name [description]`
+- **Row-Level Security:** every new table must enable RLS in its migration (`ALTER TABLE "Name" ENABLE ROW LEVEL SECURITY;`), with no policies. The app reaches the database only through Prisma as the table owner, which bypasses RLS, so this just blocks Supabase's public REST API. Without it Supabase emails a `rls_disabled_in_public` alert. `20261015120000_enable_rls` covers `Accolade` and `PlayHistory`; it is already applied in production (run `npx prisma migrate resolve --applied 20261015120000_enable_rls` to record it).
 - **Studio:** `npx prisma studio` — opens a visual browser UI at a local port
 
 ---
